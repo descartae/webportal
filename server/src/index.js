@@ -1,3 +1,4 @@
+import { load } from 'dotenv-safe'
 import express from 'express'
 
 import cors from 'cors'
@@ -7,7 +8,9 @@ import bodyParser from 'body-parser'
 
 import schema from './schema'
 
-const PORT = 4000
+load()
+
+const { PORT } = process.env
 
 const server = express()
 

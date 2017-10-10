@@ -5,6 +5,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
+    "dotenv-safe": "^4.0.4",
     "express": "^4.16.1",
     "graphql-server-express": "^1.1.3",
     "graphql-tools": "^2.2.1",
