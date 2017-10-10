@@ -1,18 +1,31 @@
 import React, { Component } from 'react'
 import './App.css'
 
-import { CenterListing, CenterCreator } from './components'
+import { CenterListing, CenterCreator } from './components';
+import {
+  ApolloClient,
+  ApolloProvider,
+  createNetworkInterface,
+} from 'react-apollo';
+
+const networkInterface = createNetworkInterface({ uri: 'http://localhost:4000/graphql' });
+
+const client = new ApolloClient({
+  networkInterface,
+});
 
 class App extends Component {
   render () {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <h1 className='App-title'>Welcome to React</h1>
-        </header>
-        <CenterCreator />
-        <CenterListing />
-      </div>
+      <ApolloProvider client={client}>
+        <div className='App'>
+          <div className="navbar">Descartae</div>
+          <CenterCreator />
+          <br/>
+          <br/>
+          <CenterListing />
+        </div>
+      </ApolloProvider> 
     )
   }
 }
