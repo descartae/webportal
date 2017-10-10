@@ -2,7 +2,7 @@ html, body {
   padding: 0;
   margin: 0;
   height: 100%;
-  background-image: linear-gradient(175deg, #2b3658 0%, #523e5b 100%);
+  background-image: linear-gradient(175deg, #f2f2f2 0%, white 100%);
 }
 
 .App-logo {
@@ -13,11 +13,26 @@ html, body {
   background-color: #222;
   height: 150px;
   padding: 20px;
-  color: white;
+  color: slategrey;
 }
 
 .App-intro {
   font-size: large;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+div.NotFound {
+  position: relative;
+  padding: 10px 50px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  width: 200px;
+  text-align: left;
+  font-size: 16px;
 }
 
 .navbar {
@@ -37,21 +52,20 @@ html, body {
   height: 30px;
   width: 30px;
   display: inline-block;
-  background-image: url('./apollo-logo.svg');
   background-size: contain;
   margin-right: 10px;
 }
 
 div.centersList {
   padding: 0 30px;
-  position: relative;
+  position: fixed;
 }
 
 div.center {
   position: relative;
   padding: 10px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.8);
+  color: darkslategrey;
   font-weight: 300;
   width: 200px;
   text-align: left;
@@ -73,13 +87,12 @@ div.centersList input {
 }
 
 div.centersList:before {
-  content: "+";
   display: inline-block;
   height: 10px;
   width: 10px;
   /*background-color: #fff;*/
   position: absolute;
-  top: 7.5px;
+  top: 11px;
   left: 40px;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -92,4 +105,16 @@ div.centersList input:focus {
 div.center span {
   position: absolute;
   left: 10px;
+}
+
+div.centerName {
+  width: 200px;
+  background-color: transparent;
+  padding: 10px 50px 10px 30px;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  text-align: center;
+  color: #22A699;
 }
