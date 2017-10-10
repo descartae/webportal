@@ -1,3 +1,4 @@
+/*
 import { reduce, mergeDeepRight } from 'ramda'
 import { makeExecutableSchema } from 'graphql-tools'
 
@@ -6,10 +7,9 @@ import {
   resolvers as centerResolvers 
 } from './center'
 
-/* 
-  TODO: Better solution to circunvent empty type errors
+// TODO: Better solution to circunvent empty type errors
   https://github.com/apollographql/graphql-tools/issues/293
-*/
+//
 const schemaDefinition = `
   type Query {
     _blank: String
@@ -33,3 +33,5 @@ const typeDefs = [
 const resolvers = reduce(mergeDeepRight, {}, [centerResolvers])
 
 export default makeExecutableSchema({ typeDefs, resolvers })
+
+*/
