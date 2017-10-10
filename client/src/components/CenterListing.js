@@ -13,7 +13,7 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
   return (
     <div className="centersList">
       { centers.map( it =>
-        (<div key={it.id} className="center">{it.name}</div>)
+        (<div key={it._id} className="center">{it.name}</div>)
       )}
     </div>
 
@@ -23,7 +23,7 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
 export const centersListQuery = gql`
   query CentersListQuery {
     centers {
-      id
+      _id
       name
     }
   }
