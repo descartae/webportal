@@ -1,12 +1,14 @@
 export const schema = `
   type Center {
-    id: ID!
+    _id: ID!
     name: String!
     location: Location!
     website: String
     telephone: String
     typeOfWaste: TypeOfWaste!
     openHours: [OpenTime]
+
+    createdBy: User
   }
 
   type Location {
@@ -54,9 +56,14 @@ export const schema = `
 `
 
 export const resolvers = {
+  Center: {
+    createdBy(obj, args, { dataLoaders: { Users } }, info) {
+      return Users.load(obj.createdBy)
+    }
+  },
   Query: {
-    centers(obj, args, context, info) {
-      return []
+    centers(obj, args, { collections: { Centers } }, info) {
+      return Centers.find().toArray()
     }
   },
   Mutation: {

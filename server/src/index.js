@@ -1,4 +1,4 @@
-import { load } from 'dotenv-safe'
+import { load as loadConfiguration } from 'dotenv-safe'
 
 import express from 'express'
 import jwt from 'express-jwt'
@@ -7,39 +7,53 @@ import cors from 'cors'
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import bodyParser from 'body-parser'
 
+import { mongoConnector, mongoLoaders } from './mongo'  
 import schema from './schema'
 
-load()
+loadConfiguration()
 
 const {
   PORT,
-  JWT_SECRET
+  JWT_SECRET,
+  MONGODB_URL
 } = process.env
 
-const server = express()
+const start = async () => {
+  console.log(`Connecting to mongodb at ${MONGODB_URL}`)
 
-const authMiddleware = 
-  jwt({ 
-    secret: new Buffer(JWT_SECRET, 'base64'),
-    credentialsRequired: false
-  })
+  const collections = await mongoConnector(MONGODB_URL)
 
-server.use('*', cors({ origin: 'http://localhost:3000' }))
+  console.log('Creating server')
 
-server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
-server.use('/graphql', authMiddleware, bodyParser.json(), graphqlExpress((request) => {
-  const context = {
-    configuration: { JWT_SECRET }
-  }
+  const server = express()
 
-  if (request.user != null) {
-    context.user = request.user
-  }
+  server.use(cors())
 
-  return {
-    schema,
-    context
-  }
-}))
+  const authMiddleware =
+    jwt({ 
+      secret: new Buffer(JWT_SECRET, 'base64'),
+      credentialsRequired: false
+    })
 
-server.listen(PORT, () => console.log(`GraphQL Server is now running on http://localhost:${PORT}`))
+  server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
+  server.use('/graphql', authMiddleware, bodyParser.json(), graphqlExpress((request) => {
+    const context = {
+      configuration: { JWT_SECRET },
+      dataLoaders: mongoLoaders(collections),
+      collections
+    }
+  
+    if (request.user != null) {
+      context.user = request.user
+    }
+  
+    return {
+      schema,
+      context
+    }
+  }))
+  
+  server.listen(PORT, () => console.log(`Server is now running on http://localhost:${PORT}`))
+}
+
+start()

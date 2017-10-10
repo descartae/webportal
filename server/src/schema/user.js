@@ -1,6 +1,12 @@
 import jwt from 'jsonwebtoken'
 
 export const schema = `
+  type User {
+    _id: ID!
+    name: String!
+    email: String!
+  }
+
   extend type Query {
     whoami: String
   }
