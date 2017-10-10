@@ -28,7 +28,9 @@ server.use('*', cors({ origin: 'http://localhost:3000' }))
 
 server.use('/graphiql', authMiddleware, graphiqlExpress({ endpointURL: '/graphql' }))
 server.use('/graphql', authMiddleware, bodyParser.json(), graphqlExpress((request) => {
-  const context = {}
+  const context = {
+    configuration: { JWT_SECRET }
+  }
 
   if (request.user != null) {
     context.user = request.user

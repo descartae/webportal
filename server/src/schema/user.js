@@ -41,7 +41,7 @@ export const resolvers = {
 
       const payload = { id, email }
 
-      const { JWT_SECRET } = process.env
+      const { JWT_SECRET } = context.configuration
 
       return {
         success: true,
