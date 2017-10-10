@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/graphql": "^0.11.5",
-    "apollo-test-utils": "^0.3.2",
-    "graphql": "^0.10.5",
-    "graphql-tools": "^2.2.1",
+    "apollo-client": "^1.1.1",
+    "apollo-test-utils": "^0.1.1",
+    "graphql-tools": "^0.10.0",
+    "false": "0.0.4",
     "react": "^16.0.0",
     "react-apollo": "^1.4.16",
     "react-dom": "^16.0.0",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.14"
+    "react-router-dom": "^4.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,6 +20,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "react-scripts": "1.0.14"
   }
 }
