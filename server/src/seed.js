@@ -25,7 +25,7 @@ export const seedDatabase = async ({ Centers, Users }) => {
           zip: '91130-540'
         },
         telephone: '+55 (51) 3364-4115',
-        typeofWaste: {
+        typeOfWaste: {
           aluminium: false,
           compost: false,
           cookingOil: false,
@@ -36,7 +36,34 @@ export const seedDatabase = async ({ Centers, Users }) => {
           hazardousWaste: false,
           paper: false,
           plastic: true
-        }
+        },
+        openHours: [
+          {
+            dayOfWeek: 'MONDAY',
+            startTime: 8,
+            endTime: 17
+          },
+          {
+            dayOfWeek: 'TUESDAY',
+            startTime: 8,
+            endTime: 17
+          },
+          {
+            dayOfWeek: 'WEDNESDAY',
+            startTime: 8,
+            endTime: 17
+          },
+          {
+            dayOfWeek: 'THURSDAY',
+            startTime: 8,
+            endTime: 17
+          },
+          {
+            dayOfWeek: 'FRIDAY',
+            startTime: 8,
+            endTime: 17
+          }
+        ]
       },
       {
         _id: new ObjectId(),
@@ -49,7 +76,7 @@ export const seedDatabase = async ({ Centers, Users }) => {
           zip: '90160-050'
         },
         telephone: '+55 (51) 3232-9300',
-        typeofWaste: {
+        typeOfWaste: {
           aluminium: false,
           compost: false,
           cookingOil: false,
@@ -60,7 +87,24 @@ export const seedDatabase = async ({ Centers, Users }) => {
           hazardousWaste: false,
           paper: false,
           plastic: false
-        }
+        },
+        openHours: [
+          {
+            dayOfWeek: 'WEDNESDAY',
+            startTime: 12,
+            endTime: 18
+          },
+          {
+            dayOfWeek: 'THURSDAY',
+            startTime: 12,
+            endTime: 18
+          },
+          {
+            dayOfWeek: 'FRIDAY',
+            startTime: 15,
+            endTime: 18
+          }
+        ]
       }
     ]
 
