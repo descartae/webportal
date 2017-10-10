@@ -1,5 +1,12 @@
-.App {
-  text-align: center;
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background-image: linear-gradient(175deg, #2b3658 0%, #523e5b 100%);
+}
+
+.App-logo {
+  height: 80px;
 }
 
 .App-header {
@@ -7,4 +14,82 @@
   height: 150px;
   padding: 20px;
   color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 30px;
+  text-align: left;
+  font-weight: 200;
+  font-size: 20px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar:before {
+  content: "";
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  background-image: url('./apollo-logo.svg');
+  background-size: contain;
+  margin-right: 10px;
+}
+
+div.centersList {
+  padding: 0 30px;
+  position: relative;
+}
+
+div.center {
+  position: relative;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  width: 200px;
+  text-align: left;
+  padding-left: 30px;
+  font-size: 16px;
+}
+
+div.centersList input {
+  width: 200px;
+  background-color: transparent;
+  padding: 10px 20px 10px 30px;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 300;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 300ms all ease-out;
+}
+
+div.centersList:before {
+  content: "+";
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  /*background-color: #fff;*/
+  position: absolute;
+  top: 7.5px;
+  left: 40px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+div.centersList input:focus {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: 300ms all ease-out;
+}
+
+div.center span {
+  position: absolute;
+  left: 10px;
 }
