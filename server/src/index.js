@@ -1,6 +1,7 @@
 import { load } from 'dotenv-safe'
-import express from 'express'
 
+import express from 'express'
+import jwt from 'express-jwt'
 import cors from 'cors'
 
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
@@ -10,15 +11,28 @@ import schema from './schema'
 
 load()
 
-const { PORT } = process.env
+const {
+  PORT,
+  JWT_SECRET
+} = process.env
 
 const server = express()
 
+const authMiddleware = 
+  jwt({ 
+    secret: new Buffer(JWT_SECRET, 'base64'),
+    credentialsRequired: false
+  })
+
 server.use('*', cors({ origin: 'http://localhost:3000' }))
-server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
-server.use('/graphql', bodyParser.json(), graphqlExpress((request) => {
-  // TODO: setup the request context with auth data & data connectors
+
+server.use('/graphiql', authMiddleware, graphiqlExpress({ endpointURL: '/graphql' }))
+server.use('/graphql', authMiddleware, bodyParser.json(), graphqlExpress((request) => {
   const context = {}
+
+  if (request.user != null) {
+    context.user = request.user
+  }
 
   return {
     schema,

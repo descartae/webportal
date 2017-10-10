@@ -6,6 +6,11 @@ import {
   resolvers as centerResolvers 
 } from './center'
 
+import { 
+  schema as userSchema, 
+  resolvers as userResolvers 
+} from './user'
+
 /* 
   TODO: Better solution to circunvent empty type errors
   https://github.com/apollographql/graphql-tools/issues/293
@@ -27,9 +32,14 @@ const schemaDefinition = `
 
 const typeDefs = [
   schemaDefinition,
-  centerSchema
+  centerSchema,
+  userSchema
 ]
 
-const resolvers = reduce(mergeDeepRight, {}, [centerResolvers])
+const resolvers = 
+  reduce(mergeDeepRight, {}, [
+    centerResolvers,
+    userResolvers
+  ])
 
 export default makeExecutableSchema({ typeDefs, resolvers })

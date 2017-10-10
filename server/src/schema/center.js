@@ -60,7 +60,7 @@ export const resolvers = {
     }
   },
   Mutation: {
-    addCenter(root, args, context) {
+    addCenter(obj, args, context, info) {
       return true
     }
   }
