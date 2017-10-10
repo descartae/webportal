@@ -1,4 +1,11 @@
-export const schema = `
+import {
+  makeExecutableSchema,
+  addMockFunctionsToSchema,
+} from 'graphql-tools';
+
+import { resolvers } from './resolvers';
+//export const schema = `
+const typeDefs = `
   type Center {
     id: ID!
     name: String!
@@ -26,6 +33,7 @@ export const schema = `
     greenWaste: Boolean
     hazardousWaste: Boolean
     paper: Boolean
+    plastic: Boolean
   }
 
   type OpenTime {
@@ -44,15 +52,17 @@ export const schema = `
     SATURDAY
   }
 
-  extend type Query {
+  //extend 
+  type Query {
     centers: [Center]
   }
 
-  extend type Mutation {
+  //extend 
+  type Mutation {
     addCenter(name: String!): Boolean!
   }
 `
-
+/*
 export const resolvers = {
   Query: {
     centers(obj, args, context, info) {
@@ -65,3 +75,7 @@ export const resolvers = {
     }
   }
 }
+*/
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+export { schema };
