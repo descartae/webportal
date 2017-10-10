@@ -1,4 +1,4 @@
-const  = [{
+const centers = [{
   id: 1,
   name: 'Global Plasticos',
   location: {
@@ -23,7 +23,7 @@ const  = [{
 
 }, {
   id: 2,
-  name: 'Fkl Recargas de Cartuchos e Toners ',
+  name: 'Fkl Recargas de Cartuchos e Toners',
   location: {
     address: 'R. Germano Hasslocher 288 s 1',
     municipality: 'Porto Alegre',
