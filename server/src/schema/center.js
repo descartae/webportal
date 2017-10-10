@@ -28,6 +28,7 @@ export const schema = `
     greenWaste: Boolean
     hazardousWaste: Boolean
     paper: Boolean
+    plastic: Boolean
   }
 
   type OpenTime {
