@@ -57,17 +57,17 @@ export const schema = `
 
 export const resolvers = {
   Center: {
-    createdBy(obj, args, { dataLoaders: { Users } }, info) {
+    createdBy (obj, args, { dataLoaders: { Users } }, info) {
       return Users.load(obj.createdBy)
     }
   },
   Query: {
-    centers(obj, args, { collections: { Centers } }, info) {
+    centers (obj, args, { collections: { Centers } }, info) {
       return Centers.find().toArray()
     }
   },
   Mutation: {
-    addCenter(obj, args, context, info) {
+    addCenter (obj, args, context, info) {
       return true
     }
   }

@@ -34,16 +34,16 @@ export const schema = `
 
 export const resolvers = {
   Query: {
-    whoami(obj, args, context, info) {
+    whoami (obj, args, context, info) {
       const { id, email } = context.user || {}
 
       return id ? `${id}: ${email}` : `anonymous`
     }
   },
   Mutation: {
-    authenticate(obj, args, context, info) {
-      const id = "identification"
-      const { email, password } = args.credentials
+    authenticate (obj, args, context, info) {
+      const id = 'identification'
+      const { email } = args.credentials
 
       const payload = { id, email }
 
@@ -51,7 +51,7 @@ export const resolvers = {
 
       return {
         success: true,
-        sessionToken: jwt.sign(payload, new Buffer(JWT_SECRET, 'base64'))
+        sessionToken: jwt.sign(payload, Buffer.from(JWT_SECRET, 'base64'))
       }
     }
   }

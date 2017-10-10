@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader'
 
-const createBatcherById = 
-  (collection) => 
+const createBatcherById =
+  (collection) =>
     async (ids) => collection.find({ _id: { $in: ids } }).toArray()
 
 export default (collections) => {

@@ -7,7 +7,7 @@ import cors from 'cors'
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import bodyParser from 'body-parser'
 
-import { mongoConnector, mongoLoaders } from './mongo'  
+import { mongoConnector, mongoLoaders } from './mongo'
 import schema from './schema'
 
 loadConfiguration()
@@ -30,8 +30,8 @@ const start = async () => {
   server.use(cors())
 
   const authMiddleware =
-    jwt({ 
-      secret: new Buffer(JWT_SECRET, 'base64'),
+    jwt({
+      secret: Buffer.from(JWT_SECRET, 'base64'),
       credentialsRequired: false
     })
 
@@ -42,17 +42,17 @@ const start = async () => {
       dataLoaders: mongoLoaders(collections),
       collections
     }
-  
+
     if (request.user != null) {
       context.user = request.user
     }
-  
+
     return {
       schema,
       context
     }
   }))
-  
+
   server.listen(PORT, () => console.log(`Server is now running on http://localhost:${PORT}`))
 }
 

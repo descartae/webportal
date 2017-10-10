@@ -1,17 +1,17 @@
 import { reduce, mergeDeepRight } from 'ramda'
 import { makeExecutableSchema } from 'graphql-tools'
 
-import { 
-  schema as centerSchema, 
-  resolvers as centerResolvers 
+import {
+  schema as centerSchema,
+  resolvers as centerResolvers
 } from './center'
 
-import { 
-  schema as userSchema, 
-  resolvers as userResolvers 
+import {
+  schema as userSchema,
+  resolvers as userResolvers
 } from './user'
 
-/* 
+/*
   TODO: Better solution to circunvent empty type errors
   https://github.com/apollographql/graphql-tools/issues/293
 */
@@ -36,7 +36,7 @@ const typeDefs = [
   userSchema
 ]
 
-const resolvers = 
+const resolvers =
   reduce(mergeDeepRight, {}, [
     centerResolvers,
     userResolvers
