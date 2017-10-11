@@ -1,10 +1,120 @@
-.App {
-  text-align: center;
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background-image: linear-gradient(175deg, #f2f2f2 0%, white 100%);
+}
+
+.App-logo {
+  height: 80px;
 }
 
 .App-header {
   background-color: #222;
   height: 150px;
   padding: 20px;
-  color: white;
+  color: slategrey;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+div.NotFound {
+  position: relative;
+  padding: 10px 50px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  width: 200px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 30px;
+  text-align: left;
+  font-weight: 200;
+  font-size: 20px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar:before {
+  content: "";
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  background-size: contain;
+  margin-right: 10px;
+}
+
+div.centersList {
+  padding: 0 30px;
+  position: fixed;
+}
+
+div.center {
+  position: relative;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: darkslategrey;
+  font-weight: 300;
+  width: 200px;
+  text-align: left;
+  padding-left: 30px;
+  font-size: 16px;
+}
+
+div.centersList input {
+  width: 200px;
+  background-color: transparent;
+  padding: 10px 20px 10px 30px;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 300;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 300ms all ease-out;
+}
+
+div.centersList:before {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  /*background-color: #fff;*/
+  position: absolute;
+  top: 11px;
+  left: 40px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+div.centersList input:focus {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: 300ms all ease-out;
+}
+
+div.center span {
+  position: absolute;
+  left: 10px;
+}
+
+div.centerName {
+  width: 200px;
+  background-color: transparent;
+  padding: 10px 50px 10px 30px;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  text-align: center;
+  color: #22A699;
 }

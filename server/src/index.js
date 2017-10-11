@@ -10,6 +10,8 @@ import bodyParser from 'body-parser'
 import { mongoConnector, mongoLoaders } from './mongo'
 import schema from './schema'
 
+import { seedDatabase } from './seed'
+
 loadConfiguration()
 
 const {
@@ -22,6 +24,8 @@ const start = async () => {
   console.log(`Connecting to mongodb at ${MONGODB_URL}`)
 
   const collections = await mongoConnector(MONGODB_URL)
+
+  await seedDatabase(collections)
 
   console.log('Creating server')
 
