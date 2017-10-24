@@ -37,7 +37,7 @@ module.exports = [
       ]
     },
     plugins: [
-      new DotEnvPlugin({ safe: true }),
+      new DotEnvPlugin({ safe: true, systemvars: true }),
       new UglifyJSPlugin(),
       new BannerPlugin({
         banner: 'require("source-map-support").install();',
@@ -75,7 +75,7 @@ module.exports = [
       ]
     },
     plugins: [
-      new DotEnvPlugin({ safe: true }),
+      new DotEnvPlugin({ safe: true, systemvars: true }),
       new StartServerPlugin('index.js'),
       new NamedModulesPlugin(),
       new HotModuleReplacementPlugin(),
