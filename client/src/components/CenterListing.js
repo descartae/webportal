@@ -11,9 +11,9 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
   }
 
   return (
-    <div className="centersList">
-      { centers.map( it =>
-        (<div key={it._id} className="center">{it.name}</div>)
+    <div className='centersList'>
+      { centers.map(it =>
+        (<div key={it._id} className='center'>{it.name}</div>)
       )}
     </div>
 
@@ -27,7 +27,7 @@ export const centersListQuery = gql`
       name
     }
   }
-`;
+`
 
 /*
 const CenterListing = ({ data: { loading, error, centers } }) => {
@@ -48,5 +48,4 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
  */
 
 export { CenterListing }
-export const CenterListingWithData = graphql(centersListQuery)(CenterListing) 
-
+export const CenterListingWithData = graphql(centersListQuery)(CenterListing)

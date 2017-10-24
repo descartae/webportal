@@ -4,23 +4,26 @@
   "private": true,
   "dependencies": {
     "apollo-client": "^1.1.1",
-    "apollo-test-utils": "^0.1.1",
-    "graphql-tools": "^0.10.0",
+    "dotenv-safe": "^4.0.4",
     "false": "0.0.4",
+    "graphql-tools": "^0.10.1",
     "react": "^16.0.0",
     "react-apollo": "^1.4.16",
     "react-dom": "^16.0.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "serve": "^6.3.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run build:digest && node -r dotenv-safe/config $(npm bin)/serve build",
+    "build:digest": "npm run clean && react-scripts build",
+    "build:watch": "npm run clean && react-scripts start",
+    "clean": "rm -rf build",
     "test": "standard && react-scripts test --env=jsdom",
-    "prettify": "standard --fix",
-    "eject": "react-scripts eject"
+    "prettify": "standard --fix"
   },
   "devDependencies": {
-    "standard": "^10.0.3",
-    "react-scripts": "1.0.14"
+    "apollo-test-utils": "^0.1.2",
+    "react-scripts": "1.0.14",
+    "standard": "^10.0.3"
   }
 }
