@@ -13,7 +13,7 @@ import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:4000/graphql'
+  uri: process.env.REACT_APP_SERVER_URL
 })
 
 const client = new ApolloClient({ networkInterface })

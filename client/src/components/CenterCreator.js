@@ -26,16 +26,16 @@ const CenterCreator = ({ mutate }) => {
         .then(({ data }) => {
           evt.target.value = ''
 
-          alert(`Result: \n${ JSON.stringify(data, null, 2) }`)
+          console.log(`Result: \n${JSON.stringify(data, null, 2)}`)
         })
     }
   }
 
   return (
     <input
-      type="text"
-      placeholder="New Center"
-      onKeyUp={ handleKeyUp }
+      type='text'
+      placeholder='New Center'
+      onKeyUp={handleKeyUp}
       />
   )
 }
