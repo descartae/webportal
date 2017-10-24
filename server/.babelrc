@@ -1,7 +1,8 @@
 {
-  "passPerPreset": true,
   "presets": [
-    "env",
+    [
+      "env", { "targets": { "node": "8.6" } }
+    ],
     "stage-0"
   ]
 }
