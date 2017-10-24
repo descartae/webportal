@@ -6,8 +6,4 @@ Technologies:
 - React
 - Express
 
-To start up the application:
-```cd client && npm install && npm start```
-```cd server && npm install && npm start```
-
-For the server application, either export to your env or create a `server/.env` file with each configuration entry of `server/.env.example` before running it.
+To start up the applications, run `npm install` on `client` and `server` then create an `.env` file at each project's root with the values from their respective `.env.example` files. There are multiple ways to run each project - check the available commands with `npm run`.
