@@ -1,4 +1,5 @@
-# Descartae Webportal
+# Descartaê Webportal
+Descartaê is an open source web portal for managing data on recycling centers and waste disposal facilities. 
 
 Technologies:
 - Apollo
