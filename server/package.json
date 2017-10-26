@@ -4,8 +4,8 @@
   "description": "The Descartaê data management service",
   "private": true,
   "scripts": {
-    "start": "npm run build:digest && node .build/index.js",
-    "clean": "rm -rf .build",
+    "start": "npm run build:digest && node build/index.js",
+    "clean": "rm -rf build",
     "build:digest": "npm run clean && webpack --config-name digest",
     "build:watch": "npm run clean && webpack --config-name watch",
     "test": "standard",
