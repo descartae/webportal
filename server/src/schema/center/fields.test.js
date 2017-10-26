@@ -1,16 +1,16 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { createdBy } from './fields'
 
 it('loads the user referenced by the center', () => {
   const obj = {
-    _id: "123",
-    createdBy: "user"
+    _id: '123',
+    createdBy: 'user'
   }
 
   const context = {
     dataLoaders: {
       Users: {
-        load:  (id) => id === "user"
+        load: (id) => id === 'user'
       }
     }
   }

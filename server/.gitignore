@@ -3,6 +3,7 @@ node_modules
 
 # testing
 coverage
+jest*
 
 # build artifacts
 build
