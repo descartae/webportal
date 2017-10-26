@@ -1,3 +1,5 @@
+import {ObjectID} from 'mongodb'
+
 export const schema = `
   type Center {
     _id: ID!
@@ -49,6 +51,7 @@ export const schema = `
 
   extend type Query {
     centers: [Center]
+    center(_id: String!): Center
   }
 
   extend type Mutation {
@@ -65,7 +68,10 @@ export const resolvers = {
   Query: {
     centers (obj, args, { collections: { Centers } }, info) {
       return Centers.find().toArray()
-    }
+    },
+    center (obj, args, { collections: { Centers } }, info) {
+      return Centers.findOne({_id: ObjectID(args._id)})
+    },
   },
   Mutation: {
     addCenter (obj, args, context, info) {
