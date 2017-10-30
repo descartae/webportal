@@ -3,12 +3,16 @@ import { makeExecutableSchema } from 'graphql-tools'
 
 import {
   schema as centerSchema,
-  resolvers as centerResolvers
+  resolvers as centerResolvers,
+  queryExtension as centerQueryExtension,
+  mutationExtension as centerMutationExtension
 } from './center'
 
 import {
   schema as userSchema,
-  resolvers as userResolvers
+  resolvers as userResolvers,
+  queryExtension as userQueryExtension,
+  mutationExtension as userMutationExtension
 } from './user'
 
 /*
@@ -17,11 +21,13 @@ import {
 */
 const schemaDefinition = `
   type Query {
-    _blank: String
+    ${centerQueryExtension}
+    ${userQueryExtension}
   }
 
   type Mutation {
-    _blank: String
+    ${centerMutationExtension}
+    ${userMutationExtension}
   }
 
   schema {

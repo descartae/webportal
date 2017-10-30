@@ -8,7 +8,7 @@
     "clean": "rm -rf build",
     "build:digest": "npm run clean && webpack --config-name digest",
     "build:watch": "npm run clean && webpack --config-name watch",
-    "test": "standard",
+    "test": "standard && jest",
     "prettify": "standard --fix"
   },
   "dependencies": {
@@ -31,11 +31,20 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "dotenv-webpack": "^1.5.4",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1",
     "standard": "^10.0.3",
     "start-server-webpack-plugin": "^2.2.0",
     "uglifyjs-webpack-plugin": "^1.0.0",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.3",
     "webpack-node-externals": "^1.6.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "./build"
+    ]
   }
 }
