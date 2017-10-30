@@ -1,51 +1,52 @@
 import { reduce, mergeDeepRight } from 'ramda'
 import { makeExecutableSchema } from 'graphql-tools'
 
-import {
-  schema as centerSchema,
-  resolvers as centerResolvers,
-  queryExtension as centerQueryExtension,
-  mutationExtension as centerMutationExtension
-} from './center'
+import * as center from './center'
+import * as user from './user'
 
-import {
-  schema as userSchema,
-  resolvers as userResolvers,
-  queryExtension as userQueryExtension,
-  mutationExtension as userMutationExtension
-} from './user'
+const definitions = [
+  user,
+  center
+]
 
 /*
   TODO: Better solution to circunvent empty type errors
   https://github.com/apollographql/graphql-tools/issues/293
 */
-const schemaDefinition = `
-  type Query {
-    ${centerQueryExtension}
-    ${userQueryExtension}
-  }
+const createTypeDefs = (definitions) => {
+  const queryExtensions = 
+    definitions
+      .map(it => it.queryExtension)
+      .join('')
+  
+  const mutationExtensions =
+    definitions
+      .map(it => it.mutationExtension)
+      .join('')
 
-  type Mutation {
-    ${centerMutationExtension}
-    ${userMutationExtension}
-  }
+  const baseTypes = `
+    type Query {
+      ${queryExtensions}
+    }
 
-  schema {
-    query: Query
-    mutation: Mutation
-  }
-`
+    type Mutation {
+      ${mutationExtensions}
+    }
 
-const typeDefs = [
-  schemaDefinition,
-  centerSchema,
-  userSchema
-]
+    schema {
+      query: Query
+      mutation: Mutation
+    }
+  `
 
-const resolvers =
-  reduce(mergeDeepRight, {}, [
-    centerResolvers,
-    userResolvers
-  ])
+  return definitions.map(it => it.schema).concat(baseTypes)
+}
+
+const createResolvers = 
+  (definitions) => reduce(mergeDeepRight, {}, definitions.map(it => it.resolvers))
+
+const typeDefs = createTypeDefs(definitions)
+const resolvers = createResolvers(definitions)
+  
 
 export default makeExecutableSchema({ typeDefs, resolvers })
