@@ -3,10 +3,12 @@ import { makeExecutableSchema } from 'graphql-tools'
 
 import * as center from './center'
 import * as user from './user'
+import * as typeOfWaste from './typeOfWaste'
 
 const definitions = [
   user,
-  center
+  center,
+  typeOfWaste
 ]
 
 /*
