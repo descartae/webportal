@@ -1,11 +1,24 @@
 import { ObjectId } from 'mongodb'
 
-export const seedDatabase = async ({ Centers, Users }) => {
+export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
   const centerCount = await Centers.count()
   const userCount = await Users.count()
 
   if (centerCount === 0 && userCount === 0) {
     console.log('No data found - seeding database')
+
+    const typesOfWaste = [
+      {
+        _id: new ObjectId(),
+        name: 'Plastic',
+        icon: 'http://example.com/plastic.png'
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Aluminium',
+        icon: 'http://example.com/aluminium.png'
+      }
+    ]
 
     const user = {
       _id: new ObjectId(),
@@ -25,18 +38,10 @@ export const seedDatabase = async ({ Centers, Users }) => {
           zip: '91130-540'
         },
         telephone: '+55 (51) 3364-4115',
-        typeOfWaste: {
-          aluminium: false,
-          compost: false,
-          cookingOil: false,
-          ewaste: false,
-          furniture: false,
-          glass: false,
-          greenWaste: false,
-          hazardousWaste: false,
-          paper: false,
-          plastic: true
-        },
+        typesOfWaste: [
+          typesOfWaste[0]._id,
+          typesOfWaste[1]._id
+        ],
         openHours: [
           {
             dayOfWeek: 'MONDAY',
@@ -76,18 +81,9 @@ export const seedDatabase = async ({ Centers, Users }) => {
           zip: '90160-050'
         },
         telephone: '+55 (51) 3232-9300',
-        typeOfWaste: {
-          aluminium: false,
-          compost: false,
-          cookingOil: false,
-          ewaste: true,
-          furniture: false,
-          glass: false,
-          greenWaste: false,
-          hazardousWaste: false,
-          paper: false,
-          plastic: false
-        },
+        typesOfWaste: [
+          typesOfWaste[1]._id
+        ],
         openHours: [
           {
             dayOfWeek: 'WEDNESDAY',
@@ -109,6 +105,7 @@ export const seedDatabase = async ({ Centers, Users }) => {
     ]
 
     await Users.insert(user)
+    await TypesOfWaste.insert(typesOfWaste)
     await Centers.insert(centers)
   }
 }
