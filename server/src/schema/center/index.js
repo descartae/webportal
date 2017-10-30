@@ -9,7 +9,7 @@ type Center {
   location: Location!
   website: String
   telephone: String
-  typeOfWaste: TypeOfWaste!
+  typesOfWaste: [TypeOfWaste]
   openHours: [OpenTime]
 
   createdBy: User
@@ -20,19 +20,6 @@ type Location {
   municipality: String
   state: String
   zip: String
-}
-
-type TypeOfWaste {
-  aluminium: Boolean
-  compost: Boolean
-  cookingOil: Boolean
-  ewaste: Boolean
-  furniture: Boolean
-  glass: Boolean
-  greenWaste: Boolean
-  hazardousWaste: Boolean
-  paper: Boolean
-  plastic: Boolean
 }
 
 type OpenTime {
