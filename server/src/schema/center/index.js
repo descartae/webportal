@@ -51,10 +51,9 @@ enum DayOfWeek {
   SATURDAY
 }
 `
-
+//center(_id: String!): Center
 export const queryExtension = `
   centers: [Center]
-  center(_id: String!): Center
 `
 
 export const mutationExtension = `
