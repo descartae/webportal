@@ -1,6 +1,8 @@
 import { assertNotEmpty } from '../validation'
 
-export const addTypeOfWaste = async (obj, { name, icon }, { collections: { TypesOfWaste } }, info) => {
+export const addTypeOfWaste = async (obj, args, { collections: { TypesOfWaste } }, info) => {
+  const { data: { name, icon } } = args
+
   assertNotEmpty(name, 'name')
   assertNotEmpty(icon, 'icon')
 
@@ -15,7 +17,9 @@ export const addTypeOfWaste = async (obj, { name, icon }, { collections: { Types
   return true
 }
 
-export const updateTypeOfWaste = async (obj, { _id, name, icon }, { collections: { TypesOfWaste } }, info) => {
+export const updateTypeOfWaste = async (obj, args, { collections: { TypesOfWaste } }, info) => {
+  const { data: { _id, patch: { name, icon } } } = args
+
   const update = {}
 
   if (name != null) {
