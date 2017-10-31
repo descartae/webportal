@@ -80,7 +80,11 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
           address: 'Av. Caldeia 150',
           municipality: 'Porto Alegre',
           state: 'RS',
-          zip: '91130-540'
+          zip: '91130-540',
+          coordinates: {
+            latitude: -29.985346,
+            longitude: -51.1096435
+          }
         },
         telephone: '+55 (51) 3364-4115',
         typesOfWaste: [
