@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 
-import { CenterListing, CenterCreator } from './components'
+import { CenterListing, CenterCreator, CenterDetail } from './components'
 
 class App extends Component {
   render () {
@@ -11,7 +11,9 @@ class App extends Component {
         <CenterCreator />
         <br />
         <br />
-        <CenterListing />
+        <CenterListing>
+          <CenterDetail/>
+        </CenterListing>
       </div>
     )
   }
