@@ -153,6 +153,9 @@ export const schema = `
 export const queryExtension = `
   # The list of available centers
   centers: [Center]
+
+  # The center with the given ID
+  center(_id: ID!): Center
 `
 
 export const mutationExtension = `
