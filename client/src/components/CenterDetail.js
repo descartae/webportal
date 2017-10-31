@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import NotFound from './NotFound';
 import { gql, graphql } from 'react-apollo'
 
 const CenterDetail = ({ data: { loading, error, center }, match }) => {
@@ -17,10 +18,11 @@ const CenterDetail = ({ data: { loading, error, center }, match }) => {
       {center.website}
       {center.telephone}
       {center.typeofWaste}
-      {center.openHours}
+      {center.openHours.dayOfWeek}
+      {center.openHours.startTime}
+      {center.openHours.endTime}
     </div>
-
-  )
+  );
 }
 
 export const centerDetailQuery = gql`
