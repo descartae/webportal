@@ -51,6 +51,11 @@ export const schema = `
     icon: String
   }
 
+  # The required data to disable a type of waste
+  input DisableTypeOfWasteInput {
+    _id: ID!
+  }
+
   # The disable operation result
   type DisableTypeOfWastePayload {
     # Indicates whether the operation was successful
@@ -71,7 +76,7 @@ export const mutationExtension = `
   updateTypeOfWaste(input: UpdateTypeOfWasteInput!): UpdateTypeOfWastePayload!
 
   # Disables a type of waste, making it impossible to add it to new centers
-  disableTypeOfWaste(_id: ID!): DisableTypeOfWastePayload!
+  disableTypeOfWaste(input: DisableTypeOfWasteInput!): DisableTypeOfWastePayload!
 `
 
 export const resolvers = {

@@ -49,7 +49,7 @@ export const updateTypeOfWaste = async (obj, args, { collections: { TypesOfWaste
   }
 }
 
-export const disableTypeOfWaste = async (obj, { _id }, { collections: { TypesOfWaste } }, info) => {
+export const disableTypeOfWaste = async (obj, { input: { _id } }, { collections: { TypesOfWaste } }, info) => {
   const update = { enabled: false }
 
   await TypesOfWaste.updateOne({ _id }, { $set: update })
