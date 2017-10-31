@@ -12,19 +12,35 @@ export const schema = `
   }
 
   # Required data for type of waste creation
-  input NewTypeOfWaste {
+  input AddTypeOfWasteInput {
     # The user-readable type name
     name: String!
     # The icon URL
     icon: String!
   }
 
+  # The add operation result
+  type AddTypeOfWastePayload {
+    # Indicates whether the operation was successful
+    success: Boolean!
+    # The created entry, if any
+    typeOfWaste: TypeOfWaste
+  }
+
   # Required data for type of waste update
-  input TypeOfWasteUpdate {
+  input UpdateTypeOfWasteInput {
     # The type of waste identifier
     _id: ID!
     # The data to be updated
     patch: TypeOfWastePatch!
+  }
+
+  # The update operation result
+  type UpdateTypeOfWastePayload {
+    # Indicates whether the operation was successful
+    success: Boolean!
+    # The updated entry, if applicable
+    typeOfWaste: TypeOfWaste
   }
 
   # Represents what can be updated on a type of waste
@@ -34,16 +50,28 @@ export const schema = `
     # The icon URL
     icon: String
   }
+
+  # The disable operation result
+  type DisableTypeOfWastePayload {
+    # Indicates whether the operation was successful
+    success: Boolean!
+  }
 `
 
 export const queryExtension = `
+  # All the types of waste that a center can receive
   typesOfWaste: [TypeOfWaste]
 `
 
 export const mutationExtension = `
-  addTypeOfWaste(data: NewTypeOfWaste!): Boolean!
-  updateTypeOfWaste(data: TypeOfWasteUpdate!): Boolean!
-  disableTypeOfWaste(_id: ID!): Boolean!
+  # Creates a new type of waste for centers
+  addTypeOfWaste(input: AddTypeOfWasteInput!): AddTypeOfWastePayload!
+
+  # Updates data related to a given type of waste
+  updateTypeOfWaste(input: UpdateTypeOfWasteInput!): UpdateTypeOfWastePayload!
+
+  # Disables a type of waste, making it impossible to add it to new centers
+  disableTypeOfWaste(_id: ID!): DisableTypeOfWastePayload!
 `
 
 export const resolvers = {
