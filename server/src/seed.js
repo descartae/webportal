@@ -3,21 +3,64 @@ import { ObjectId } from 'mongodb'
 export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
   const centerCount = await Centers.count()
   const userCount = await Users.count()
+  const typesOfWasteCount = await TypesOfWaste.count()
 
-  if (centerCount === 0 && userCount === 0) {
+  if (centerCount === 0 && userCount === 0 && typesOfWasteCount === 0) {
     console.log('No data found - seeding database')
 
     const typesOfWaste = [
       {
         _id: new ObjectId(),
-        name: 'Plastic',
-        icon: 'http://example.com/plastic.png',
+        name: 'Aluminium',
+        icon: 'http://example.com/aluminium.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Aluminium',
-        icon: 'http://example.com/aluminium.png',
+        name: 'Compost',
+        icon: 'http://example.com/compost.png',
+        enabled: true
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Cooking Oil',
+        icon: 'http://example.com/cookingOil.png',
+        enabled: true
+      },
+      {
+        _id: new ObjectId(),
+        name: 'eWaste',
+        icon: 'http://example.com/ewaste.png',
+        enabled: true
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Furniture',
+        icon: 'http://example.com/furniture.png',
+        enabled: true
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Glass',
+        icon: 'http://example.com/glass.png',
+        enabled: true
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Green Waste',
+        icon: 'http://example.com/greenWaste.png',
+        enabled: true
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Hazardous Waste',
+        icon: 'http://example.com/hazardousWaste.png',
+        enabled: true
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Paper',
+        icon: 'http://example.com/paper.png',
         enabled: true
       }
     ]
