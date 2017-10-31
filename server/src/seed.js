@@ -11,12 +11,14 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
       {
         _id: new ObjectId(),
         name: 'Plastic',
-        icon: 'http://example.com/plastic.png'
+        icon: 'http://example.com/plastic.png',
+        enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Aluminium',
-        icon: 'http://example.com/aluminium.png'
+        icon: 'http://example.com/aluminium.png',
+        enabled: true
       }
     ]
 

@@ -15,8 +15,8 @@ export const queryExtension = `
 
 export const mutationExtension = `
   addTypeOfWaste(name: String!, icon: String!): Boolean!
-  updateTypeOfWaste(name: String, icon: String): Boolean!
-  disableTypeOfWaste(_id: String!): Boolean!
+  updateTypeOfWaste(_id: ID!, name: String, icon: String): Boolean!
+  disableTypeOfWaste(_id: ID!): Boolean!
 `
 
 export const resolvers = {
