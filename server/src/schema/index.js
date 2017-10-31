@@ -1,51 +1,62 @@
 import { reduce, mergeDeepRight } from 'ramda'
 import { makeExecutableSchema } from 'graphql-tools'
 
-import {
-  schema as centerSchema,
-  resolvers as centerResolvers,
-  queryExtension as centerQueryExtension,
-  mutationExtension as centerMutationExtension
-} from './center'
+import * as center from './center'
+import * as user from './user'
+import * as typeOfWaste from './typeOfWaste'
 
-import {
-  schema as userSchema,
-  resolvers as userResolvers,
-  queryExtension as userQueryExtension,
-  mutationExtension as userMutationExtension
-} from './user'
+import * as utilities from './utilities'
+
+const definitions = [
+  user,
+  center,
+  typeOfWaste,
+  utilities
+]
 
 /*
   TODO: Better solution to circunvent empty type errors
   https://github.com/apollographql/graphql-tools/issues/293
 */
-const schemaDefinition = `
-  type Query {
-    ${centerQueryExtension}
-    ${userQueryExtension}
-  }
+const createTypeDefs = (definitions) => {
+  const queryExtensions =
+    definitions
+      .map(it => it.queryExtension)
+      .filter(it => it != null)
+      .join('')
 
-  type Mutation {
-    ${centerMutationExtension}
-    ${userMutationExtension}
-  }
+  const mutationExtensions =
+    definitions
+      .map(it => it.mutationExtension)
+      .filter(it => it != null)
+      .join('')
 
-  schema {
-    query: Query
-    mutation: Mutation
-  }
-`
+  const baseTypes = `
+    type Query {
+      ${queryExtensions}
+    }
 
-const typeDefs = [
-  schemaDefinition,
-  centerSchema,
-  userSchema
-]
+    type Mutation {
+      ${mutationExtensions}
+    }
 
-const resolvers =
-  reduce(mergeDeepRight, {}, [
-    centerResolvers,
-    userResolvers
-  ])
+    schema {
+      query: Query
+      mutation: Mutation
+    }
+  `
+
+  return definitions.map(it => it.schema).filter(it => it != null).concat(baseTypes)
+}
+
+const createResolvers = (definitions) => {
+  const resolvers =
+    definitions.map(it => it.resolvers).filter(it => it != null)
+
+  return reduce(mergeDeepRight, {}, resolvers)
+}
+
+const typeDefs = createTypeDefs(definitions)
+const resolvers = createResolvers(definitions)
 
 export default makeExecutableSchema({ typeDefs, resolvers })

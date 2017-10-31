@@ -9,10 +9,11 @@ const defaultOptions = {
 }
 
 export default (collections) => {
-  const { Users, Centers } = collections
+  const { Users, Centers, TypesOfWaste } = collections
 
   return {
     Users: new DataLoader(createBatcherById(Users), defaultOptions),
-    Centers: new DataLoader(createBatcherById(Centers), defaultOptions)
+    Centers: new DataLoader(createBatcherById(Centers), defaultOptions),
+    TypesOfWaste: new DataLoader(createBatcherById(TypesOfWaste), defaultOptions)
   }
 }
