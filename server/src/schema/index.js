@@ -5,10 +5,13 @@ import * as center from './center'
 import * as user from './user'
 import * as typeOfWaste from './typeOfWaste'
 
+import * as utilities from './utilities'
+
 const definitions = [
   user,
   center,
-  typeOfWaste
+  typeOfWaste,
+  utilities
 ]
 
 /*
@@ -16,14 +19,16 @@ const definitions = [
   https://github.com/apollographql/graphql-tools/issues/293
 */
 const createTypeDefs = (definitions) => {
-  const queryExtensions = 
+  const queryExtensions =
     definitions
       .map(it => it.queryExtension)
+      .filter(it => it != null)
       .join('')
-  
+
   const mutationExtensions =
     definitions
       .map(it => it.mutationExtension)
+      .filter(it => it != null)
       .join('')
 
   const baseTypes = `
@@ -41,14 +46,17 @@ const createTypeDefs = (definitions) => {
     }
   `
 
-  return definitions.map(it => it.schema).concat(baseTypes)
+  return definitions.map(it => it.schema).filter(it => it != null).concat(baseTypes)
 }
 
-const createResolvers = 
-  (definitions) => reduce(mergeDeepRight, {}, definitions.map(it => it.resolvers))
+const createResolvers = (definitions) => {
+  const resolvers =
+    definitions.map(it => it.resolvers).filter(it => it != null)
+
+  return reduce(mergeDeepRight, {}, resolvers)
+}
 
 const typeDefs = createTypeDefs(definitions)
 const resolvers = createResolvers(definitions)
-  
 
 export default makeExecutableSchema({ typeDefs, resolvers })
