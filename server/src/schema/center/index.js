@@ -54,6 +54,7 @@ enum DayOfWeek {
 
 export const queryExtension = `
   centers: [Center]
+  center(_id: String!): Center
 `
 
 export const mutationExtension = `
