@@ -36,11 +36,11 @@ div.NotFound {
 }
 
 .navbar {
-  background-color: #333;
-  color: #fff;
+  background-color: white;
+  color: black;
   padding: 10px 30px;
   text-align: left;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 20px;
   line-height: 30px;
   display: flex;
