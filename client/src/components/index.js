@@ -1,3 +1,3 @@
 export { CenterListingWithData as CenterListing } from './CenterListing'
-export { CenterDetail as CenterDetail } from './CenterDetail'
+export { CenterDetailsWithData as CenterDetails } from './CenterDetails'
 export { CenterCreatorWithData as CenterCreator } from './CenterCreator'
