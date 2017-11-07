@@ -22,25 +22,21 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   
   return (
     <div>
-      <div className='centerDetails'>
-        Name: {center.name}
-        <br/>
-        Website: {center.website}
-        <br/>
-        Address:
-        {center.location.address}, 
-        {center.location.municipality}, {center.location.state} {center.location.zip}
-        <br/>
-        Telephone: {center.telephone} 
-        <br/>
-        Types of Waste: {center.typesOfWaste.name}
-        <br/>
-        Open Hours: 
+      <div className='centerDetails container'>
+        <h3>{center.name}</h3>
         <hr/>
-
-        {center.openHours.dayOfWeek}
-        {center.openHours.startTime}
-        {center.openHours.endTime}
+        <p><strong>Address:</strong></p> 
+        <p>{center.location.address},</p> 
+        <p>{center.location.municipality}, {center.location.state} {center.location.zip}</p>
+        <p><strong>Telephone:</strong> {center.telephone}</p> 
+        {/* BUG: typesOfWaste is showing as undefined - empty array. Issue might be within the schema. */}
+        <p><strong>Types of Waste:</strong> {center.typesOfWaste.name}</p>
+        <p><strong>Open Hours:</strong></p>
+      { center.openHours.map(it =>
+        (<div key={it._dayOfWeek} className='centerHours container'>
+          <p>{it.dayOfWeek}: {it.startTime}:00 - {it.endTime}:00</p>    
+        </div>)
+      )}
       </div>
     </div>
   );
