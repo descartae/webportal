@@ -5,7 +5,8 @@ import cors from 'cors'
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import bodyParser from 'body-parser'
 
-import { mongoConnector, mongoLoaders } from './mongo'
+import { mongoConnector } from './mongo'
+import { createModels } from './model'
 import schema from './schema'
 
 import { seedDatabase } from './seed'
@@ -14,6 +15,8 @@ export const createApp = async (jwtSecret, mongodbUrl) => {
   const collections = await mongoConnector.connect(mongodbUrl)
 
   await seedDatabase(collections)
+
+  const models = await createModels(collections)
 
   const server = express()
 
@@ -29,8 +32,7 @@ export const createApp = async (jwtSecret, mongodbUrl) => {
   server.use('/graphql', authMiddleware, bodyParser.json(), graphqlExpress((request) => {
     const context = {
       configuration: { jwtSecret },
-      dataLoaders: mongoLoaders(collections),
-      collections
+      models
     }
 
     if (request.user != null) {
