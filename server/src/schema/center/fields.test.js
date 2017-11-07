@@ -4,9 +4,9 @@ import { typesOfWaste } from './fields'
 describe('Center field resolvers', () => {
   describe('typesOfWaste resolver', () => {
     const context = {
-      dataLoaders: {
+      models: {
         TypesOfWaste: {
-          load (id) {
+          typeOfWaste (id) {
             return id === 'typeOfWaste'
           }
         }
