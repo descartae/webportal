@@ -17,7 +17,9 @@ import {
   toIdValue,
 } from 'react-apollo';
 
-const networkInterface = createNetworkInterface({ uri: 'http://localhost:4000/graphql' });
+const networkInterface = createNetworkInterface({
+  uri: process.env.REACT_APP_SERVER_URL
+});
 networkInterface.use([{
   applyMiddleware(req, next) {
     setTimeout(next, 500);
@@ -48,7 +50,7 @@ const client = new ApolloClient({
 class App extends Component {
   render () {
     return (
-      <ApolloProvider client={client}>      
+      <ApolloProvider client={client}>
         <BrowserRouter>
           <div className='App'>
              <Link to="/" className="navbar"><img src={logo} className="App-logo" alt="logo" /> Descartaê</Link>
@@ -58,7 +60,7 @@ class App extends Component {
               </Switch>
           </div>
         </BrowserRouter>
-      </ApolloProvider> 
+      </ApolloProvider>
     )
   }
 }
