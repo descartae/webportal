@@ -29,14 +29,20 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
         <p>{center.location.address},</p> 
         <p>{center.location.municipality}, {center.location.state} {center.location.zip}</p>
         <p><strong>Telephone:</strong> {center.telephone}</p> 
-        {/* BUG: typesOfWaste is showing as undefined - empty array. Issue might be within the schema. */}
-        <p><strong>Types of Waste:</strong> {center.typesOfWaste.name}</p>
+        <p><strong>Types of Waste:</strong></p>
+        <ul>
+        { center.typesOfWaste.map(it => (
+          <li key={it._id} className='typesOfWastes'>
+            <img src={it.icon} alt={it.name} /> {it.name}
+          </li>
+        ))}
+        </ul>
         <p><strong>Open Hours:</strong></p>
-      { center.openHours.map(it =>
-        (<div key={it._dayOfWeek} className='centerHours container'>
+        { center.openHours.map(it => (
+        <div key={it.dayOfWeek} className='centerHours'>
           <p>{it.dayOfWeek}: {it.startTime}:00 - {it.endTime}:00</p>    
-        </div>)
-      )}
+        </div>
+      ))}
       </div>
     </div>
   );
