@@ -8,7 +8,7 @@ import {
 
 import './App.css'
 import logo from './logo.png';
-import { Home, CenterListing, CenterDetails} from './components'
+import { CenterListing, CenterDetails} from './components'
 
 import {
   ApolloClient,
