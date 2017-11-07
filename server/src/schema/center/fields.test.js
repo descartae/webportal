@@ -1,19 +1,48 @@
 /* eslint-env jest */
-import { createdBy } from './fields'
+import { typesOfWaste } from './fields'
 
-it('loads the user referenced by the center', () => {
-  const obj = {
-    _id: '123',
-    createdBy: 'user'
-  }
-
-  const context = {
-    dataLoaders: {
-      Users: {
-        load: (id) => id === 'user'
+describe('Center field resolvers', () => {
+  describe('typesOfWaste resolver', () => {
+    const context = {
+      models: {
+        TypesOfWaste: {
+          typeOfWaste (id) {
+            return id === 'typeOfWaste'
+          }
+        }
       }
     }
-  }
 
-  expect(createdBy(obj, null, context, null)).toBe(true)
+    it('does not fail on null relationship', async () => {
+      const obj = {
+        _id: 'center'
+      }
+
+      const result = await typesOfWaste(obj, null, context, null)
+
+      expect(result).toEqual([])
+    })
+
+    it('does not fail on empty list', async () => {
+      const obj = {
+        _id: 'center',
+        typesOfWaste: []
+      }
+
+      const result = await typesOfWaste(obj, null, context, null)
+
+      expect(result).toEqual([])
+    })
+
+    it('resolves the references successfully', async () => {
+      const obj = {
+        _id: 'center',
+        typesOfWaste: ['typeOfWaste']
+      }
+
+      const result = await typesOfWaste(obj, null, context, null)
+
+      expect(result).toEqual([true])
+    })
+  })
 })

@@ -25,6 +25,8 @@ services:
       - SERVER_PORT=4000
       - JWT_SECRET=descartae
       - MONGODB_URL=mongodb://mongodb:27017/webportal
+    depends_on:
+      - mongodb
     networks:
       - descartae
 
