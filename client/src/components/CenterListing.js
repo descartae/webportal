@@ -1,4 +1,7 @@
 import React from 'react'
+import {
+  Link
+} from 'react-router-dom'
 import { gql, graphql } from 'react-apollo'
 
 const CenterListing = ({ data: { loading, error, centers } }) => {
@@ -10,6 +13,7 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
     return <p>{ error.message }</p>
   }
 
+/*
   return (
     <div className='centersList'>
       { centers.map(it =>
@@ -18,6 +22,23 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
     </div>
 
   )
+*/
+
+ return (
+      <div className='centersList'>
+      <h3>Recycling Centers</h3>
+      <hr/>
+      { centers.map(it =>
+        (<div key={it._id} className='center'>
+          <Link to={it._id < 0 ? `/` : `centers/${it._id}`}>
+            {it.name}
+          </Link>
+        </div>)
+      )}
+    </div>
+
+  )
+
 }
 
 export const centersListQuery = gql`
@@ -28,24 +49,6 @@ export const centersListQuery = gql`
     }
   }
 `
-
-/*
-const CenterListing = ({ data: { loading, error, centers } }) => {
-  if (loading) {
-    return <p>Loading...</p>
-  }
-
-  if (error) {
-    return <p>{ error.message }</p>
-  }
-
-  return (
-    <ul>
-      { centers.map(it => <li key={it.id}>{ it.name }</li>) }
-    </ul>
-  )
-}
- */
 
 export { CenterListing }
 export const CenterListingWithData = graphql(centersListQuery)(CenterListing)

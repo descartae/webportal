@@ -149,7 +149,6 @@ export const schema = `
     success: Boolean!
   }
 `
-
 export const queryExtension = `
   # The list of available centers
   centers: [Center]
