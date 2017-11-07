@@ -7,7 +7,6 @@ import {
 } from 'react-apollo';
 
 const CenterDetails = ({ data: { loading, error, center }, match }) => {
-  console.log("HELLO!!!");
   if (loading) {
     return <p>Loading...</p>
   }
@@ -19,16 +18,16 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   if (center === null) {
     return <NotFound />
   }
-  
+
   return (
     <div>
       <div className='centerDetails container'>
         <h3>{center.name}</h3>
         <hr/>
-        <p><strong>Address:</strong></p> 
-        <p>{center.location.address},</p> 
+        <p><strong>Address:</strong></p>
+        <p>{center.location.address},</p>
         <p>{center.location.municipality}, {center.location.state} {center.location.zip}</p>
-        <p><strong>Telephone:</strong> {center.telephone}</p> 
+        <p><strong>Telephone:</strong> {center.telephone}</p>
         <p><strong>Types of Waste:</strong></p>
         <ul>
         { center.typesOfWaste.map(it => (
@@ -40,7 +39,7 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
         <p><strong>Open Hours:</strong></p>
         { center.openHours.map(it => (
         <div key={it.dayOfWeek} className='centerHours'>
-          <p>{it.dayOfWeek}: {it.startTime}:00 - {it.endTime}:00</p>    
+          <p>{it.dayOfWeek}: {it.startTime}:00 - {it.endTime}:00</p>
         </div>
       ))}
       </div>
@@ -60,7 +59,7 @@ export const centerDetailsQuery = gql`
         municipality
         state
         zip
-      } 
+      }
       typesOfWaste {
         _id
         name
@@ -80,4 +79,4 @@ export const CenterDetailsWithData = (graphql(centerDetailsQuery, {
   options: (props) => ({
     variables: { centerId: props.match.params.centerId}
   })
-})(CenterDetails)); 
+})(CenterDetails));
