@@ -29,7 +29,18 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   if (center === null) {
     return <NotFound />
   }
-  
+  const state = {
+      fixedHeader: true,
+      stripedRows: false,      
+      showRowHover: false,       
+      selectable: false,   
+      multiSelectable: false,     
+      enableSelectAll: false,
+      deselectOnClickaway: false,    
+      showCheckboxes: false, 
+      height: '300px',    
+    };
+
   return (
     <div className='container'>
       <div className='centerDetails'>
@@ -48,15 +59,15 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
         </p> 
         <br/>
         <Table
-          fixedHeader={true}
-          fixedFooter={false} 
-          selectable={false} 
-          multiSelectable={false}
+          header={state.height}
+          fixedHeader={state.fixedHeader}
+          selectable={state.selectable} 
+          multiSelectable={state.multiSelectable}
         >
           <TableHeader
-            displaySelectAll={false}
-            adjustForCheckbox={false}
-            enableSelectAll={false}
+            displaySelectAll={state.showCheckboxes}
+            adjustForCheckbox={state.showCheckboxes}
+            enableSelectAll={state.enableSelectAll}
           >
             <TableRow>
               <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
@@ -70,10 +81,10 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
             </TableRow>
           </TableHeader>         
           <TableBody
-            displayRowCheckbox={false}
-            deselectOnClickaway={false}
-            showRowHover={false}
-            stripedRows={true}
+            displayRowCheckbox={state.showCheckboxes}
+            deselectOnClickaway={state.deselectOnClickaway}
+            showRowHover={state.showRowHover}
+            stripedRows={state.stripedRows}
           >
             {center.openHours.map(it => (
               <TableRow key={it.dayOfWeek}>
