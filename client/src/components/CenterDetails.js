@@ -35,9 +35,9 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
       <div className='centerDetails'>
         <h3>{center.name}</h3>
         <hr/>
-        <p><ActionRoom /> {center.location.address}, {center.location.municipality}, {center.location.state} {center.location.zip}</p>
-        <p><CommunicationCall/> {center.telephone}</p>
-        <p><strong>Types of Waste:</strong></p>
+        <p><ActionRoom /> Endereço: {center.location.address}, {center.location.municipality}, {center.location.state} {center.location.zip}</p>
+        <p><CommunicationCall/> Contato: {center.telephone}</p>
+        <p><strong>Tipo de resíduo</strong>:
         { center.typesOfWaste.map(it => (
           <p key={it._id} className='typesOfWastes'>
             {/* image fails to load
@@ -45,6 +45,7 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
            <MapsLocalOffer/> {it.name}
           </p>
         ))}
+        </p> 
         <br/>
         <Table
           fixedHeader={true}
@@ -58,14 +59,14 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
             enableSelectAll={false}
           >
             <TableRow>
-              <TableHeaderColumn colSpan="3" style={{textAlign: 'center'}}>
-                <ActionSchedule/> Hours 
+              <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
+                <ActionSchedule/> Horários
               </TableHeaderColumn>
             </TableRow>
             <TableRow>
-              <TableHeaderColumn>Day of Week</TableHeaderColumn>
-              <TableHeaderColumn>Open</TableHeaderColumn>
-              <TableHeaderColumn>Close</TableHeaderColumn>
+              <TableHeaderColumn>Dias</TableHeaderColumn>
+              <TableHeaderColumn>Começar</TableHeaderColumn>
+              <TableHeaderColumn>Fim</TableHeaderColumn>
             </TableRow>
           </TableHeader>         
           <TableBody
