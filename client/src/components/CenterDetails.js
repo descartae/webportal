@@ -1,6 +1,13 @@
 import React from 'react';
 import NotFound from './NotFound';
-
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import {
     gql,
     graphql,
@@ -32,16 +39,31 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
         <ul>
         { center.typesOfWaste.map(it => (
           <li key={it._id} className='typesOfWastes'>
-            <img src={it.icon} alt={it.name} /> {it.name}
+            {/* image fails to load
+            <img src={it.icon} alt={it.name} /> */}
+            {it.name}
           </li>
         ))}
         </ul>
         <p><strong>Open Hours:</strong></p>
-        { center.openHours.map(it => (
-        <div key={it.dayOfWeek} className='centerHours'>
-          <p>{it.dayOfWeek}: {it.startTime}:00 - {it.endTime}:00</p>
-        </div>
-      ))}
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Day of Week</TableHeaderColumn>
+              <TableHeaderColumn>Open</TableHeaderColumn>
+              <TableHeaderColumn>Close</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>         
+          <TableBody>
+            {center.openHours.map(it => (
+              <TableRow key={it.dayOfWeek}>
+                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
+                <TableRowColumn>{it.startTime}:00</TableRowColumn>
+                <TableRowColumn>{it.endTime}:00</TableRowColumn>
+              </TableRow>
+              ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
