@@ -32,14 +32,13 @@ const CenterDetails = ({ data: { loading, error, center }, state, match }) => {
   
   state = {
     fixedHeader: true,
-    fixedFooter: true,
     stripedRows: false,
     showRowHover: false,
-    selectable: true,
+    selectable: false,
     multiSelectable: false,
     enableSelectAll: false,
-    deselectOnClickaway: true,
-    showCheckboxes: true,
+    deselectOnClickaway: false,
+    showCheckboxes: false,
     height: '300px',
   };
 
