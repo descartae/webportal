@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo'
 import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 
 const CenterListing = ({ data: { loading, error, centers } }) => {
   if (loading) {
