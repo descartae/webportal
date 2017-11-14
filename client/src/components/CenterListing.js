@@ -16,7 +16,7 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
 
  return (
       <div className='centersList'>
-        <h3>Recycling Centers</h3>
+        <h3>Pontos de coleta</h3>
         <List>
           { centers.map(it =>
             (<div key={it._id} className='center'>
