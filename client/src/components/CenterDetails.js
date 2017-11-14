@@ -11,12 +11,13 @@ import {
 import ActionRoom from 'material-ui/svg-icons/action/room';
 import CommunicationCall from 'material-ui/svg-icons/communication/call';
 import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer';
+import ActionSchedule from 'material-ui/svg-icons/action/schedule';
 import {
     gql,
     graphql,
 } from 'react-apollo';
 
-const CenterDetails = ({ data: { loading, error, center }, match }) => {
+const CenterDetails = ({ data: { loading, error, center }, state, match }) => {
   if (loading) {
     return <p>Loading...</p>
   }
@@ -28,6 +29,19 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   if (center === null) {
     return <NotFound />
   }
+  
+  state = {
+    fixedHeader: true,
+    fixedFooter: true,
+    stripedRows: false,
+    showRowHover: false,
+    selectable: true,
+    multiSelectable: false,
+    enableSelectAll: false,
+    deselectOnClickaway: true,
+    showCheckboxes: true,
+    height: '300px',
+  };
 
   return (
     <div className='container'>
@@ -44,16 +58,36 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
            <MapsLocalOffer/> {it.name}
           </p>
         ))}
-        <p><strong>Open Hours:</strong></p>
-        <Table>
-          <TableHeader>
+        <br/>
+        <Table
+          height={this.state.height}
+          fixedHeader={this.state.fixedHeader}
+          fixedFooter={this.state.fixedFooter}
+          selectable={this.state.selectable}
+          multiSelectable={this.state.multiSelectable}
+        >
+          <TableHeader
+            displaySelectAll={this.state.showCheckboxes}
+            adjustForCheckbox={this.state.showCheckboxes}
+            enableSelectAll={this.state.enableSelectAll}
+          >
+            <TableRow>
+              <TableHeaderColumn colSpan="3" tooltip="Super Header" style={{textAlign: 'center'}}>
+                <ActionSchedule/> Hours 
+              </TableHeaderColumn>
+            </TableRow>
             <TableRow>
               <TableHeaderColumn>Day of Week</TableHeaderColumn>
               <TableHeaderColumn>Open</TableHeaderColumn>
               <TableHeaderColumn>Close</TableHeaderColumn>
             </TableRow>
           </TableHeader>         
-          <TableBody>
+          <TableBody
+            displayRowCheckbox={this.state.showCheckboxes}
+            deselectOnClickaway={this.state.deselectOnClickaway}
+            showRowHover={this.state.showRowHover}
+            stripedRows={this.state.stripedRows}
+          >
             {center.openHours.map(it => (
               <TableRow key={it.dayOfWeek}>
                 <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
