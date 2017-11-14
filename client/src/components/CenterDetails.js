@@ -8,6 +8,9 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import ActionRoom from 'material-ui/svg-icons/action/room';
+import CommunicationCall from 'material-ui/svg-icons/communication/call';
+import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer';
 import {
     gql,
     graphql,
@@ -27,24 +30,20 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   }
 
   return (
-    <div>
-      <div className='centerDetails container'>
+    <div className='container'>
+      <div className='centerDetails'>
         <h3>{center.name}</h3>
         <hr/>
-        <p><strong>Address:</strong></p>
-        <p>{center.location.address},</p>
-        <p>{center.location.municipality}, {center.location.state} {center.location.zip}</p>
-        <p><strong>Telephone:</strong> {center.telephone}</p>
+        <p><ActionRoom /> {center.location.address}, {center.location.municipality}, {center.location.state} {center.location.zip}</p>
+        <p><CommunicationCall/> {center.telephone}</p>
         <p><strong>Types of Waste:</strong></p>
-        <ul>
         { center.typesOfWaste.map(it => (
-          <li key={it._id} className='typesOfWastes'>
+          <p key={it._id} className='typesOfWastes'>
             {/* image fails to load
             <img src={it.icon} alt={it.name} /> */}
-            {it.name}
-          </li>
+           <MapsLocalOffer/> {it.name}
+          </p>
         ))}
-        </ul>
         <p><strong>Open Hours:</strong></p>
         <Table>
           <TableHeader>
