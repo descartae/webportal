@@ -30,19 +30,6 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
     return <NotFound />
   }
   
-  {/* Setting the state of the table */}  
-  this.state = {
-    fixedHeader: true,
-    stripedRows: false,
-    showRowHover: false,
-    selectable: false,
-    multiSelectable: false,
-    enableSelectAll: false,
-    deselectOnClickaway: false,
-    showCheckboxes: false,
-    height: '300px',
-  };
-
   return (
     <div className='container'>
       <div className='centerDetails'>
@@ -60,16 +47,15 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
         ))}
         <br/>
         <Table
-          height={this.state.height}
-          fixedHeader={this.state.fixedHeader}
-          fixedFooter={this.state.fixedFooter}
-          selectable={this.state.selectable}
-          multiSelectable={this.state.multiSelectable}
+          fixedHeader={true}
+          fixedFooter={false} 
+          selectable={false} 
+          multiSelectable={false}
         >
           <TableHeader
-            displaySelectAll={this.state.showCheckboxes}
-            adjustForCheckbox={this.state.showCheckboxes}
-            enableSelectAll={this.state.enableSelectAll}
+            displaySelectAll={false}
+            adjustForCheckbox={false}
+            enableSelectAll={false}
           >
             <TableRow>
               <TableHeaderColumn colSpan="3" style={{textAlign: 'center'}}>
@@ -83,10 +69,10 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
             </TableRow>
           </TableHeader>         
           <TableBody
-            displayRowCheckbox={this.state.showCheckboxes}
-            deselectOnClickaway={this.state.deselectOnClickaway}
-            showRowHover={this.state.showRowHover}
-            stripedRows={this.state.stripedRows}
+            displayRowCheckbox={false}
+            deselectOnClickaway={false}
+            showRowHover={false}
+            stripedRows={true}
           >
             {center.openHours.map(it => (
               <TableRow key={it.dayOfWeek}>
