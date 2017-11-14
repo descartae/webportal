@@ -17,7 +17,7 @@ import {
     graphql,
 } from 'react-apollo';
 
-const CenterDetails = ({ data: { loading, error, center }, state, match }) => {
+const CenterDetails = ({ data: { loading, error, center }, match }) => {
   if (loading) {
     return <p>Loading...</p>
   }
@@ -30,7 +30,8 @@ const CenterDetails = ({ data: { loading, error, center }, state, match }) => {
     return <NotFound />
   }
   
-  state = {
+  {/* Setting the state of the table */}  
+  this.state = {
     fixedHeader: true,
     stripedRows: false,
     showRowHover: false,
@@ -71,7 +72,7 @@ const CenterDetails = ({ data: { loading, error, center }, state, match }) => {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow>
-              <TableHeaderColumn colSpan="3" tooltip="Super Header" style={{textAlign: 'center'}}>
+              <TableHeaderColumn colSpan="3" style={{textAlign: 'center'}}>
                 <ActionSchedule/> Hours 
               </TableHeaderColumn>
             </TableRow>
