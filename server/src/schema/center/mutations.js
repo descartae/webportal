@@ -8,4 +8,4 @@ export const updateCenter =
 
 export const disableCenter =
   (obj, { input }, { models: { Centers: { disableCenter } } }, info) =>
-    disableCenter(input._id)
+    disableCenter(input)
