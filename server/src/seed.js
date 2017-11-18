@@ -117,7 +117,8 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
             startTime: 8,
             endTime: 17
           }
-        ]
+        ],
+        enabled: true
       },
       {
         _id: new ObjectId(),
@@ -149,7 +150,8 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
             startTime: 15,
             endTime: 18
           }
-        ]
+        ],
+        enabled: true
       }
     ]
 
