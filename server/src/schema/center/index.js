@@ -105,6 +105,15 @@ export const schema = `
 
     # The zip code or equivalent
     zip: String
+
+    # Exact coordinates to the location
+    coordinates: CoordinatesInput
+  }
+
+  # A latitude + longitude pair
+  input CoordinatesInput {
+    latitude: Float!
+    longitude: Float!
   }
 
   # Represents a timespan in a day of the week
