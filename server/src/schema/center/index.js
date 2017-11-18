@@ -6,30 +6,40 @@ export const schema = `
   # Represents a registered recycling center
   type Center {
     _id: ID!
+
     # The name of the center
     name: String!
+
     # The location data for a given center
     location: Location!
+
     # The responsible's website, if available
     website: String
+
     # The responsible's contact phone number, if available
     telephone: String
+
     # The types of waste the recycling center handles
     typesOfWaste: [TypeOfWaste]
+
     # The center's operating hours
     openHours: [OpenTime]
   }
 
   # Location data for a point of interest
   type Location {
-    # The readable, complete address
-    address: String
+    # The readable address
+    address: String!
+
     # The adress' municipality
     municipality: String
+
     # The adress' state
     state: String
+
     # The zip code or equivalent
     zip: String
+
     # Exact coordinates to the location
     coordinates: Coordinates
   }
@@ -43,8 +53,10 @@ export const schema = `
   # Represents a timespan in a day of the week
   type OpenTime {
     dayOfWeek: DayOfWeek!
+
     # The hour representing the start of the timespan
     startTime: Int!
+
     # The hour representing the end of the timespan
     endTime: Int!
   }
@@ -63,14 +75,19 @@ export const schema = `
   input AddCenterInput {
     # The name of the center
     name: String!
+
     # The location data of the new center
-    location: LocationInput
+    location: LocationInput!
+
     # The responsible's website, if available
     website: String
+
     # The responsible's contact phone number, if available
     telephone: String
+
     # IDs of the types of waste the recycling center handles
     typesOfWaste: [ID]
+
     # The center's operating hours
     openHours: [OpenTimeInput]
   }
@@ -78,11 +95,14 @@ export const schema = `
   # A location for the related center
   input LocationInput {
     # The readable, complete address
-    address: String
+    address: String!
+
     # The adress' municipality
     municipality: String
+
     # The adress' state
     state: String
+
     # The zip code or equivalent
     zip: String
   }
@@ -90,8 +110,10 @@ export const schema = `
   # Represents a timespan in a day of the week
   input OpenTimeInput {
     dayOfWeek: DayOfWeek!
+
     # The hour representing the start of the timespan
     startTime: Int!
+
     # The hour representing the end of the timespan
     endTime: Int!
   }
@@ -100,6 +122,7 @@ export const schema = `
   type AddCenterPayload {
     # Indicates whether the operation was successful
     success: Boolean!
+
     # The created entry, if any
     center: Center
   }
@@ -108,6 +131,7 @@ export const schema = `
   input UpdateCenterInput {
     # The center identifier
     _id: ID!
+
     # The data to be updated
     patch: CenterPatch!
   }
@@ -116,15 +140,20 @@ export const schema = `
   input CenterPatch {
     # The name of the center
     name: String
+
     # The location data of the center
     location: LocationInput
+
     # The responsible's website
     website: String
+
     # The responsible's contact phone number
     telephone: String
+
     # IDs of the types of waste the recycling center handles
     # Changes to this field replace the entire list
     typesOfWaste: [ID]
+
     # The center's operating hours
     # Changes to this field replace the entire list
     openHours: [OpenTimeInput]
@@ -134,6 +163,7 @@ export const schema = `
   type UpdateCenterPayload {
     # Indicates whether the operation was successful
     success: Boolean!
+    
     # The updated entry, if applicable
     center: Center
   }
