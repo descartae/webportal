@@ -17,6 +17,8 @@ import {
   toIdValue,
 } from 'react-apollo';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 const networkInterface = createNetworkInterface({
   uri: process.env.REACT_APP_SERVER_URL
 });
@@ -48,8 +50,10 @@ const client = new ApolloClient({
 });
 
 class App extends Component {
+
   render () {
     return (
+    <MuiThemeProvider>
       <ApolloProvider client={client}>
         <BrowserRouter>
           <div className='App'>
@@ -61,6 +65,7 @@ class App extends Component {
           </div>
         </BrowserRouter>
       </ApolloProvider>
+    </MuiThemeProvider> 
     )
   }
 }

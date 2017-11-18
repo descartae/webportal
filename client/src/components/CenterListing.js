@@ -3,6 +3,7 @@ import {
   Link
 } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo'
+import {List, ListItem} from 'material-ui/List';
 
 const CenterListing = ({ data: { loading, error, centers } }) => {
   if (loading) {
@@ -13,28 +14,20 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
     return <p>{ error.message }</p>
   }
 
-/*
-  return (
-    <div className='centersList'>
-      { centers.map(it =>
-        (<div key={it._id} className='center'>{it.name}</div>)
-      )}
-    </div>
-
-  )
-*/
-
  return (
       <div className='centersList'>
-      <h3>Recycling Centers</h3>
-      <hr/>
-      { centers.map(it =>
-        (<div key={it._id} className='center'>
-          <Link to={it._id < 0 ? `/` : `centers/${it._id}`}>
-            {it.name}
-          </Link>
-        </div>)
-      )}
+        <h3>Pontos de coleta</h3>
+        <List>
+          { centers.map(it =>
+            (<div key={it._id} className='center'>
+              <ListItem>
+                <Link to={it._id < 0 ? `/` : `centers/${it._id}`}>
+                  {it.name}
+                </Link>
+              </ListItem>
+            </div>)
+          )}
+        </List>
     </div>
 
   )

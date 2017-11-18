@@ -1,6 +1,17 @@
 import React from 'react';
 import NotFound from './NotFound';
-
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+import ActionRoom from 'material-ui/svg-icons/action/room';
+import CommunicationCall from 'material-ui/svg-icons/communication/call';
+import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer';
+import ActionSchedule from 'material-ui/svg-icons/action/schedule';
 import {
     gql,
     graphql,
@@ -18,30 +29,72 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   if (center === null) {
     return <NotFound />
   }
+  const state = {
+      fixedHeader: true,
+      stripedRows: false,      
+      showRowHover: false,       
+      selectable: false,   
+      multiSelectable: false,     
+      enableSelectAll: false,
+      deselectOnClickaway: false,    
+      showCheckboxes: false, 
+      height: '300px',    
+    };
 
   return (
-    <div>
-      <div className='centerDetails container'>
+    <div className='container'>
+      <div className='centerDetails'>
         <h3>{center.name}</h3>
         <hr/>
-        <p><strong>Address:</strong></p>
-        <p>{center.location.address},</p>
-        <p>{center.location.municipality}, {center.location.state} {center.location.zip}</p>
-        <p><strong>Telephone:</strong> {center.telephone}</p>
-        <p><strong>Types of Waste:</strong></p>
-        <ul>
+        <p><ActionRoom /> Endereço: {center.location.address}, {center.location.municipality}, {center.location.state} {center.location.zip}</p>
+        <p><CommunicationCall/> Contato: {center.telephone}</p>
+        <p><strong>Tipo de resíduo</strong>:
         { center.typesOfWaste.map(it => (
-          <li key={it._id} className='typesOfWastes'>
-            <img src={it.icon} alt={it.name} /> {it.name}
-          </li>
+          <p key={it._id} className='typesOfWastes'>
+            {/* image fails to load
+            <img src={it.icon} alt={it.name} /> */}
+           <MapsLocalOffer/> {it.name}
+          </p>
         ))}
-        </ul>
-        <p><strong>Open Hours:</strong></p>
-        { center.openHours.map(it => (
-        <div key={it.dayOfWeek} className='centerHours'>
-          <p>{it.dayOfWeek}: {it.startTime}:00 - {it.endTime}:00</p>
-        </div>
-      ))}
+        </p> 
+        <br/>
+        <Table
+          header={state.height}
+          fixedHeader={state.fixedHeader}
+          selectable={state.selectable} 
+          multiSelectable={state.multiSelectable}
+        >
+          <TableHeader
+            displaySelectAll={state.showCheckboxes}
+            adjustForCheckbox={state.showCheckboxes}
+            enableSelectAll={state.enableSelectAll}
+          >
+            <TableRow>
+              <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
+                <ActionSchedule/> Horários
+              </TableHeaderColumn>
+            </TableRow>
+            <TableRow>
+              <TableHeaderColumn>Dias</TableHeaderColumn>
+              <TableHeaderColumn>Começar</TableHeaderColumn>
+              <TableHeaderColumn>Fim</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>         
+          <TableBody
+            displayRowCheckbox={state.showCheckboxes}
+            deselectOnClickaway={state.deselectOnClickaway}
+            showRowHover={state.showRowHover}
+            stripedRows={state.stripedRows}
+          >
+            {center.openHours.map(it => (
+              <TableRow key={it.dayOfWeek}>
+                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
+                <TableRowColumn>{it.startTime}:00</TableRowColumn>
+                <TableRowColumn>{it.endTime}:00</TableRowColumn>
+              </TableRow>
+              ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
