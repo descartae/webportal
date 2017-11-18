@@ -10,3 +10,5 @@ WORKDIR /opt/app
 
 COPY . /opt/app
 RUN cd /opt/app && npm install
+
+CMD npm start

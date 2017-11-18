@@ -44,6 +44,7 @@ export const createApp = async (jwtSecret, mongodbUrl) => {
       context
     }
   }))
+  server.use('/', (req, res) => { res.send('') })
 
   return server
 }
