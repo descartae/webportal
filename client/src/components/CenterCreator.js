@@ -2,6 +2,8 @@ import React from 'react'
 
 import { gql, graphql } from 'react-apollo'
 
+{/* 
+
 import { centersListQuery } from './CenterListing'
 
 const centerCreationMutation = gql`
@@ -41,4 +43,8 @@ const CenterCreator = ({ mutate }) => {
 }
 
 export { centerCreationMutation, CenterCreator }
-export const CenterCreatorWithData = graphql(centerCreationMutation)(CenterCreator)
+export const CenterCreatorWithData = graphql(centerCreationMutation)(CenterCreator) 
+
+*/}
+
+export default graphql(centerCreationMutation, {name: 'centerCreationMutation'})(CenterCreator) 
