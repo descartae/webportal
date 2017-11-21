@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 import { gql, graphql } from 'react-apollo'
 
@@ -60,6 +60,7 @@ class CenterCreator extends Component {
   render () {
     return (
       <div className='container'>
+        <strong>Create New Center</strong>
         <div className='form'>
           <input
             className='centerName'
