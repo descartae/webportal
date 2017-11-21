@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo'
 import {List, ListItem} from 'material-ui/List';
+import CenterCreator from './CenterCreator';
 
 const CenterListing = ({ data: { loading, error, centers } }) => {
   if (loading) {
@@ -16,6 +17,8 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
 
  return (
       <div className='centersList'>
+        <CenterCreator/>
+        <br/>
         <h3>Pontos de coleta</h3>
         <List>
           { centers.map(it =>
