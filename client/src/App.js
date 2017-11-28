@@ -8,7 +8,7 @@ import {
 
 import './App.css'
 import logo from './logo.png';
-import { CenterListing, CenterDetails, CenterCreator } from './components'
+import { CenterListing, CenterDetails } from './components'
 
 import {
   ApolloClient,
@@ -59,7 +59,6 @@ class App extends Component {
           <div className='App'>
              <Link to="/" className="navbar"><img src={logo} className="App-logo" alt="logo" /> Descartaê</Link>
               <Switch>
-                <Route exact path='/new' component={CenterCreator} />
                 <Route exact path="/" component={CenterListing}/>
                 <Route path="/centers/:centerId" component={CenterDetails}/>
               </Switch>
