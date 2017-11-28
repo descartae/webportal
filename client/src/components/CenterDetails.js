@@ -1,5 +1,6 @@
 import React from 'react';
 import NotFound from './NotFound';
+import UpdateCenter from './UpdateCenter';
 import {
   Table,
   TableBody,
@@ -16,6 +17,11 @@ import {
     gql,
     graphql,
 } from 'react-apollo';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12,
+};
 
 const CenterDetails = ({ data: { loading, error, center }, match }) => {
   if (loading) {
@@ -44,17 +50,23 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   return (
     <div className='container'>
       <div className='centerDetails'>
+
+        <div>
+        <RaisedButton label="Default" style={style}>
+          <UpdateCenter/>
+        </RaisedButton>
+        </div>
         <h3>{center.name}</h3>
         <hr/>
-        <p><ActionRoom /> Endereço: {center.location.address}, {center.location.municipality}, {center.location.state} {center.location.zip}</p>
+        <p><ActionRoom />Endereço: {center.location.address}, {center.location.municipality}, {center.location.state} {center.location.zip}</p>
         <p><CommunicationCall/> Contato: {center.telephone}</p>
         <p><strong>Tipo de resíduo</strong>:
         { center.typesOfWaste.map(it => (
-          <p key={it._id} className='typesOfWastes'>
+          <div key={it._id} className='typesOfWastes'>
             {/* image fails to load
             <img src={it.icon} alt={it.name} /> */}
            <MapsLocalOffer/> {it.name}
-          </p>
+          </div>
         ))}
         </p> 
         <br/>
