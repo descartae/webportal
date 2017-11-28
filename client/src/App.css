@@ -58,12 +58,12 @@ div.NotFound {
   margin-right: 10px;
 }
 
-div.centersList {
+div.facilityList {
   padding: 0 30px;
   position: fixed;
 }
 
-div.center {
+div.facility {
   position: relative;
   padding: 10px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -75,7 +75,7 @@ div.center {
   font-size: 16px;
 }
 
-div.centersList input {
+div.facilityList input {
   width: 200px;
   background-color: transparent;
   padding: 10px 20px 10px 30px;
@@ -88,7 +88,7 @@ div.centersList input {
   transition: 300ms all ease-out;
 }
 
-div.centersList:before {
+div.facilityList:before {
   display: inline-block;
   height: 10px;
   width: 10px;
@@ -99,17 +99,17 @@ div.centersList:before {
   color: rgba(255, 255, 255, 0.6);
 }
 
-div.centersList input:focus {
+div.facilityList input:focus {
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   transition: 300ms all ease-out;
 }
 
-div.center span {
+div.facility span {
   position: absolute;
   left: 10px;
 }
 
-div.centerName {
+div.facilityName {
   width: 200px;
   background-color: transparent;
   padding: 10px 50px 10px 30px;

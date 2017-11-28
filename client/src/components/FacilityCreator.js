@@ -2,17 +2,17 @@ import React from 'react'
 
 import { gql, graphql } from 'react-apollo'
 
-import { centersListQuery } from './CenterListing'
+import { facilityListQuery } from './FacilityListing'
 
-const centerCreationMutation = gql`
-  mutation AddCenter($name: String!) {
-    addCenter(name: $name) {
+const facilityCreationMutation = gql`
+  mutation AddFacility($name: String!) {
+    addFacility(name: $name) {
       success
     }
   }
 `
 
-const CenterCreator = ({ mutate }) => {
+const FacilityCreator = ({ mutate }) => {
   const handleKeyUp = (evt) => {
     if (evt.keyCode === 13) {
       evt.persist()
@@ -21,7 +21,7 @@ const CenterCreator = ({ mutate }) => {
 
       mutate({
         variables,
-        refetchQueries: [{ query: centersListQuery }]
+        refetchQueries: [{ query: facilityListQuery }]
       })
         .then(({ data }) => {
           evt.target.value = ''
@@ -34,11 +34,11 @@ const CenterCreator = ({ mutate }) => {
   return (
     <input
       type='text'
-      placeholder='New Center'
+      placeholder='New Facility'
       onKeyUp={handleKeyUp}
       />
   )
 }
 
-export { centerCreationMutation, CenterCreator }
-export const CenterCreatorWithData = graphql(centerCreationMutation)(CenterCreator)
+export { facilityCreationMutation, FacilityCreator }
+export const FacilityCreatorWithData = graphql(facilityCreationMutation)(FacilityCreator)

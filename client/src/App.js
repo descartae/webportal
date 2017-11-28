@@ -8,7 +8,7 @@ import {
 
 import './App.css'
 import logo from './logo.png';
-import { CenterListing, CenterDetails} from './components'
+import { FacilityListing, FacilityDetails } from './components'
 
 import {
   ApolloClient,
@@ -41,8 +41,8 @@ const client = new ApolloClient({
   networkInterface,
   customResolvers: {
     Query: {
-      center: (_, args) => {
-        return toIdValue(dataIdFromObject({ __typename: 'Center', id: args['id'] }))
+      facility: (_, args) => {
+        return toIdValue(dataIdFromObject({ __typename: 'Facility', id: args['id'] }))
       },
     },
   },
@@ -59,8 +59,8 @@ class App extends Component {
           <div className='App'>
              <Link to="/" className="navbar"><img src={logo} className="App-logo" alt="logo" /> Descartaê</Link>
               <Switch>
-                <Route exact path="/" component={CenterListing}/>
-                <Route path="/centers/:centerId" component={CenterDetails}/>
+                <Route exact path="/" component={FacilityListing}/>
+                <Route path="/facilities/:facilityId" component={FacilityDetails}/>
               </Switch>
           </div>
         </BrowserRouter>
