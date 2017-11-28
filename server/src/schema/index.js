@@ -1,7 +1,7 @@
 import { reduce, mergeDeepRight } from 'ramda'
 import { makeExecutableSchema } from 'graphql-tools'
 
-import * as center from './center'
+import * as facility from './facility'
 import * as user from './user'
 import * as typeOfWaste from './typeOfWaste'
 
@@ -9,7 +9,7 @@ import * as utilities from './utilities'
 
 const definitions = [
   user,
-  center,
+  facility,
   typeOfWaste,
   utilities
 ]

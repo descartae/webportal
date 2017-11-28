@@ -1,8 +1,8 @@
 import createTypeOfWasteModel from './typeOfWaste'
-import createCenterModel from './center'
+import createFacilityModel from './facility'
 
 export const createModels =
   (collections) => ({
-    Centers: createCenterModel(collections),
+    Facilities: createFacilityModel(collections),
     TypesOfWaste: createTypeOfWasteModel(collections)
   })
