@@ -1,11 +1,17 @@
-import React, {Component} from 'react'
-
+import React, {Component}  from 'react'
 import { gql, graphql } from 'react-apollo'
-
-{/* 
-
 import { centersListQuery } from './CenterListing'
 
+{/* 
+TODO: Fix issues with routing after saving the form 
+Notes: Import the following to redirect user after Submit. However, props.router is undefined 
+---------------------------------------------------------------------------------------------
+import { Route, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+------------ 
+
+OLD EXAMPLE 
 const centerCreationMutation = gql`
   mutation AddCenter($name: String!) {
     addCenter(name: $name) {
@@ -47,21 +53,64 @@ export const CenterCreatorWithData = graphql(centerCreationMutation)(CenterCreat
 
 */}
 
-{/* TODO: Improve UI with styling */}
-class CenterCreator extends Component {
-  state = {
-    name: '',
-    address: '',
-    municipality: '',
-    state: '',
-    zip: ''
+const centerCreationMutation = gql`
+  mutation AddCenter(
+    $name: String!,
+    $address: String!,
+    $municipality: String!,
+    $state: String!,
+    $zip: String!
+  ) {
+  addCenter(input: {
+    name: $name,
+    location: {
+      address: $address,
+      municipality: $municipality,
+      state: $state,
+       zip: $zip
+      }
+    }) {
+    success
+    center {
+      _id
+      name
+    }
+  }
+}
+`
+class CenterCreator extends Component { 
+   constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      address: '',
+      municipality: '',
+      state: '',
+      zip: ''
+    };
   }
 
-  render () {
+  async onSubmit(e) {
+    e.preventDefault();
+    const { name, address, municipality, zip, state } = this.state;
+    await this.props.centerCreationMutation({
+      variables: {
+        name,
+        address,
+        municipality,
+        zip,
+        state
+      },
+      refetchQueries: [{ query: centersListQuery }]
+    });
+  {/* 
+    this.props.router.push('/'); */}
+  }
+  render() { 
     return (
       <div className='container'>
         <strong>Create New Center</strong>
-        <div className='form'>
+        <form onSubmit={this.onSubmit.bind(this)}>
           <input
             className='centerName'
             value={this.state.name}
@@ -98,53 +147,17 @@ class CenterCreator extends Component {
             type='text'
             placeholder='Enter Center Zip'
           />
-        </div>
         <button
-          onClick={() => this._addCenter()}
+         type='submit'
         >
           Save
         </button>
-      </div>
+      </form>
+     </div>
     )
-  }
-
-  _addCenter = async () => {
-    const { name, address, municipality, zip, state } = this.state
-    await this.props.centerCreationMutation({
-    variables: {
-      name,
-      address,
-      municipality,
-      zip,
-      state
-    }
-  })
-  }
+  } 
 }
 
-const centerCreationMutation = gql`
-  mutation AddCenter(
-    $name: String!,
-    $address: String!,
-    $municipality: String!,
-    $state: String!,
-    $zip: String!
-  ) {
-  addCenter(input: {
-    name: $name,
-    location: {
-      address: $address,
-      municipality: $municipality,
-      state: $state,
-       zip: $zip
-      }
-    }) {
-    success
-    center {
-      _id
-      name
-    }
-  }
-}
-`
-export default graphql(centerCreationMutation, {name: 'centerCreationMutation'})(CenterCreator) 
+{/* 
+export default graphql(centerCreationMutation, {name: 'centerCreationMutation'})(withRouter(CenterCreator)); */} 
+export default graphql(centerCreationMutation, {name: 'centerCreationMutation'})(CenterCreator)
