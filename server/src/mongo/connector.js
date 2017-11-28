@@ -20,6 +20,7 @@ export const connect = async (mongoUrl) => {
   return {
     Users: db.collection('users'),
     Centers: db.collection('centers'),
-    TypesOfWaste: db.collection('typesOfWaste')
+    TypesOfWaste: db.collection('typesOfWaste'),
+    Feedbacks: db.collection('feedbacks')
   }
 }
