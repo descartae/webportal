@@ -1,6 +1,6 @@
-import React, {Component}  from 'react'
-import { gql, graphql } from 'react-apollo'
-import { centersListQuery } from './CenterListing'
+import React, {Component}  from 'react';
+import { gql, graphql } from 'react-apollo';
+import { centersListQuery } from './CenterListing';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -29,6 +29,7 @@ const centerCreationMutation = gql`
   }
 }
 `
+
 class CenterCreator extends Component {
    constructor(props) {
     super(props);
@@ -58,6 +59,11 @@ class CenterCreator extends Component {
       },
       refetchQueries: [{ query: centersListQuery }]
     });
+    this.state.name = '';
+    this.state.address = '';
+    this.state.municipality = '';
+    this.state.state = '';
+    this.state.zip = '';
     this.props.history.push('/');
   }
   render() {
