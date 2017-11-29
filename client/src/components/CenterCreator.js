@@ -1,57 +1,8 @@
 import React, {Component}  from 'react'
 import { gql, graphql } from 'react-apollo'
 import { centersListQuery } from './CenterListing'
-
-{/* 
-TODO: Fix issues with routing after saving the form 
-Notes: Import the following to redirect user after Submit. However, props.router is undefined 
----------------------------------------------------------------------------------------------
-import { Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
------------- 
-
-OLD EXAMPLE 
-const centerCreationMutation = gql`
-  mutation AddCenter($name: String!) {
-    addCenter(name: $name) {
-      success
-    }
-  }
-`
-
-const CenterCreator = ({ mutate }) => {
-  const handleKeyUp = (evt) => {
-    if (evt.keyCode === 13) {
-      evt.persist()
-
-      const variables = { name: evt.target.value }
-
-      mutate({
-        variables,
-        refetchQueries: [{ query: centersListQuery }]
-      })
-        .then(({ data }) => {
-          evt.target.value = ''
-
-          console.log(`Result: \n${JSON.stringify(data, null, 2)}`)
-        })
-    }
-  }
-
-  return (
-    <input
-      type='text'
-      placeholder='New Center'
-      onKeyUp={handleKeyUp}
-      />
-  )
-}
-
-export { centerCreationMutation, CenterCreator }
-export const CenterCreatorWithData = graphql(centerCreationMutation)(CenterCreator) 
-
-*/}
 
 const centerCreationMutation = gql`
   mutation AddCenter(
@@ -78,7 +29,7 @@ const centerCreationMutation = gql`
   }
 }
 `
-class CenterCreator extends Component { 
+class CenterCreator extends Component {
    constructor(props) {
     super(props);
     this.state = {
@@ -88,6 +39,10 @@ class CenterCreator extends Component {
       state: '',
       zip: ''
     };
+  }
+
+ static propTypes = {
+    history: PropTypes.object.isRequired,
   }
 
   async onSubmit(e) {
@@ -103,10 +58,9 @@ class CenterCreator extends Component {
       },
       refetchQueries: [{ query: centersListQuery }]
     });
-  {/* 
-    this.props.router.push('/'); */}
+    this.props.history.push('/');
   }
-  render() { 
+  render() {
     return (
       <div className='container'>
         <strong>Create New Center</strong>
@@ -118,7 +72,7 @@ class CenterCreator extends Component {
             type='text'
             placeholder='Enter Center Name'
           />
-        
+
         <input
             className='centerAddress '
             value={this.state.address}
@@ -155,9 +109,7 @@ class CenterCreator extends Component {
       </form>
      </div>
     )
-  } 
+  }
 }
 
-{/* 
-export default graphql(centerCreationMutation, {name: 'centerCreationMutation'})(withRouter(CenterCreator)); */} 
-export default graphql(centerCreationMutation, {name: 'centerCreationMutation'})(CenterCreator)
+export default graphql(centerCreationMutation, {name: 'centerCreationMutation'})(withRouter(CenterCreator));
