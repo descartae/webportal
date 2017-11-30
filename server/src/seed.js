@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 
-export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
+export const seedDatabase = async ({ Centers, Users, TypesOfWaste, Feedbacks }) => {
   const centerCount = await Centers.count()
   const userCount = await Users.count()
   const typesOfWasteCount = await TypesOfWaste.count()
@@ -155,8 +155,28 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste }) => {
       }
     ]
 
+    const feedbacks = [
+      {
+        _id: new ObjectId(),
+        resolved: false,
+        contents: 'Example feedback 1'
+      },
+      {
+        _id: new ObjectId(),
+        resolved: false,
+        center: centers[0]._id,
+        contents: 'Example feedback 2'
+      },
+      {
+        _id: new ObjectId(),
+        resolved: true,
+        contents: 'Example feedback 3'
+      }
+    ]
+
     await Users.insert(user)
     await TypesOfWaste.insert(typesOfWaste)
     await Centers.insert(centers)
+    await Feedbacks.insert(feedbacks)
   }
 }
