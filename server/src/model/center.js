@@ -13,7 +13,12 @@ export default ({ Centers }) => ({
     assertNotEmpty(data.name, 'name')
     assertNotEmpty((data.location || {}).address, 'location.address')
 
-    data.enabled = true
+    data = {
+      ...data,
+      openHours: data.openHours || [],
+      typesOfWaste: data.typesOfWaste || [],
+      enabled: true
+    }
 
     const { ops: [center] } = await Centers.insert(data)
 
@@ -29,6 +34,14 @@ export default ({ Centers }) => ({
 
     if ('location' in patch && 'address' in patch.location) {
       assertNotEmpty(patch.location.address)
+    }
+
+    if ('typesOfWaste' in patch) {
+      patch.typesOfWaste = patch.typesOfWaste || []
+    }
+
+    if ('openHours' in patch) {
+      patch.openHours = patch.openHours || []
     }
 
     const { value } =
