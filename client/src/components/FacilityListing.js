@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo'
 import {List, ListItem} from 'material-ui/List';
+import FacilityCreator  from './FacilityCreator';
 
 const FacilityListing = ({ data: { loading, error, facilities } }) => {
   if (loading) {
@@ -16,6 +17,10 @@ const FacilityListing = ({ data: { loading, error, facilities } }) => {
 
  return (
       <div className='facilityList'>
+        <br/> 
+        <FacilityCreator/>
+        <br/>
+        <hr/>
         <h3>Pontos de coleta</h3>
         <List>
           { facilities.map(it =>

@@ -5,8 +5,13 @@ export const schema = `
   # Represents some type of waste accepted by facilities
   type TypeOfWaste {
     _id: ID!
+
     # The user-readable type name
     name: String!
+
+    # The user-readable type description
+    description: String!
+
     # The icon URL
     icon: String!
   }
@@ -15,6 +20,10 @@ export const schema = `
   input AddTypeOfWasteInput {
     # The user-readable type name
     name: String!
+
+    # The user-readable type description
+    description: String!
+
     # The icon URL
     icon: String!
   }
@@ -23,6 +32,7 @@ export const schema = `
   type AddTypeOfWastePayload {
     # Indicates whether the operation was successful
     success: Boolean!
+
     # The created entry, if any
     typeOfWaste: TypeOfWaste
   }
@@ -31,6 +41,7 @@ export const schema = `
   input UpdateTypeOfWasteInput {
     # The type of waste identifier
     _id: ID!
+
     # The data to be updated
     patch: TypeOfWastePatch!
   }
@@ -39,6 +50,7 @@ export const schema = `
   type UpdateTypeOfWastePayload {
     # Indicates whether the operation was successful
     success: Boolean!
+
     # The updated entry, if applicable
     typeOfWaste: TypeOfWaste
   }
@@ -47,6 +59,10 @@ export const schema = `
   input TypeOfWastePatch {
     # The user-readable type name
     name: String
+
+    # The user-readable type description
+    description: String
+
     # The icon URL
     icon: String
   }

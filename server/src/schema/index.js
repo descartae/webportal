@@ -4,6 +4,7 @@ import { makeExecutableSchema } from 'graphql-tools'
 import * as facility from './facility'
 import * as user from './user'
 import * as typeOfWaste from './typeOfWaste'
+import * as feedback from './feedback'
 
 import * as utilities from './utilities'
 
@@ -11,6 +12,7 @@ const definitions = [
   user,
   facility,
   typeOfWaste,
+  feedback,
   utilities
 ]
 

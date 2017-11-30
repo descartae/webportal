@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 
-export const seedDatabase = async ({ Facilities, Users, TypesOfWaste }) => {
+export const seedDatabase = async ({ Facilities, Users, TypesOfWaste, Feedbacks }) => {
   const facilityCount = await Facilities.count()
   const userCount = await Users.count()
   const typesOfWasteCount = await TypesOfWaste.count()
@@ -11,55 +11,64 @@ export const seedDatabase = async ({ Facilities, Users, TypesOfWaste }) => {
     const typesOfWaste = [
       {
         _id: new ObjectId(),
-        name: 'Aluminium',
+        name: 'Alumínio',
+        description: 'Peças diversas feitas de alumínio',
         icon: 'http://example.com/aluminium.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Compost',
+        name: 'Compostas',
+        description: 'Compostos de lixo orgânico',
         icon: 'http://example.com/compost.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Cooking Oil',
+        name: 'Óleo de Cozinha',
+        description: 'Óleo saturado utilizado em alimentos',
         icon: 'http://example.com/cookingOil.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'eWaste',
+        name: 'Lixo Eletrônico',
+        description: 'Aparelhos eletrônicos diversos',
         icon: 'http://example.com/ewaste.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Furniture',
+        name: 'Móveis',
+        description: 'Móveis residenciais diversos',
         icon: 'http://example.com/furniture.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Glass',
+        name: 'Vidro',
+        description: 'Pedaços de vidro ou itens compostos de vidro',
         icon: 'http://example.com/glass.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Green Waste',
+        name: 'Lixo Verde',
+        description: 'Descarte de grama, folhas, galhos e semelhantes',
         icon: 'http://example.com/greenWaste.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Hazardous Waste',
+        name: 'Resíduos Perigosos',
+        description: 'Itens que apresentam risco de contaminação',
         icon: 'http://example.com/hazardousWaste.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
-        name: 'Paper',
+        name: 'Papel',
+        description: 'Descarte de folhas e itens feitos inteiramente de papel',
         icon: 'http://example.com/paper.png',
         enabled: true
       }
@@ -155,8 +164,28 @@ export const seedDatabase = async ({ Facilities, Users, TypesOfWaste }) => {
       }
     ]
 
+    const feedbacks = [
+      {
+        _id: new ObjectId(),
+        resolved: false,
+        contents: 'Example feedback 1'
+      },
+      {
+        _id: new ObjectId(),
+        resolved: false,
+        facility: facilities[0]._id,
+        contents: 'Example feedback 2'
+      },
+      {
+        _id: new ObjectId(),
+        resolved: true,
+        contents: 'Example feedback 3'
+      }
+    ]
+
     await Users.insert(user)
     await TypesOfWaste.insert(typesOfWaste)
     await Facilities.insert(facilities)
+    await Feedbacks.insert(feedbacks)
   }
 }

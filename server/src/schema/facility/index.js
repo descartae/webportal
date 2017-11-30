@@ -20,10 +20,10 @@ export const schema = `
     telephone: String
 
     # The types of waste the recycling facility handles
-    typesOfWaste: [TypeOfWaste]
+    typesOfWaste: [TypeOfWaste]!
 
     # The facility's operating hours
-    openHours: [OpenTime]
+    openHours: [OpenTime]!
   }
 
   # Location data for a point of interest

@@ -88,6 +88,41 @@ describe('Facility operations', () => {
       expect(spy.result.location.address).toEqual('Av. Example')
     })
 
+    it('ensures openHours and typesOfWaste are at least empty lists', async () => {
+      const spy = {
+        called: false,
+        result: null
+      }
+
+      const args = {
+        name: 'Example',
+        location: {
+          address: 'Av. Example'
+        },
+        typesOfWaste: null
+        // openHours as undefined
+      }
+
+      const context = {
+        Facilities: {
+          insert: async (args) => {
+            spy.called = true
+            spy.result = args
+
+            return { ops: [args] }
+          }
+        }
+      }
+
+      const model = createModel(context)
+
+      await model.addFacility(args)
+
+      expect(spy.called).toEqual(true)
+      expect(spy.result.typesOfWaste).toEqual([])
+      expect(spy.result.openHours).toEqual([])
+    })
+
     it('fails if a required field is missing', async () => {
       const spy = {
         called: false,
