@@ -1,11 +1,11 @@
 import { ObjectId } from 'mongodb'
 
-export const seedDatabase = async ({ Centers, Users, TypesOfWaste, Feedbacks }) => {
-  const centerCount = await Centers.count()
+export const seedDatabase = async ({ Facilities, Users, TypesOfWaste, Feedbacks }) => {
+  const facilityCount = await Facilities.count()
   const userCount = await Users.count()
   const typesOfWasteCount = await TypesOfWaste.count()
 
-  if (centerCount === 0 && userCount === 0 && typesOfWasteCount === 0) {
+  if (facilityCount === 0 && userCount === 0 && typesOfWasteCount === 0) {
     console.log('No data found - seeding database')
 
     const typesOfWaste = [
@@ -80,7 +80,7 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste, Feedbacks }) 
       email: 'user@example.com'
     }
 
-    const centers = [
+    const facilities = [
       {
         _id: new ObjectId(),
         createdBy: user._id,
@@ -173,7 +173,7 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste, Feedbacks }) 
       {
         _id: new ObjectId(),
         resolved: false,
-        center: centers[0]._id,
+        facility: facilities[0]._id,
         contents: 'Example feedback 2'
       },
       {
@@ -185,7 +185,7 @@ export const seedDatabase = async ({ Centers, Users, TypesOfWaste, Feedbacks }) 
 
     await Users.insert(user)
     await TypesOfWaste.insert(typesOfWaste)
-    await Centers.insert(centers)
+    await Facilities.insert(facilities)
     await Feedbacks.insert(feedbacks)
   }
 }

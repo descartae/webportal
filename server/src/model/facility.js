@@ -1,15 +1,15 @@
 import { assertNotEmpty } from './validation'
 
-export default ({ Centers }) => ({
+export default ({ Facilities }) => ({
   // Root queries
-  async center (_id) {
-    return Centers.findOne({ _id })
+  async facility (_id) {
+    return Facilities.findOne({ _id })
   },
-  async centers () {
-    return Centers.find({ enabled: true }).toArray()
+  async facilities () {
+    return Facilities.find({ enabled: true }).toArray()
   },
   // Operations
-  async addCenter (data) {
+  async addFacility (data) {
     assertNotEmpty(data.name, 'name')
     assertNotEmpty((data.location || {}).address, 'location.address')
 
@@ -20,14 +20,14 @@ export default ({ Centers }) => ({
       enabled: true
     }
 
-    const { ops: [center] } = await Centers.insert(data)
+    const { ops: [facility] } = await Facilities.insert(data)
 
     return {
       success: true,
-      center
+      facility
     }
   },
-  async updateCenter ({ _id, patch }) {
+  async updateFacility ({ _id, patch }) {
     if ('name' in patch) {
       assertNotEmpty(patch.name, 'name')
     }
@@ -45,7 +45,7 @@ export default ({ Centers }) => ({
     }
 
     const { value } =
-      await Centers.findOneAndUpdate({
+      await Facilities.findOneAndUpdate({
         _id,
         enabled: true
       }, {
@@ -56,11 +56,11 @@ export default ({ Centers }) => ({
 
     return {
       success: true,
-      center: value
+      facility: value
     }
   },
-  async disableCenter ({ _id }) {
-    await Centers.updateOne({
+  async disableFacility ({ _id }) {
+    await Facilities.updateOne({
       _id
     }, {
       $set: { enabled: false }

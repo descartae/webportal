@@ -7,8 +7,8 @@ export const schema = `
   type Feedback {
     _id: ID!
 
-    # The related center, if any
-    center: Center
+    # The related facility, if any
+    facility: Facility
 
     # Indicates if the feedback was answered and/or resolved
     resolved: Boolean!
@@ -19,8 +19,8 @@ export const schema = `
 
   # Required data to create a new feedback entry
   input AddFeedbackInput {
-    # The related center, if any
-    center: ID
+    # The related facility, if any
+    facility: ID
 
     # The feedback's content
     contents: String!

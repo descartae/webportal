@@ -2,7 +2,7 @@ import * as mutations from './mutations'
 import * as queries from './queries'
 
 export const schema = `
-  # Represents some type of waste accepted by centers
+  # Represents some type of waste accepted by facilities
   type TypeOfWaste {
     _id: ID!
 
@@ -80,18 +80,18 @@ export const schema = `
 `
 
 export const queryExtension = `
-  # All the types of waste that a center can receive
+  # All the types of waste that a facility can receive
   typesOfWaste: [TypeOfWaste]
 `
 
 export const mutationExtension = `
-  # Creates a new type of waste for centers
+  # Creates a new type of waste for facilities
   addTypeOfWaste(input: AddTypeOfWasteInput!): AddTypeOfWastePayload!
 
   # Updates data related to a given type of waste
   updateTypeOfWaste(input: UpdateTypeOfWasteInput!): UpdateTypeOfWastePayload!
 
-  # Disables a type of waste, making it impossible to add it to new centers
+  # Disables a type of waste, making it impossible to add it to new facilities
   disableTypeOfWaste(input: DisableTypeOfWasteInput!): DisableTypeOfWastePayload!
 `
 

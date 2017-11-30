@@ -17,7 +17,7 @@ import {
     graphql,
 } from 'react-apollo';
 
-const CenterDetails = ({ data: { loading, error, center }, match }) => {
+const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
   if (loading) {
     return <p>Loading...</p>
   }
@@ -26,7 +26,7 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
     return <p>{ error.message }</p>
   }
 
-  if (center === null) {
+  if (facility === null) {
     return <NotFound />
   }
   const state = {
@@ -43,13 +43,13 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
 
   return (
     <div className='container'>
-      <div className='centerDetails'>
-        <h3>{center.name}</h3>
+      <div className='facilityDetails'>
+        <h3>{facility.name}</h3>
         <hr/>
-        <p><ActionRoom /> Endereço: {center.location.address}, {center.location.municipality}, {center.location.state} {center.location.zip}</p>
-        <p><CommunicationCall/> Contato: {center.telephone}</p>
+        <p><ActionRoom /> Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
+        <p><CommunicationCall/> Contato: {facility.telephone}</p>
         <p><strong>Tipo de resíduo</strong>:
-        { center.typesOfWaste.map(it => (
+        { facility.typesOfWaste.map(it => (
           <p key={it._id} className='typesOfWastes'>
             {/* image fails to load
             <img src={it.icon} alt={it.name} /> */}
@@ -86,7 +86,7 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
             showRowHover={state.showRowHover}
             stripedRows={state.stripedRows}
           >
-            {center.openHours.map(it => (
+            {facility.openHours.map(it => (
               <TableRow key={it.dayOfWeek}>
                 <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
                 <TableRowColumn>{it.startTime}:00</TableRowColumn>
@@ -100,9 +100,9 @@ const CenterDetails = ({ data: { loading, error, center }, match }) => {
   );
 }
 
-export const centerDetailsQuery = gql`
-  query CenterDetailsQuery($centerId: ID!) {
-  center(_id: $centerId) {
+export const facilityDetailsQuery = gql`
+  query FacilityDetailsQuery($facilityId: ID!) {
+  facility(_id: $facilityId) {
       _id
       name
       telephone
@@ -127,9 +127,9 @@ export const centerDetailsQuery = gql`
   }
 `;
 
-export { CenterDetails }
-export const CenterDetailsWithData = (graphql(centerDetailsQuery, {
+export { FacilityDetails }
+export const FacilityDetailsWithData = (graphql(facilityDetailsQuery, {
   options: (props) => ({
-    variables: { centerId: props.match.params.centerId}
+    variables: { facilityId: props.match.params.facilityId}
   })
-})(CenterDetails));
+})(FacilityDetails));

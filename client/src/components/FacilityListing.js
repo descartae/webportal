@@ -4,9 +4,9 @@ import {
 } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo'
 import {List, ListItem} from 'material-ui/List';
-import CenterCreator  from './CenterCreator';
+import FacilityCreator  from './FacilityCreator';
 
-const CenterListing = ({ data: { loading, error, centers } }) => {
+const FacilityListing = ({ data: { loading, error, facilities } }) => {
   if (loading) {
     return <p>Loading...</p>
   }
@@ -16,17 +16,17 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
   }
 
  return (
-      <div className='centersList'>
+      <div className='facilityList'>
         <br/> 
-        <CenterCreator/>
+        <FacilityCreator/>
         <br/>
-        <hr/> 
+        <hr/>
         <h3>Pontos de coleta</h3>
         <List>
-          { centers.map(it =>
-            (<div key={it._id} className='center'>
+          { facilities.map(it =>
+            (<div key={it._id} className='facility'>
               <ListItem>
-                <Link to={it._id < 0 ? `/` : `centers/${it._id}`}>
+                <Link to={it._id < 0 ? `/` : `facilities/${it._id}`}>
                   {it.name}
                 </Link>
               </ListItem>
@@ -39,14 +39,14 @@ const CenterListing = ({ data: { loading, error, centers } }) => {
 
 }
 
-export const centersListQuery = gql`
-  query CentersListQuery {
-    centers {
+export const facilityListQuery = gql`
+  query FacilityListQuery {
+    facilities {
       _id
       name
     }
   }
 `
 
-export { CenterListing }
-export const CenterListingWithData = graphql(centersListQuery)(CenterListing)
+export { FacilityListing }
+export const FacilityListingWithData = graphql(facilityListQuery)(FacilityListing)

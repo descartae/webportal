@@ -1,5 +1,5 @@
-export const center =
-  ({ center }, args, { models: { Centers } }, info) =>
-    center != null
-      ? Centers.center(center)
+export const facility =
+  ({ facility }, args, { models: { Facilities } }, info) =>
+    facility != null
+      ? Facilities.facility(facility)
       : null

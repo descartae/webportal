@@ -3,14 +3,14 @@ import * as mutations from './mutations'
 import * as queries from './queries'
 
 export const schema = `
-  # Represents a registered recycling center
-  type Center {
+  # Represents a registered recycling facility
+  type Facility {
     _id: ID!
 
-    # The name of the center
+    # The name of the facility
     name: String!
 
-    # The location data for a given center
+    # The location data for a given facility
     location: Location!
 
     # The responsible's website, if available
@@ -19,10 +19,10 @@ export const schema = `
     # The responsible's contact phone number, if available
     telephone: String
 
-    # The types of waste the recycling center handles
+    # The types of waste the recycling facility handles
     typesOfWaste: [TypeOfWaste]!
 
-    # The center's operating hours
+    # The facility's operating hours
     openHours: [OpenTime]!
   }
 
@@ -71,12 +71,12 @@ export const schema = `
     SATURDAY
   }
 
-  # Data for the creation of a center
-  input AddCenterInput {
-    # The name of the center
+  # Data for the creation of a facility
+  input AddFacilityInput {
+    # The name of the facility
     name: String!
 
-    # The location data of the new center
+    # The location data of the new facility
     location: LocationInput!
 
     # The responsible's website, if available
@@ -85,14 +85,14 @@ export const schema = `
     # The responsible's contact phone number, if available
     telephone: String
 
-    # IDs of the types of waste the recycling center handles
+    # IDs of the types of waste the recycling facility handles
     typesOfWaste: [ID]
 
-    # The center's operating hours
+    # The facility's operating hours
     openHours: [OpenTimeInput]
   }
 
-  # A location for the related center
+  # A location for the related facility
   input LocationInput {
     # The readable, complete address
     address: String!
@@ -127,30 +127,30 @@ export const schema = `
     endTime: Int!
   }
 
-  # The add center operation result
-  type AddCenterPayload {
+  # The add facility operation result
+  type AddFacilityPayload {
     # Indicates whether the operation was successful
     success: Boolean!
 
     # The created entry, if any
-    center: Center
+    facility: Facility
   }
 
-  # Required data for updating a center
-  input UpdateCenterInput {
-    # The center identifier
+  # Required data for updating a facility
+  input UpdateFacilityInput {
+    # The facility identifier
     _id: ID!
 
     # The data to be updated
-    patch: CenterPatch!
+    patch: FacilityPatch!
   }
 
-  # Represents what can be updated on a center
-  input CenterPatch {
-    # The name of the center
+  # Represents what can be updated on a facility
+  input FacilityPatch {
+    # The name of the facility
     name: String
 
-    # The location data of the center
+    # The location data of the facility
     location: LocationInput
 
     # The responsible's website
@@ -159,56 +159,56 @@ export const schema = `
     # The responsible's contact phone number
     telephone: String
 
-    # IDs of the types of waste the recycling center handles
+    # IDs of the types of waste the recycling facility handles
     # Changes to this field replace the entire list
     typesOfWaste: [ID]
 
-    # The center's operating hours
+    # The facility's operating hours
     # Changes to this field replace the entire list
     openHours: [OpenTimeInput]
   }
 
-  # The result of a center update operation
-  type UpdateCenterPayload {
+  # The result of a facility update operation
+  type UpdateFacilityPayload {
     # Indicates whether the operation was successful
     success: Boolean!
     
     # The updated entry, if applicable
-    center: Center
+    facility: Facility
   }
 
-  # The required data to disable a center
-  input DisableCenterInput {
+  # The required data to disable a facility
+  input DisableFacilityInput {
     _id: ID!
   }
 
   # The disable operation result
-  type DisableCenterPayload {
+  type DisableFacilityPayload {
     # Indicates whether the operation was successful
     success: Boolean!
   }
 `
 export const queryExtension = `
-  # The list of available centers
-  centers: [Center]
+  # The list of available facilities
+  facilities: [Facility]
 
-  # The center with the given ID
-  center(_id: ID!): Center
+  # The facility with the given ID
+  facility(_id: ID!): Facility
 `
 
 export const mutationExtension = `
-  # Creates a new center
-  addCenter(input: AddCenterInput!): AddCenterPayload!
+  # Creates a new facility
+  addFacility(input: AddFacilityInput!): AddFacilityPayload!
 
-  # Updates information related to an existing center
-  updateCenter(input: UpdateCenterInput!): UpdateCenterPayload!
+  # Updates information related to an existing facility
+  updateFacility(input: UpdateFacilityInput!): UpdateFacilityPayload!
 
-  # Disables a center, removing it from search results
-  disableCenter(input: DisableCenterInput!): DisableCenterPayload!
+  # Disables a facility, removing it from search results
+  disableFacility(input: DisableFacilityInput!): DisableFacilityPayload!
 `
 
 export const resolvers = {
-  Center: fields,
+  Facility: fields,
   Query: queries,
   Mutation: mutations
 }
