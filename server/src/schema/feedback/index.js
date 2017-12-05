@@ -47,11 +47,28 @@ export const schema = `
     # The resolved entry, if any
     feedback: Feedback
   }
+
+  # Available filters on a feedback query
+  input FeedbackFilters {
+    # The pagination data
+    cursor: FilterCursors!
+
+    # Indicates the required state for the resolved flag
+    resolved: Boolean
+  }
+
+  type FeedbackPage {
+    # Cursor information for the next possible requests
+    cursors: PageCursors!
+
+    # The items found according to the query
+    items: [Feedback]
+  }
 `
 
 export const queryExtension = `
   # Every feedback received
-  feedbacks: [Feedback]
+  feedbacks(filters: FeedbackFilters!): FeedbackPage
 
   # The feedback with the given ID
   feedback(_id: ID!): Feedback

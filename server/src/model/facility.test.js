@@ -26,8 +26,8 @@ describe('Facility querying', () => {
           find: () => ({
             limit: () => ({
               toArray: async () => [
-                { _id: "Example 1" },
-                { _id: "Example 2" },
+                { _id: 'Example 1' },
+                { _id: 'Example 2' }
               ]
             })
           })
@@ -43,7 +43,7 @@ describe('Facility querying', () => {
       const model = createModel(context)
       const result = await model.facilities(args)
 
-      expect(result.items).toEqual([{ _id: "Example 1" }, { _id: "Example 2" }])
+      expect(result.items).toEqual([{ _id: 'Example 1' }, { _id: 'Example 2' }])
     })
 
     it('filters out disabled facilities', async () => {
@@ -52,9 +52,9 @@ describe('Facility querying', () => {
           find: (args) => ({
             limit: () => ({
               toArray: async () => [
-                { 
+                {
                   _id: 'Example 1 ',
-                  passed: args.enabled === true 
+                  passed: args.enabled === true
                 }
               ]
             })
@@ -71,7 +71,7 @@ describe('Facility querying', () => {
       const model = createModel(context)
       const result = await model.facilities(args)
 
-      expect(result.items).toEqual([{"_id": "Example 1 ", "passed": true}])
+      expect(result.items).toEqual([{'_id': 'Example 1 ', 'passed': true}])
     })
   })
 })
