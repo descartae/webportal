@@ -187,10 +187,61 @@ export const schema = `
     # Indicates whether the operation was successful
     success: Boolean!
   }
+
+  # Represents the possible filters on facilities
+  input FacilityFilters {
+    # The pagination data
+    cursor: FilterCursors!
+
+    # Requirements related to location
+    location: LocationFilter
+
+    # The types of wast the facility has to support
+    hasTypesOfWaste: [ID]
+  }
+
+  # Filters on location data
+  input LocationFilter {
+    # Indicates roughly where the subject must be located
+    near: CoordinatesInput
+  }
+
+  # Represents relevant pagination data
+  input FilterCursors {
+    # Indicates that the results must be after a given cursor
+    # Has priority over the 'before' field
+    after: Cursor
+
+    # Indicates that the results must be before a given cursor
+    # The field 'after' has priority over this
+    before: Cursor
+
+    # The total quantity of items that should be retrieved
+    # Must be a value between 1 and 100
+    quantity: Int!
+  }
+
+  # Represents the result of the facilities query
+  type FacilitiesPage {
+    # Cursor information for the next possible requests
+    cursors: PageCursors
+
+    # The items found according to the query
+    items: [Facility]
+  }
+
+  # A pair of cursors allowing navigation from this page
+  type PageCursors {
+    # The cursor used to get items from before this page
+    after: Cursor
+
+    # The cursor used to get items from after this page
+    before: Cursor
+  }
 `
 export const queryExtension = `
   # The list of available facilities
-  facilities: [Facility]
+  facilities(filters: FacilityFilters!): FacilitiesPage
 
   # The facility with the given ID
   facility(_id: ID!): Facility
