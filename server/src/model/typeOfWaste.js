@@ -20,12 +20,14 @@ export default ({ TypesOfWaste }) => {
       return TypesOfWaste.find({ enabled: true }).toArray()
     },
     // Operations
-    async addTypeOfWaste ({ name, icon }) {
+    async addTypeOfWaste ({ name, description, icon }) {
       assertNotEmpty(name, 'name')
+      assertNotEmpty(description, 'description')
       assertNotEmpty(icon, 'icon')
 
       const item = {
         name,
+        description,
         icon,
         enabled: true
       }
@@ -37,11 +39,15 @@ export default ({ TypesOfWaste }) => {
         typeOfWaste: result
       }
     },
-    async updateTypeOfWaste ({ _id, patch: { name, icon } }) {
+    async updateTypeOfWaste ({ _id, patch: { name, description, icon } }) {
       const update = {}
 
       if (name != null) {
         update.name = name
+      }
+
+      if (description != null) {
+        update.description = description
       }
 
       if (icon != null) {

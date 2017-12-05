@@ -1,11 +1,11 @@
 /* eslint-env jest */
-import createModel from './center'
+import createModel from './facility'
 
-describe('center querying', () => {
+describe('Facility querying', () => {
   describe('singular query', () => {
     it('filters using the given id', async () => {
       const context = {
-        Centers: {
+        Facilities: {
           async findOne ({ _id }) {
             return _id === 'id'
           }
@@ -13,7 +13,7 @@ describe('center querying', () => {
       }
 
       const model = createModel(context)
-      const result = await model.center('id')
+      const result = await model.facility('id')
 
       expect(result).toEqual(true)
     })
@@ -22,7 +22,7 @@ describe('center querying', () => {
   describe('plural query', () => {
     it('returns all items', async () => {
       const context = {
-        Centers: {
+        Facilities: {
           find: () => ({
             toArray: async () => [1, 2, 3]
           })
@@ -30,14 +30,14 @@ describe('center querying', () => {
       }
 
       const model = createModel(context)
-      const result = await model.centers()
+      const result = await model.facilities()
 
       expect(result).toEqual([1, 2, 3])
     })
 
-    it('filters out disabled centers', async () => {
+    it('filters out disabled facilities', async () => {
       const context = {
-        Centers: {
+        Facilities: {
           find: (args) => ({
             toArray: async () => args.enabled === true
           })
@@ -45,16 +45,16 @@ describe('center querying', () => {
       }
 
       const model = createModel(context)
-      const result = await model.centers()
+      const result = await model.facilities()
 
       expect(result).toEqual(true)
     })
   })
 })
 
-describe('center operations', () => {
-  describe('center creation', () => {
-    it('successfully creates a well formed center', async () => {
+describe('Facility operations', () => {
+  describe('facility creation', () => {
+    it('successfully creates a well formed facility', async () => {
       const spy = {
         called: false,
         result: null
@@ -68,7 +68,7 @@ describe('center operations', () => {
       }
 
       const context = {
-        Centers: {
+        Facilities: {
           insert: async (args) => {
             spy.called = true
             spy.result = args
@@ -80,12 +80,47 @@ describe('center operations', () => {
 
       const model = createModel(context)
 
-      await model.addCenter(args)
+      await model.addFacility(args)
 
       expect(spy.called).toEqual(true)
       expect(spy.result.enabled).toEqual(true)
       expect(spy.result.name).toEqual('Example')
       expect(spy.result.location.address).toEqual('Av. Example')
+    })
+
+    it('ensures openHours and typesOfWaste are at least empty lists', async () => {
+      const spy = {
+        called: false,
+        result: null
+      }
+
+      const args = {
+        name: 'Example',
+        location: {
+          address: 'Av. Example'
+        },
+        typesOfWaste: null
+        // openHours as undefined
+      }
+
+      const context = {
+        Facilities: {
+          insert: async (args) => {
+            spy.called = true
+            spy.result = args
+
+            return { ops: [args] }
+          }
+        }
+      }
+
+      const model = createModel(context)
+
+      await model.addFacility(args)
+
+      expect(spy.called).toEqual(true)
+      expect(spy.result.typesOfWaste).toEqual([])
+      expect(spy.result.openHours).toEqual([])
     })
 
     it('fails if a required field is missing', async () => {
@@ -99,7 +134,7 @@ describe('center operations', () => {
       }
 
       const context = {
-        Centers: {
+        Facilities: {
           insert: async (args) => {
             spy.called = true
             spy.result = args
@@ -110,15 +145,15 @@ describe('center operations', () => {
       }
 
       const model = createModel(context)
-      const operation = model.addCenter(args)
+      const operation = model.addFacility(args)
       const expectedError = new Error('Received empty value for required field: location.address')
 
       expect(operation).rejects.toEqual(expectedError)
     })
   })
 
-  describe('center update', () => {
-    it('successfully updates a center with the new data', async () => {
+  describe('facility update', () => {
+    it('successfully updates a facility with the new data', async () => {
       const spy = {
         called: false,
         filters: null,
@@ -134,7 +169,7 @@ describe('center operations', () => {
       }
 
       const context = {
-        Centers: {
+        Facilities: {
           findOneAndUpdate: async (filters, updates, options) => {
             spy.called = true
             spy.filters = filters
@@ -148,7 +183,7 @@ describe('center operations', () => {
 
       const model = createModel(context)
 
-      await model.updateCenter(args)
+      await model.updateFacility(args)
 
       expect(spy.called).toEqual(true)
       expect(spy.filters.enabled).toEqual(true)
@@ -171,7 +206,7 @@ describe('center operations', () => {
       }
 
       const context = {
-        Centers: {
+        Facilities: {
           findOneAndUpdate: async (filters, updates, options) => {
             spy.called = true
             spy.filters = filters
@@ -185,7 +220,7 @@ describe('center operations', () => {
 
       const model = createModel(context)
 
-      await model.updateCenter(args)
+      await model.updateFacility(args)
 
       expect(spy.called).toEqual(true)
       expect(spy.filters.enabled).toEqual(true)
@@ -194,8 +229,8 @@ describe('center operations', () => {
     })
   })
 
-  describe('center disabling', () => {
-    it('successfully disables an active center', async () => {
+  describe('facility disabling', () => {
+    it('successfully disables an active facility', async () => {
       const spy = {
         called: false,
         filters: null,
@@ -207,7 +242,7 @@ describe('center operations', () => {
       }
 
       const context = {
-        Centers: {
+        Facilities: {
           updateOne: async (filters, updates) => {
             spy.called = true
             spy.filters = filters
@@ -220,7 +255,7 @@ describe('center operations', () => {
 
       const model = createModel(context)
 
-      await model.disableCenter(args)
+      await model.disableFacility(args)
 
       expect(spy.called).toEqual(true)
       expect(spy.filters._id).toEqual('example')
