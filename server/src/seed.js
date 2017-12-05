@@ -13,63 +13,21 @@ export const seedDatabase = async ({ Facilities, Users, TypesOfWaste, Feedbacks 
         _id: new ObjectId(),
         name: 'Alumínio',
         description: 'Peças diversas feitas de alumínio',
-        icon: 'http://example.com/aluminium.png',
-        enabled: true
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Compostas',
-        description: 'Compostos de lixo orgânico',
-        icon: 'http://example.com/compost.png',
-        enabled: true
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Óleo de Cozinha',
-        description: 'Óleo saturado utilizado em alimentos',
-        icon: 'http://example.com/cookingOil.png',
-        enabled: true
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Lixo Eletrônico',
-        description: 'Aparelhos eletrônicos diversos',
-        icon: 'http://example.com/ewaste.png',
-        enabled: true
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Móveis',
-        description: 'Móveis residenciais diversos',
-        icon: 'http://example.com/furniture.png',
+        icon: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallalluminium.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Vidro',
         description: 'Pedaços de vidro ou itens compostos de vidro',
-        icon: 'http://example.com/glass.png',
-        enabled: true
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Lixo Verde',
-        description: 'Descarte de grama, folhas, galhos e semelhantes',
-        icon: 'http://example.com/greenWaste.png',
-        enabled: true
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Resíduos Perigosos',
-        description: 'Itens que apresentam risco de contaminação',
-        icon: 'http://example.com/hazardousWaste.png',
+        icon: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallglass.png',
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Papel',
         description: 'Descarte de folhas e itens feitos inteiramente de papel',
-        icon: 'http://example.com/paper.png',
+        icon: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallpaper.png',
         enabled: true
       }
     ]
@@ -80,106 +38,411 @@ export const seedDatabase = async ({ Facilities, Users, TypesOfWaste, Feedbacks 
       email: 'user@example.com'
     }
 
-    const facilities = [
-      {
-        _id: new ObjectId(),
-        createdBy: user._id,
-        name: 'Global Plasticos',
-        location: {
-          address: 'Av. Caldeia 150',
-          municipality: 'Porto Alegre',
-          state: 'RS',
-          zip: '91130-540',
-          coordinates: {
-            latitude: -29.985346,
-            longitude: -51.1096435
-          }
-        },
-        telephone: '+55 (51) 3364-4115',
-        typesOfWaste: [
-          typesOfWaste[0]._id,
-          typesOfWaste[1]._id
-        ],
-        openHours: [
-          {
-            dayOfWeek: 'MONDAY',
-            startTime: 8,
-            endTime: 17
-          },
-          {
-            dayOfWeek: 'TUESDAY',
-            startTime: 8,
-            endTime: 17
-          },
-          {
-            dayOfWeek: 'WEDNESDAY',
-            startTime: 8,
-            endTime: 17
-          },
-          {
-            dayOfWeek: 'THURSDAY',
-            startTime: 8,
-            endTime: 17
-          },
-          {
-            dayOfWeek: 'FRIDAY',
-            startTime: 8,
-            endTime: 17
-          }
-        ],
-        enabled: true
+    const facilities = [{
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 1',
+      location: {
+        address: 'Av. Exemplo 1',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.985046,
+          longitude: -51.1099435
+        }
       },
-      {
-        _id: new ObjectId(),
-        createdBy: user._id,
-        name: 'Fkl Recargas de Cartuchos e Toners',
-        location: {
-          address: 'R. Germano Hasslocher 288 s 1',
-          municipality: 'Porto Alegre',
-          state: 'RS',
-          zip: '90160-050'
-        },
-        telephone: '+55 (51) 3232-9300',
-        typesOfWaste: [
-          typesOfWaste[1]._id
-        ],
-        openHours: [
-          {
-            dayOfWeek: 'WEDNESDAY',
-            startTime: 12,
-            endTime: 18
-          },
-          {
-            dayOfWeek: 'THURSDAY',
-            startTime: 12,
-            endTime: 18
-          },
-          {
-            dayOfWeek: 'FRIDAY',
-            startTime: 15,
-            endTime: 18
-          }
-        ],
-        enabled: true
-      }
-    ]
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id,
+        typesOfWaste[1]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 2',
+      location: {
+        address: 'Av. Exemplo 2',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.984746,
+          longitude: -51.110243499999996
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id,
+        typesOfWaste[1]._id,
+        typesOfWaste[2]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'TUESDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 3',
+      location: {
+        address: 'Av. Exemplo 3',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.984446,
+          longitude: -51.1105435
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'TUESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'WEDNESDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 4',
+      location: {
+        address: 'Av. Exemplo 4',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.984146,
+          longitude: -51.110843499999994
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id,
+        typesOfWaste[1]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'TUESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'WEDNESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'THURSDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 5',
+      location: {
+        address: 'Av. Exemplo 5',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.983846,
+          longitude: -51.1111435
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id,
+        typesOfWaste[1]._id,
+        typesOfWaste[2]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'TUESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'WEDNESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'THURSDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'FRIDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 6',
+      location: {
+        address: 'Av. Exemplo 6',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.983546,
+          longitude: -51.1114435
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'TUESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'WEDNESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'THURSDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'FRIDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'SATURDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 7',
+      location: {
+        address: 'Av. Exemplo 7',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.983246,
+          longitude: -51.111743499999996
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id,
+        typesOfWaste[1]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 8',
+      location: {
+        address: 'Av. Exemplo 8',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.982946,
+          longitude: -51.1120435
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id,
+        typesOfWaste[1]._id,
+        typesOfWaste[2]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 9',
+      location: {
+        address: 'Av. Exemplo 9',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.982646,
+          longitude: -51.112343499999994
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'TUESDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    },
+    {
+      _id: new ObjectId(),
+      createdBy: user._id,
+      name: 'Local Exemplo 10',
+      location: {
+        address: 'Av. Exemplo 10',
+        municipality: 'Porto Alegre',
+        state: 'RS',
+        zip: '91100-000',
+        coordinates: {
+          latitude: -29.982346,
+          longitude: -51.1126435
+        }
+      },
+      telephone: '+55 (51) 3000-0000',
+      typesOfWaste: [
+        typesOfWaste[0]._id,
+        typesOfWaste[1]._id
+      ],
+      openHours: [
+        {
+          dayOfWeek: 'SUNDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'MONDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'TUESDAY',
+          startTime: 12,
+          endTime: 18
+        }, {
+          dayOfWeek: 'WEDNESDAY',
+          startTime: 12,
+          endTime: 18
+        }
+      ],
+      enabled: true
+    }]
 
     const feedbacks = [
       {
         _id: new ObjectId(),
         resolved: false,
-        contents: 'Example feedback 1'
+        contents: 'Feedback Exemplo 1'
       },
       {
         _id: new ObjectId(),
         resolved: false,
         facility: facilities[0]._id,
-        contents: 'Example feedback 2'
+        contents: 'Feedback Exemplo 2'
       },
       {
         _id: new ObjectId(),
         resolved: true,
-        contents: 'Example feedback 3'
+        contents: 'Feedback Exemplo 3'
       }
     ]
 
