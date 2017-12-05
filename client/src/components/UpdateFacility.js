@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import { gql, graphql } from 'react-apollo'
 
-class UpdateCenter extends Component {
+class UpdateFacility extends Component {
   state = {
     _id: '', 
     name: '',
@@ -15,47 +15,47 @@ class UpdateCenter extends Component {
   render () {
     return (
       <div className='container'>
-        <strong>Update Center</strong>
+        <strong>Update Facility</strong>
         <div className='form'>
           <input
-            className='centerName'
+            className='facilityName'
             value={this.state.name}
             onChange={(e) => this.setState({name: e.target.value})}
             type='text'
-            placeholder='Enter Center Name'
+            placeholder='Enter Facility Name'
           />
         
         <input
-            className='centerAddress '
+            className='facilityAddress '
             value={this.state.address}
             onChange={(e) => this.setState({address: e.target.value})}
             type='text'
-            placeholder='Enter Center Address'
+            placeholder='Enter Facility Address'
          />
         <input
-            className='centerMunicipality'
+            className='facilityMunicipality'
             value={this.state.municipality}
             onChange={(e) => this.setState({municipality: e.target.value})}
             type='text'
-            placeholder='Enter Center Municipality'
+            placeholder='Enter Facility Municipality'
           />
         <input
-            className='centerState'
+            className='facilityState'
             value={this.state.state}
             onChange={(e) => this.setState({state: e.target.value})}
             type='text'
-            placeholder='Enter Center State'
+            placeholder='Enter Facility State'
           />
         <input
-            className='centerZip'
+            className='facilityZip'
             value={this.state.Zip}
             onChange={(e) => this.setState({zip: e.target.value})}
             type='text'
-            placeholder='Enter Center Zip'
+            placeholder='Enter Facility Zip'
           />
         </div>
         <button
-          onClick={() => this._updateCenter()}
+          onClick={() => this._updateFacility()}
         >
           Save
         </button>
@@ -63,9 +63,9 @@ class UpdateCenter extends Component {
     )
   }
 
-  _updateCenter = async () => {
+  _updateFacility = async () => {
     const { _id, name, address, municipality, zip, state } = this.state
-    await this.props.updateCenterMutation({
+    await this.props.updateFacilityMutation({
     variables: {
       _id, 
       name,
@@ -78,8 +78,8 @@ class UpdateCenter extends Component {
   }
 }
 
-const updateCenterMutation = gql`
-  mutation UpdateCenter(
+const updateFacilityMutation = gql`
+  mutation UpdateFacility(
     $_id: ID!, 
     $name: String!,
     $address: String!,
@@ -87,7 +87,7 @@ const updateCenterMutation = gql`
     $state: String!,
     $zip: String!
   ) {
-    updateCenter(input: {
+    updateFacility(input: {
       _id: $_id, 
       patch:{
         name: $name,
@@ -99,11 +99,11 @@ const updateCenterMutation = gql`
       }
     }) {
       success
-      center {
+      facility {
         _id
         name
       }
     }    
   }
 `
-export default graphql(updateCenterMutation, {name: 'updateCenterMutation'})(UpdateCenter) 
+export default graphql(updateFacilityMutation, {name: 'updateFacilityMutation'})(UpdateFacility) 

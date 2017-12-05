@@ -1,5 +1,6 @@
 import React from 'react';
 import NotFound from './NotFound';
+import UpdateFacility from './UpdateFacility';
 import {
   Table,
   TableBody,
@@ -16,6 +17,11 @@ import {
     gql,
     graphql,
 } from 'react-apollo';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 20,
+};
 
 const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
   if (loading) {
@@ -44,6 +50,11 @@ const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
   return (
     <div className='container'>
       <div className='facilityDetails'>
+        <div> 
+          <RaisedButton label="Default" style={style}>
+            <UpdateFacility/>
+          </RaisedButton>
+        </div>
         <h3>{facility.name}</h3>
         <hr/>
         <p><ActionRoom /> Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
