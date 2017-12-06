@@ -13,63 +13,126 @@ export const seedDatabase = async ({ Facilities, Users, TypesOfWaste, Feedbacks 
         _id: new ObjectId(),
         name: 'Alumínio',
         description: 'Peças diversas feitas de alumínio',
-        icon: 'http://example.com/aluminium.png',
+        icons: {
+          iosSmallURL: 'http://example.com/aluminium.png',
+          iosMediumURL: 'http://example.com/aluminium.png',
+          iosLargeURL: 'http://example.com/aluminium.png',
+          androidSmallURL: 'http://example.com/aluminium.png',
+          androidMediumURL: 'http://example.com/aluminium.png',
+          androidLargeURL: 'http://example.com/aluminium.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Compostas',
         description: 'Compostos de lixo orgânico',
-        icon: 'http://example.com/compost.png',
+        icons: {
+          iosSmallURL: 'http://example.com/compost.png',
+          iosMediumURL: 'http://example.com/compost.png',
+          iosLargeURL: 'http://example.com/compost.png',
+          androidSmallURL: 'http://example.com/compost.png',
+          androidMediumURL: 'http://example.com/compost.png',
+          androidLargeURL: 'http://example.com/compost.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Óleo de Cozinha',
         description: 'Óleo saturado utilizado em alimentos',
-        icon: 'http://example.com/cookingOil.png',
+        icons: {
+          iosSmallURL: 'http://example.com/cookingOil.png',
+          iosMediumURL: 'http://example.com/cookingOil.png',
+          iosLargeURL: 'http://example.com/cookingOil.png',
+          androidSmallURL: 'http://example.com/cookingOil.png',
+          androidMediumURL: 'http://example.com/cookingOil.png',
+          androidLargeURL: 'http://example.com/cookingOil.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Lixo Eletrônico',
         description: 'Aparelhos eletrônicos diversos',
-        icon: 'http://example.com/ewaste.png',
+        icons: {
+          iosSmallURL: 'http://example.com/ewaste.png',
+          iosMediumURL: 'http://example.com/ewaste.png',
+          iosLargeURL: 'http://example.com/ewaste.png',
+          androidSmallURL: 'http://example.com/ewaste.png',
+          androidMediumURL: 'http://example.com/ewaste.png',
+          androidLargeURL: 'http://example.com/ewaste.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Móveis',
         description: 'Móveis residenciais diversos',
-        icon: 'http://example.com/furniture.png',
+        icons: {
+          iosSmallURL: 'http://example.com/furniture.png',
+          iosMediumURL: 'http://example.com/furniture.png',
+          iosLargeURL: 'http://example.com/furniture.png',
+          androidSmallURL: 'http://example.com/furniture.png',
+          androidMediumURL: 'http://example.com/furniture.png',
+          androidLargeURL: 'http://example.com/furniture.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Vidro',
         description: 'Pedaços de vidro ou itens compostos de vidro',
-        icon: 'http://example.com/glass.png',
+        icons: {
+          iosSmallURL: 'http://example.com/glass.png',
+          iosMediumURL: 'http://example.com/glass.png',
+          iosLargeURL: 'http://example.com/glass.png',
+          androidSmallURL: 'http://example.com/glass.png',
+          androidMediumURL: 'http://example.com/glass.png',
+          androidLargeURL: 'http://example.com/glass.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Lixo Verde',
         description: 'Descarte de grama, folhas, galhos e semelhantes',
-        icon: 'http://example.com/greenWaste.png',
+        icons: {
+          iosSmallURL: 'http://example.com/greenWaste.png',
+          iosMediumURL: 'http://example.com/greenWaste.png',
+          iosLargeURL: 'http://example.com/greenWaste.png',
+          androidSmallURL: 'http://example.com/greenWaste.png',
+          androidMediumURL: 'http://example.com/greenWaste.png',
+          androidLargeURL: 'http://example.com/greenWaste.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Resíduos Perigosos',
         description: 'Itens que apresentam risco de contaminação',
-        icon: 'http://example.com/hazardousWaste.png',
+        icons: {
+          iosSmallURL: 'http://example.com/hazardousWaste.png',
+          iosMediumURL: 'http://example.com/hazardousWaste.png',
+          iosLargeURL: 'http://example.com/hazardousWaste.png',
+          androidSmallURL: 'http://example.com/hazardousWaste.png',
+          androidMediumURL: 'http://example.com/hazardousWaste.png',
+          androidLargeURL: 'http://example.com/hazardousWaste.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Papel',
         description: 'Descarte de folhas e itens feitos inteiramente de papel',
-        icon: 'http://example.com/paper.png',
+        icons: {
+          iosSmallURL: 'http://example.com/paper.png',
+          iosMediumURL: 'http://example.com/paper.png',
+          iosLargeURL: 'http://example.com/paper.png',
+          androidSmallURL: 'http://example.com/paper.png',
+          androidMediumURL: 'http://example.com/paper.png',
+          androidLargeURL: 'http://example.com/paper.png'
+        },
         enabled: true
       }
     ]
