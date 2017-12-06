@@ -1,6 +1,5 @@
 import React from 'react';
 import NotFound from './NotFound';
-import UpdateFacility from './UpdateFacility';
 import {
   Table,
   TableBody,
@@ -17,130 +16,67 @@ import {
     gql,
     graphql,
 } from 'react-apollo';
-import RaisedButton from 'material-ui/RaisedButton';
+import PropTypes from 'prop-types';
+import { filter } from 'graphql-anywhere';
+import { withRouter } from 'react-router';
+import FacilityPage from './FacilityPage';
 
-const style = {
-  margin: 20,
-};
+class FacilityDetails extends React.Component {
 
-const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
-  if (loading) {
-    return <p>Loading...</p>
+  static propTypes = {
+    data: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      Facility: PropTypes.object,
+    }).isRequired,
+    router: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
   }
 
-  if (error) {
-    return <p>{ error.message }</p>
-  }
 
-  if (facility === null) {
-    return <NotFound />
-  }
-  const state = {
-      fixedHeader: true,
-      stripedRows: false,      
-      showRowHover: false,       
-      selectable: false,   
-      multiSelectable: false,     
-      enableSelectAll: false,
-      deselectOnClickaway: false,    
-      showCheckboxes: false, 
-      height: '300px',    
-    };
+  render () {
+    if (this.props.data.loading) {
+      return (<div>Loading</div>)
+    }
 
-  return (
-    <div className='container'>
-      <div className='facilityDetails'>
-        <div> 
-          <RaisedButton label="Default" style={style}>
-            <UpdateFacility/>
-          </RaisedButton>
-        </div>
-        <h3>{facility.name}</h3>
-        <hr/>
-        <p><ActionRoom /> Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
-        <p><CommunicationCall/> Contato: {facility.telephone}</p>
-        <p><strong>Tipo de resíduo</strong>:
-        { facility.typesOfWaste.map(it => (
-          <p key={it._id} className='typesOfWastes'>
-            {/* image fails to load
-            <img src={it.icon} alt={it.name} /> */}
-           <MapsLocalOffer/> {it.name}
-          </p>
-        ))}
-        </p> 
-        <br/>
-        <Table
-          header={state.height}
-          fixedHeader={state.fixedHeader}
-          selectable={state.selectable} 
-          multiSelectable={state.multiSelectable}
-        >
-          <TableHeader
-            displaySelectAll={state.showCheckboxes}
-            adjustForCheckbox={state.showCheckboxes}
-            enableSelectAll={state.enableSelectAll}
-          >
-            <TableRow>
-              <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
-                <ActionSchedule/> Horários
-              </TableHeaderColumn>
-            </TableRow>
-            <TableRow>
-              <TableHeaderColumn>Dias</TableHeaderColumn>
-              <TableHeaderColumn>Começar</TableHeaderColumn>
-              <TableHeaderColumn>Fim</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>         
-          <TableBody
-            displayRowCheckbox={state.showCheckboxes}
-            deselectOnClickaway={state.deselectOnClickaway}
-            showRowHover={state.showRowHover}
-            stripedRows={state.stripedRows}
-          >
-            {facility.openHours.map(it => (
-              <TableRow key={it.dayOfWeek}>
-                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
-                <TableRowColumn>{it.startTime}:00</TableRowColumn>
-                <TableRowColumn>{it.endTime}:00</TableRowColumn>
-              </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+    if (this.props.data.error) {
+      console.log(this.props.data)
+      console.log(this.props.data.error)
+      return (<div>An unexpected error occurred</div>)
+    }
+
+    const facility = this.props.data.Facility
+
+    return (
+      <div>
+        <FacilityPage faciilty={filter(FacilityPage.fragments.facility, facility)} handleCancel={this.goBack}/>
       </div>
-    </div>
-  );
+    )
+  }
+
+  goBack = () => {
+    this.props.router.replace('/')
+  }
 }
 
-export const facilityDetailsQuery = gql`
+
+const facilityDetailsQuery = gql`
   query FacilityDetailsQuery($facilityId: ID!) {
-  facility(_id: $facilityId) {
-      _id
-      name
-      telephone
-      website
-      location {
-        address
-        municipality
-        state
-        zip
-      }
-      typesOfWaste {
-        _id
-        name
-        icon
-      }
-      openHours {
-        dayOfWeek
-        startTime
-        endTime
-      }
+  Facility(_id: $facilityId) {
+      ... FacilityPageFacility
     }
   }
+  ${FacilityPage.fragments.facility}
 `;
 
-export { FacilityDetails }
-export const FacilityDetailsWithData = (graphql(facilityDetailsQuery, {
-  options: (props) => ({
-    variables: { facilityId: props.match.params.facilityId}
+//export { FacilityDetails }
+
+const FacilityDetailsWithData = graphql(facilityDetailsQuery, {
+  options: (ownProps) => ({
+    variables: { 
+      _id: ownProps.params.facilityId
+    }
   })
-})(FacilityDetails));
+})(withRouter(FacilityDetails));
+
+export default FacilityDetailsWithData; 
