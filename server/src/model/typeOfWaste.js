@@ -20,15 +20,22 @@ export default ({ TypesOfWaste }) => {
       return TypesOfWaste.find({ enabled: true }).toArray()
     },
     // Operations
-    async addTypeOfWaste ({ name, description, icon }) {
+    async addTypeOfWaste ({ name, description, icons }) {
       assertNotEmpty(name, 'name')
       assertNotEmpty(description, 'description')
-      assertNotEmpty(icon, 'icon')
+
+      assertNotEmpty(icons.iosSmallURL, 'icons.iosSmallURL')
+      assertNotEmpty(icons.iosMediumURL, 'icons.iosMediumURL')
+      assertNotEmpty(icons.iosLargeURL, 'icons.iosLargeURL')
+
+      assertNotEmpty(icons.androidSmallURL, 'icons.androidSmallURL')
+      assertNotEmpty(icons.androidMediumURL, 'icons.androidMediumURL')
+      assertNotEmpty(icons.androidLargeURL, 'icons.androidLargeURL')
 
       const item = {
         name,
         description,
-        icon,
+        icons,
         enabled: true
       }
 
@@ -39,7 +46,7 @@ export default ({ TypesOfWaste }) => {
         typeOfWaste: result
       }
     },
-    async updateTypeOfWaste ({ _id, patch: { name, description, icon } }) {
+    async updateTypeOfWaste ({ _id, patch: { name, description, icons } }) {
       const update = {}
 
       if (name != null) {
@@ -50,8 +57,10 @@ export default ({ TypesOfWaste }) => {
         update.description = description
       }
 
-      if (icon != null) {
-        update.icon = icon
+      if (icons != null) {
+        for (let field in icons) {
+          update[`icons.${field}`] = icons[field]
+        }
       }
 
       const { value } =
