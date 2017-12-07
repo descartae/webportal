@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { assertNotEmpty } from './validation'
+import { assertNotEmpty, assertAny } from './validation'
 
 export default ({ Facilities }) => ({
   // Root queries
@@ -55,6 +55,8 @@ export default ({ Facilities }) => ({
     assertNotEmpty(data.name, 'name')
     assertNotEmpty((data.location || {}).address, 'location.address')
 
+    assertAny(data.typesOfWaste, 'typesOfWaste')
+
     data = {
       ...data,
       openHours: data.openHours || [],
@@ -79,7 +81,7 @@ export default ({ Facilities }) => ({
     }
 
     if ('typesOfWaste' in patch) {
-      patch.typesOfWaste = patch.typesOfWaste || []
+      assertAny(patch.typesOfWaste, 'typesOfWaste')
     }
 
     if ('openHours' in patch) {
