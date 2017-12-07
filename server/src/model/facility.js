@@ -1,4 +1,4 @@
-import { assertNotEmpty } from './validation'
+import { assertNotEmpty, assertAny } from './validation'
 
 export default ({ Facilities }) => ({
   // Root queries
@@ -12,6 +12,8 @@ export default ({ Facilities }) => ({
   async addFacility (data) {
     assertNotEmpty(data.name, 'name')
     assertNotEmpty((data.location || {}).address, 'location.address')
+
+    assertAny(data.typesOfWaste, 'typesOfWaste')
 
     data = {
       ...data,
@@ -37,7 +39,7 @@ export default ({ Facilities }) => ({
     }
 
     if ('typesOfWaste' in patch) {
-      patch.typesOfWaste = patch.typesOfWaste || []
+      assertAny(patch.typesOfWaste, 'typesOfWaste')
     }
 
     if ('openHours' in patch) {

@@ -10,7 +10,8 @@ const facilityCreationMutation = gql`
     $address: String!,
     $municipality: String!,
     $state: String!,
-    $zip: String!
+    $zip: String!,
+    $typeOfWaste: ID!
   ) {
   addFacility(input: {
     name: $name,
@@ -19,7 +20,8 @@ const facilityCreationMutation = gql`
       municipality: $municipality,
       state: $state,
        zip: $zip
-      }
+      },
+      typesOfWaste: [$typeOfWaste]
     }) {
     success
     facility {
@@ -38,7 +40,8 @@ class FacilityCreator extends Component {
       address: '',
       municipality: '',
       state: '',
-      zip: ''
+      zip: '',
+      typeOfWaste: ''
     };
   }
 
@@ -48,14 +51,15 @@ class FacilityCreator extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { name, address, municipality, zip, state } = this.state;
+    const { name, address, municipality, zip, state, typeOfWaste } = this.state;
     await this.props.facilityCreationMutation({
       variables: {
         name,
         address,
         municipality,
         zip,
-        state
+        state,
+        typeOfWaste
       },
       refetchQueries: [{ query: facilityListQuery }]
     });
@@ -64,9 +68,28 @@ class FacilityCreator extends Component {
     this.state.municipality = '';
     this.state.state = '';
     this.state.zip = '';
+    this.state.typeOfWaste = '';
     this.props.history.push('/');
   }
   render() {
+    const { loading, error, typesOfWaste } = this.props.typeOfWasteListQuery
+
+    if (loading) {
+      return (
+        <div className='container'>
+          <p>Loading..</p>
+        </div>
+      )
+    }
+
+    if (error) {
+      return (
+        <div className='container'>
+          <p>{ error.message }</p>
+        </div>
+      )
+    }
+
     return (
       <div className='container'>
         <strong>Create New Facility</strong>
@@ -106,6 +129,10 @@ class FacilityCreator extends Component {
               type='text'
               placeholder='Enter Facility Zip'
             />
+          <select onChange={(e) => this.setState({ typeOfWaste: e.target.value })} value={this.state.typeOfWaste} className='facilityWaste'>
+            <option value="" disabled>Preferred Type of Waste</option>
+            {typesOfWaste.map(it => <option key={it._id} value={it._id}>{it.name}</option>)}
+          </select>
           <button
           type='submit'
           >
@@ -117,4 +144,13 @@ class FacilityCreator extends Component {
   }
 }
 
-export default graphql(facilityCreationMutation, {name: 'facilityCreationMutation'})(withRouter(FacilityCreator));
+export const typeOfWasteListQuery = gql`
+  query TypeOfWasteListQuery {
+    typesOfWaste {
+      _id
+      name
+    }
+  }
+`
+
+export default graphql(typeOfWasteListQuery, {name: 'typeOfWasteListQuery'})(graphql(facilityCreationMutation, {name: 'facilityCreationMutation'})(withRouter(FacilityCreator)));
