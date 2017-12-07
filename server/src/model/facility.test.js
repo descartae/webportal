@@ -24,30 +24,54 @@ describe('Facility querying', () => {
       const context = {
         Facilities: {
           find: () => ({
-            toArray: async () => [1, 2, 3]
+            limit: () => ({
+              toArray: async () => [
+                { _id: 'Example 1' },
+                { _id: 'Example 2' }
+              ]
+            })
           })
         }
       }
 
-      const model = createModel(context)
-      const result = await model.facilities()
+      const args = {
+        cursor: {
+          quantity: 10
+        }
+      }
 
-      expect(result).toEqual([1, 2, 3])
+      const model = createModel(context)
+      const result = await model.facilities(args)
+
+      expect(result.items).toEqual([{ _id: 'Example 1' }, { _id: 'Example 2' }])
     })
 
     it('filters out disabled facilities', async () => {
       const context = {
         Facilities: {
           find: (args) => ({
-            toArray: async () => args.enabled === true
+            limit: () => ({
+              toArray: async () => [
+                {
+                  _id: 'Example 1 ',
+                  passed: args.enabled === true
+                }
+              ]
+            })
           })
         }
       }
 
-      const model = createModel(context)
-      const result = await model.facilities()
+      const args = {
+        cursor: {
+          quantity: 10
+        }
+      }
 
-      expect(result).toEqual(true)
+      const model = createModel(context)
+      const result = await model.facilities(args)
+
+      expect(result.items).toEqual([{'_id': 'Example 1 ', 'passed': true}])
     })
   })
 })
@@ -64,7 +88,8 @@ describe('Facility operations', () => {
         name: 'Example',
         location: {
           address: 'Av. Example'
-        }
+        },
+        typesOfWaste: ['000000000000000000000000']
       }
 
       const context = {
@@ -88,7 +113,7 @@ describe('Facility operations', () => {
       expect(spy.result.location.address).toEqual('Av. Example')
     })
 
-    it('ensures openHours and typesOfWaste are at least empty lists', async () => {
+    it('ensures openHours is at least an empty list', async () => {
       const spy = {
         called: false,
         result: null
@@ -99,7 +124,7 @@ describe('Facility operations', () => {
         location: {
           address: 'Av. Example'
         },
-        typesOfWaste: null
+        typesOfWaste: ['000000000000000000000000']
         // openHours as undefined
       }
 
@@ -119,7 +144,6 @@ describe('Facility operations', () => {
       await model.addFacility(args)
 
       expect(spy.called).toEqual(true)
-      expect(spy.result.typesOfWaste).toEqual([])
       expect(spy.result.openHours).toEqual([])
     })
 
