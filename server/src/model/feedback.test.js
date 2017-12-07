@@ -24,15 +24,26 @@ describe('feedback querying', () => {
       const context = {
         Feedbacks: {
           find: () => ({
-            toArray: async () => [1, 2, 3]
+            limit: () => ({
+              toArray: async () => [
+                { _id: 'Example 1' },
+                { _id: 'Example 2' }
+              ]
+            })
           })
         }
       }
 
-      const model = createModel(context)
-      const result = await model.feedbacks()
+      const args = {
+        cursor: {
+          quantity: 10
+        }
+      }
 
-      expect(result).toEqual([1, 2, 3])
+      const model = createModel(context)
+      const result = await model.feedbacks(args)
+
+      expect(result.items).toEqual([{ _id: 'Example 1' }, { _id: 'Example 2' }])
     })
   })
 })

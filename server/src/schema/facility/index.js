@@ -187,10 +187,37 @@ export const schema = `
     # Indicates whether the operation was successful
     success: Boolean!
   }
+
+  # Represents the possible filters on facilities
+  input FacilityFilters {
+    # The pagination data
+    cursor: FilterCursors!
+
+    # Requirements related to location
+    location: LocationFilter
+
+    # The types of wast the facility has to support
+    hasTypesOfWaste: [ID]
+  }
+
+  # Filters on location data
+  input LocationFilter {
+    # Indicates roughly where the subject must be located
+    near: CoordinatesInput
+  }
+
+  # Represents the result of the facilities query
+  type FacilitiesPage {
+    # Cursor information for the next possible requests
+    cursors: PageCursors!
+
+    # The items found according to the query
+    items: [Facility]
+  }
 `
 export const queryExtension = `
   # The list of available facilities
-  facilities: [Facility]
+  facilities(filters: FacilityFilters!): FacilitiesPage
 
   # The facility with the given ID
   facility(_id: ID!): Facility
