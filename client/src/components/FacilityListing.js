@@ -23,7 +23,7 @@ const FacilityListing = ({ data: { loading, error, facilities } }) => {
         <hr/>
         <h3>Pontos de coleta</h3>
         <List>
-          { facilities.map(it =>
+          { facilities.items.map(it =>
             (<div key={it._id} className='facility'>
               <ListItem>
                 <Link to={it._id < 0 ? `/` : `facilities/${it._id}`}>
@@ -40,10 +40,23 @@ const FacilityListing = ({ data: { loading, error, facilities } }) => {
 }
 
 export const facilityListQuery = gql`
-  query FacilityListQuery {
-    facilities {
-      _id
-      name
+  query FacilityListQuery($after: Cursor, $before: Cursor) {
+    facilities(filters: {
+      cursor: {
+        after: $after
+        before: $before
+        quantity: 10
+      }
+    }) {
+      cursors {
+        after
+        before
+      }
+
+      items {
+        _id
+        name
+      }
     }
   }
 `
