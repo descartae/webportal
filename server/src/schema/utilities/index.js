@@ -4,10 +4,10 @@ import { Kind } from 'graphql'
 export const resolvers = {
   ID: {
     __parseValue (value) {
-      if (ObjectID.isValid(value)) {
+      if (ObjectId.isValid(value)) {
         return ObjectId(value)
       }
-      
+
       return null
     },
     __serialize (value) {
