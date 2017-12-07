@@ -13,21 +13,42 @@ export const seedDatabase = async ({ Facilities, Users, TypesOfWaste, Feedbacks 
         _id: new ObjectId(),
         name: 'Alumínio',
         description: 'Peças diversas feitas de alumínio',
-        icon: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallalluminium.png',
+        icons: {
+          iosSmallURL: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallalluminium.png',
+          iosMediumURL: 'http://example.com/aluminium.png',
+          iosLargeURL: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/ioslargealluminium.png',
+          androidSmallURL: 'http://example.com/aluminium.png',
+          androidMediumURL: 'http://example.com/aluminium.png',
+          androidLargeURL: 'http://example.com/aluminium.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Vidro',
         description: 'Pedaços de vidro ou itens compostos de vidro',
-        icon: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallglass.png',
+        icons: {
+          iosSmallURL: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallglass.png',
+          iosMediumURL: 'http://example.com/glass.png',
+          iosLargeURL: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/ioslargeglass.png',
+          androidSmallURL: 'http://example.com/glass.png',
+          androidMediumURL: 'http://example.com/glass.png',
+          androidLargeURL: 'http://example.com/glass.png'
+        },
         enabled: true
       },
       {
         _id: new ObjectId(),
         name: 'Papel',
         description: 'Descarte de folhas e itens feitos inteiramente de papel',
-        icon: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallpaper.png',
+        icons: {
+          iosSmallURL: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/iossmallpaper.png',
+          iosMediumURL: 'http://example.com/paper.png',
+          iosLargeURL: 'https://s3-sa-east-1.amazonaws.com/descartae/typesOfWaste/ioslargepaper.png',
+          androidSmallURL: 'http://example.com/paper.png',
+          androidMediumURL: 'http://example.com/paper.png',
+          androidLargeURL: 'http://example.com/paper.png'
+        },
         enabled: true
       }
     ]

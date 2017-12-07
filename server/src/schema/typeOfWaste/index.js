@@ -12,8 +12,18 @@ export const schema = `
     # The user-readable type description
     description: String!
 
-    # The icon URL
-    icon: String!
+    # The icons for this type
+    icons: IconSet!
+  }
+
+  type IconSet {
+    iosSmallURL: String!
+    iosMediumURL: String!
+    iosLargeURL: String!
+
+    androidSmallURL: String!
+    androidMediumURL: String!
+    androidLargeURL: String!
   }
 
   # Required data for type of waste creation
@@ -24,8 +34,18 @@ export const schema = `
     # The user-readable type description
     description: String!
 
-    # The icon URL
-    icon: String!
+    # The icons for this type
+    icons: IconSetInput!
+  }
+
+  input IconSetInput {
+    iosSmallURL: String!
+    iosMediumURL: String!
+    iosLargeURL: String!
+
+    androidSmallURL: String!
+    androidMediumURL: String!
+    androidLargeURL: String!
   }
 
   # The add operation result
@@ -63,8 +83,19 @@ export const schema = `
     # The user-readable type description
     description: String
 
-    # The icon URL
-    icon: String
+    # The icons for this type
+    icons: IconSetPatch!
+  }
+
+  # Represents what can be updated on a set of icons
+  input IconSetPatch {
+    iosSmallURL: String
+    iosMediumURL: String
+    iosLargeURL: String
+
+    androidSmallURL: String
+    androidMediumURL: String
+    androidLargeURL: String
   }
 
   # The required data to disable a type of waste

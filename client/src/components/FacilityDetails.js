@@ -116,7 +116,6 @@ export const facilityDetailsQuery = gql`
       typesOfWaste {
         _id
         name
-        icon
       }
       openHours {
         dayOfWeek
