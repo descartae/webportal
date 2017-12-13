@@ -48,14 +48,14 @@ class FacilityCreator extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { name, address, municipality, zip, state } = this.state;
+    const { name, address, municipality, state, zip } = this.state;
     await this.props.facilityCreationMutation({
       variables: {
         name,
         address,
         municipality,
-        zip,
-        state
+        state,
+        zip
       },
       refetchQueries: [{ query: facilityListQuery }]
     });
@@ -101,7 +101,7 @@ class FacilityCreator extends Component {
             />
           <input
               className='facilityZip'
-              value={this.state.Zip}
+              value={this.state.zip}
               onChange={(e) => this.setState({zip: e.target.value})}
               type='text'
               placeholder='Enter Facility Zip'
