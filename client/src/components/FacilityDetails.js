@@ -1,24 +1,12 @@
 import React from 'react';
 import NotFound from './NotFound';
 import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
-import ActionRoom from 'material-ui/svg-icons/action/room';
-import CommunicationCall from 'material-ui/svg-icons/communication/call';
-import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer';
-import ActionSchedule from 'material-ui/svg-icons/action/schedule';
-import {
     gql,
     graphql,
 } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { filter } from 'graphql-anywhere';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import FacilityPage from './FacilityPage';
 
 class FacilityDetails extends React.Component {
@@ -29,23 +17,23 @@ class FacilityDetails extends React.Component {
       error: PropTypes.object,
       Facility: PropTypes.object,
     }).isRequired,
-    router: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+//    params: PropTypes.object.isRequired,
   }
 
 
   render () {
+    console.log(this.props.data)
     if (this.props.data.loading) {
       return (<div>Loading</div>)
     }
 
     if (this.props.data.error) {
-      console.log(this.props.data)
       console.log(this.props.data.error)
       return (<div>An unexpected error occurred</div>)
     }
 
-    const facility = this.props.data.Facility
+    const facility = this.props.data.facility
 
     return (
       <div>
@@ -55,7 +43,7 @@ class FacilityDetails extends React.Component {
   }
 
   goBack = () => {
-    this.props.router.replace('/')
+    this.props.history.push('/');
   }
 }
 
@@ -70,7 +58,7 @@ const facilityDetailsQuery = gql`
 `;
 
 //export { FacilityDetails }
-
+{/*
 const FacilityDetailsWithData = graphql(facilityDetailsQuery, {
   options: (ownProps) => ({
     variables: { 
@@ -80,3 +68,11 @@ const FacilityDetailsWithData = graphql(facilityDetailsQuery, {
 })(withRouter(FacilityDetails));
 
 export default FacilityDetailsWithData; 
+*/} 
+
+export { FacilityDetails }
+export const FacilityDetailsWithData = graphql(facilityDetailsQuery, {
+  options: (props) => ({
+    variables: { facilityId: props.match.params.facilityId}
+  })
+})(withRouter(FacilityDetails));
