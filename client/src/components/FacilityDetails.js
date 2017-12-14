@@ -18,7 +18,6 @@ class FacilityDetails extends React.Component {
       Facility: PropTypes.object,
     }).isRequired,
     history: PropTypes.object.isRequired
-//    params: PropTypes.object.isRequired,
   }
 
 
@@ -37,7 +36,7 @@ class FacilityDetails extends React.Component {
 
     return (
       <div>
-        <FacilityPage faciilty={filter(FacilityPage.fragments.facility, facility)} handleCancel={this.goBack}/>
+        <FacilityPage facility={filter(FacilityPage.fragments.facility, facility)} handleCancel={this.goBack}/>
       </div>
     )
   }
@@ -50,25 +49,12 @@ class FacilityDetails extends React.Component {
 
 const facilityDetailsQuery = gql`
   query FacilityDetailsQuery($facilityId: ID!) {
-  Facility(_id: $facilityId) {
+  facility(_id: $facilityId) {
       ... FacilityPageFacility
     }
   }
   ${FacilityPage.fragments.facility}
 `;
-
-//export { FacilityDetails }
-{/*
-const FacilityDetailsWithData = graphql(facilityDetailsQuery, {
-  options: (ownProps) => ({
-    variables: { 
-      _id: ownProps.params.facilityId
-    }
-  })
-})(withRouter(FacilityDetails));
-
-export default FacilityDetailsWithData; 
-*/} 
 
 export { FacilityDetails }
 export const FacilityDetailsWithData = graphql(facilityDetailsQuery, {
