@@ -34,7 +34,6 @@ export default class FacilityDetails extends React.Component {
             typesOfWaste {
               _id
               name
-              icon
             }
             openHours {
               dayOfWeek
@@ -71,15 +70,14 @@ export default class FacilityDetails extends React.Component {
         <hr/>
         <p><ActionRoom /> Endereço: {this.props.facility.location.address}, {this.props.facility.location.municipality}, {this.props.facility.location.state} {this.props.facility.location.zip}</p>
         <p><CommunicationCall/> Contato: {this.props.facility.telephone}</p>
-        <p><strong>Tipo de resíduo</strong>:
+        <p><strong>Tipo de resíduo</strong>:</p>
         { this.props.facility.typesOfWaste.map(it => (
-          <p key={it._id} className='typesOfWastes'>
+          <div key={it._id} className='typesOfWastes'>
             {/* image fails to load
             <img src={it.icon} alt={it.name} /> */}
            <MapsLocalOffer/> {it.name}
-          </p>
+          </div>
         ))}
-        </p> 
         <br/>
         <Table
           header={state.height}
@@ -117,10 +115,11 @@ export default class FacilityDetails extends React.Component {
               </TableRow>
               ))}
           </TableBody>
-          <div className='flex justify-between'>
-            <button onClick={this.props.handleCancel}>Cancel</button>
-          </div>
         </Table>
+        <br/>
+        <div className='flex justify-between'>
+            <button onClick={this.props.handleCancel}>Cancel</button>
+        </div>
       </div>
     </div>
     )
