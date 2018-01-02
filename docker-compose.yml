@@ -1,35 +1,6 @@
 version: "2"
 
 services:
-  mongodb:
-    container_name: mongo.descartae
-    image: mongo:3.4
-    restart: always
-    command: --smallfiles --noprealloc
-    ports:
-      - 27017:27017
-    networks:
-      - descartae
-
-  webportal-server:
-    container_name: server.webportal.descartae
-    image: descartae/webportal-server
-    command: npm run build:watch
-    restart: always
-    volumes:
-      - ./server:/opt/app
-      - /opt/app/node_modules
-    ports:
-      - 4000:4000
-    environment:
-      - SERVER_PORT=4000
-      - JWT_SECRET=descartae
-      - MONGODB_URL=mongodb://mongodb:27017/webportal
-    depends_on:
-      - mongodb
-    networks:
-      - descartae
-
   webportal-client:
     container_name: client.webportal.descartae
     image: descartae/webportal-client
