@@ -3,6 +3,14 @@ import { gql, graphql } from 'react-apollo';
 import { facilityListQuery } from './FacilityListing'
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 const facilityCreationMutation = gql`
   mutation AddFacility(
@@ -11,7 +19,8 @@ const facilityCreationMutation = gql`
     $municipality: String!,
     $state: String!,
     $zip: String!,
-    $typeOfWaste: ID!
+    $typeOfWaste: [ID],
+    $openHours: [OpenTimeInput],
   ) {
   addFacility(input: {
     name: $name,
@@ -21,7 +30,8 @@ const facilityCreationMutation = gql`
       state: $state,
        zip: $zip
       },
-      typesOfWaste: [$typeOfWaste]
+      typesOfWaste: $typeOfWaste,
+      openHours: $openHours
     }) {
     success
     facility {
@@ -32,16 +42,22 @@ const facilityCreationMutation = gql`
 }
 `
 
+
 class FacilityCreator extends Component {
    constructor(props) {
     super(props);
+
     this.state = {
       name: '',
       address: '',
       municipality: '',
       state: '',
       zip: '',
-      typeOfWaste: ''
+      typeOfWaste: '',
+  //    dayOfWeek: ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
+  //    startTime: '',
+  //    endTime: '',
+      openHours: []
     };
   }
 
@@ -51,7 +67,7 @@ class FacilityCreator extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { name, address, municipality, zip, state, typeOfWaste } = this.state;
+    const { name, address, municipality, zip, state, typeOfWaste, openHours } = this.state;
     await this.props.facilityCreationMutation({
       variables: {
         name,
@@ -59,7 +75,11 @@ class FacilityCreator extends Component {
         municipality,
         state,
         zip,
-        typeOfWaste
+        typeOfWaste,
+        openHours
+   //     dayOfWeek,
+   //     startTime,
+   //     endTime
       },
       refetchQueries: [{ query: facilityListQuery }]
     });
@@ -69,6 +89,10 @@ class FacilityCreator extends Component {
     this.state.state = '';
     this.state.zip = '';
     this.state.typeOfWaste = '';
+//    this.state.dayOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+//    this.state.startTime = '';
+//    this.state.endTime = '';
+    this.state.openHours = [];
     this.props.history.push('/');
   }
   render() {
@@ -90,6 +114,22 @@ class FacilityCreator extends Component {
       )
     }
 
+    const state = {
+      fixedHeader: true,
+      stripedRows: false,
+      showRowHover: false,
+      selectable: false,
+      multiSelectable: false,
+      enableSelectAll: false,
+      deselectOnClickaway: false,
+      showCheckboxes: false,
+      height: '300px',
+    };
+
+
+  //  const daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
+    console.log("this.props: " + JSON.stringify(this.props));
+    console.log("openHours: " + JSON.stringify(this.state.openHours));
     return (
       <div className='container'>
         <strong>Create New Facility</strong>
@@ -130,14 +170,70 @@ class FacilityCreator extends Component {
               placeholder='Enter Facility Zip'
             />
           <select onChange={(e) => this.setState({ typeOfWaste: e.target.value })} value={this.state.typeOfWaste} className='facilityWaste'>
-            <option value="" disabled>Preferred Type of Waste</option>
+            <option value="" abled>Preferred Type of Waste</option>
             {typesOfWaste.map(it => <option key={it._id} value={it._id}>{it.name}</option>)}
           </select>
+          <br/>
+
+        <Table
+          header={state.height}
+          fixedHeader={state.fixedHeader}
+          selectable={state.selectable}
+          multiSelectable={state.multiSelectable}
+        >
+          <TableHeader
+            displaySelectAll={state.showCheckboxes}
+            adjustForCheckbox={state.showCheckboxes}
+            enableSelectAll={state.enableSelectAll}
+          >
+            <TableRow>
+              <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
+                Horários
+              </TableHeaderColumn>
+            </TableRow>
+            <TableRow>
+              <TableHeaderColumn>Dias</TableHeaderColumn>
+              <TableHeaderColumn>Começar</TableHeaderColumn>
+              <TableHeaderColumn>Fim</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody
+            displayRowCheckbox={state.showCheckboxes}
+            deselectOnClickaway={state.deselectOnClickaway}
+            showRowHover={state.showRowHover}
+            stripedRows={state.stripedRows}
+          >
+            {this.state.openHours.map(it => (
+              <TableRow key={it.dayOfWeek}>
+                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
+                <TableRowColumn>
+                  <input
+                    className='facilityStartTime'
+                    value={this.state.openHours.startTime}
+                    onChange={(e) => this.setState({startTime: e.target.value})}
+                    type='text'
+                    placeholder='Enter Start Time'
+                  />
+                </TableRowColumn>
+<TableRowColumn>
+                  <input
+                    className='facilityEndTime'
+                    value={this.state.openHours.endTime}
+                    onChange={(e) => this.setState({endTime: e.target.value})}
+                    type='text'
+                    placeholder='Enter End Time'
+                  />
+                </TableRowColumn>
+              </TableRow>
+              ))}
+            </TableBody>
+          </Table>
           <button
           type='submit'
           >
             Save
           </button>
+
         </form>
       </div>
     )
