@@ -42,6 +42,19 @@ const facilityCreationMutation = gql`
 }
 `
 
+function generateEmptyCalendar() {
+  var calendar = [];
+  for (var day of ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]) {
+    calendar.push({
+      dayOfWeek: day,
+      startTime: '',
+      endTime: '',
+    });
+  }
+  console.log(calendar);
+  return calendar;
+}
+
 
 class FacilityCreator extends Component {
    constructor(props) {
@@ -54,10 +67,10 @@ class FacilityCreator extends Component {
       state: '',
       zip: '',
       typeOfWaste: '',
-  //    dayOfWeek: ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
-  //    startTime: '',
-  //    endTime: '',
-      openHours: []
+      calendar: generateEmptyCalendar(),
+      daysOfWeek: ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
+      startTime: '',
+      endTime: '',
     };
   }
 
@@ -67,7 +80,7 @@ class FacilityCreator extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { name, address, municipality, zip, state, typeOfWaste, openHours } = this.state;
+    const { name, address, municipality, zip, state, typeOfWaste, daysOfWeek, startTime, endTime, calendar } = this.state;
     await this.props.facilityCreationMutation({
       variables: {
         name,
@@ -76,10 +89,10 @@ class FacilityCreator extends Component {
         state,
         zip,
         typeOfWaste,
-        openHours
-   //     dayOfWeek,
-   //     startTime,
-   //     endTime
+        calendar,
+        daysOfWeek,
+        startTime,
+        endTime
       },
       refetchQueries: [{ query: facilityListQuery }]
     });
@@ -89,10 +102,10 @@ class FacilityCreator extends Component {
     this.state.state = '';
     this.state.zip = '';
     this.state.typeOfWaste = '';
-//    this.state.dayOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
-//    this.state.startTime = '';
-//    this.state.endTime = '';
-    this.state.openHours = [];
+    this.state.calendar = generateEmptyCalendar();
+    this.state.daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+    this.state.startTime = '';
+    this.state.endTime = '';
     this.props.history.push('/');
   }
   render() {
@@ -128,8 +141,8 @@ class FacilityCreator extends Component {
 
 
   //  const daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
-    console.log("this.props: " + JSON.stringify(this.props));
-    console.log("openHours: " + JSON.stringify(this.state.openHours));
+//    console.log("this.props: " + JSON.stringify(this.props));
+//    console.log("openHours: " + JSON.stringify(this.state.daysOfWeek));
     return (
       <div className='container'>
         <strong>Create New Facility</strong>
@@ -203,14 +216,18 @@ class FacilityCreator extends Component {
             showRowHover={state.showRowHover}
             stripedRows={state.stripedRows}
           >
-            {this.state.openHours.map(it => (
+            {this.state.calendar.map((it, idx) => (
               <TableRow key={it.dayOfWeek}>
                 <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
                 <TableRowColumn>
                   <input
                     className='facilityStartTime'
-                    value={this.state.openHours.startTime}
-                    onChange={(e) => this.setState({startTime: e.target.value})}
+                    value={it.startTime}
+                    onChange={(e) => { 
+                      var obj = {calendar: this.state.calendar}; //set key 'calendar' to this.state.calendar inside an object
+                      obj.calendar[idx].startTime = e.target.value;
+                      this.setState(obj) // pass object into setState to update this.state
+                    }}
                     type='text'
                     placeholder='Enter Start Time'
                   />
@@ -218,8 +235,12 @@ class FacilityCreator extends Component {
 <TableRowColumn>
                   <input
                     className='facilityEndTime'
-                    value={this.state.openHours.endTime}
-                    onChange={(e) => this.setState({endTime: e.target.value})}
+                    value={it.endTime}
+                    onChange={(e) => { 
+                      var obj = {calendar: this.state.calendar};
+                      obj.calendar[idx].endTime = e.target.value;
+                      this.setState(obj)
+                    }}
                     type='text'
                     placeholder='Enter End Time'
                   />
