@@ -21,7 +21,7 @@ const FacilityListing = ({ data: { loading, error, facilities } }) => {
         <FacilityCreator/>
         <br/>
         <hr/>
-        <h3>Pontos de coleta</h3>
+        <h3>Facilities</h3>
         <List>
           { facilities.items.map(it =>
             (<div key={it._id} className='facility'>
