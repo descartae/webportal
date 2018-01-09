@@ -49,16 +49,16 @@ const style = {
 }
 
 function generateEmptyCalendar() {
-  var calendar = [];
+  var openHours = [];
   for (var day of ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]) {
-    calendar.push({
+    openHours.push({
       dayOfWeek: day,
       startTime: '',
       endTime: '',
     });
   }
-  console.log(calendar);
-  return calendar;
+  console.log(openHours);
+  return openHours;
 }
 
 
@@ -73,7 +73,7 @@ class FacilityCreator extends Component {
       state: '',
       zip: '',
       typesOfWaste: [],
-      calendar: generateEmptyCalendar(),
+      openHours: generateEmptyCalendar(),
       daysOfWeek: ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
       startTime: '',
       endTime: '',
@@ -86,7 +86,7 @@ class FacilityCreator extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { name, address, municipality, zip, state, typesOfWaste, daysOfWeek, startTime, endTime, calendar } = this.state;
+    const { name, address, municipality, zip, state, typesOfWaste, daysOfWeek, startTime, endTime, openHours } = this.state;
     await this.props.facilityCreationMutation({
       variables: {
         name,
@@ -95,21 +95,18 @@ class FacilityCreator extends Component {
         state,
         zip,
         typesOfWaste,
-        calendar,
-        daysOfWeek,
-        startTime,
-        endTime
+        openHours
       },
       refetchQueries: [{ query: facilityListQuery }]
     });
-    console.log(this.state.calendar);
+    console.log(this.state.openHours);
     this.state.name = '';
     this.state.address = '';
     this.state.municipality = '';
     this.state.state = '';
     this.state.zip = '';
     this.state.typesOfWaste = [];
-    this.state.calendar = generateEmptyCalendar();
+    this.state.openHours = generateEmptyCalendar();
     this.state.daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
     this.state.startTime = '';
     this.state.endTime = '';
@@ -241,7 +238,7 @@ class FacilityCreator extends Component {
               showRowHover={state.showRowHover}
               stripedRows={state.stripedRows}
             >
-              {this.state.calendar.map((it, idx) => (
+              {this.state.openHours.map((it, idx) => (
                 <TableRow key={it.dayOfWeek}>
                   <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
                   <TableRowColumn>
@@ -249,8 +246,8 @@ class FacilityCreator extends Component {
                       className='facilityStartTime'
                       value={it.startTime}
                       onChange={(e) => { 
-                        var obj = {calendar: this.state.calendar}; //set key 'calendar' to this.state.calendar inside an object
-                        obj.calendar[idx].startTime = e.target.value;
+                        var obj = {openHours: this.state.openHours}; //set key 'openHours' to this.state.openHours inside an object
+                        obj.openHours[idx].startTime = e.target.value;
                         this.setState(obj) // pass object into setState to update this.state
                       }}
                       type='text'
@@ -262,8 +259,8 @@ class FacilityCreator extends Component {
                       className='facilityEndTime'
                       value={it.endTime}
                       onChange={(e) => { 
-                        var obj = {calendar: this.state.calendar};
-                        obj.calendar[idx].endTime = e.target.value;
+                        var obj = {openHours: this.state.openHours}; //set key 'openHours' to this.state.openHours inside an object
+                        obj.openHours[idx].endTime = e.target.value;
                         this.setState(obj)
                       }}
                       type='text'
