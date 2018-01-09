@@ -13,6 +13,7 @@ import {
 } from 'material-ui/Table';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const facilityCreationMutation = gql`
   mutation AddFacility(
@@ -43,6 +44,9 @@ const facilityCreationMutation = gql`
   }
 }
 `
+const style = {
+  margin: 12,
+}
 
 function generateEmptyCalendar() {
   var calendar = [];
@@ -98,6 +102,7 @@ class FacilityCreator extends Component {
       },
       refetchQueries: [{ query: facilityListQuery }]
     });
+    console.log(this.state.calendar);
     this.state.name = '';
     this.state.address = '';
     this.state.municipality = '';
@@ -153,13 +158,10 @@ class FacilityCreator extends Component {
       enableSelectAll: false,
       deselectOnClickaway: false,
       showCheckboxes: false,
-      height: '300px',
+      height: '100px',
     };
 
 
-  //  const daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
-//    console.log("this.props: " + JSON.stringify(this.props));
-//    console.log("openHours: " + JSON.stringify(this.state.daysOfWeek));
     return (
       <div className='container'>
         <strong>Create New Facility</strong>
@@ -199,12 +201,7 @@ class FacilityCreator extends Component {
               type='text'
               placeholder='Enter Facility Zip'
             />
-{/*           <select onChange={(e) => this.setState({ typesOfWaste: e.target.value })} value={this.state.typeOfWaste} className='facilityWaste'>
-            <option value="" abled>Preferred Type of Waste</option>
-            {typesOfWaste.map(it => <option key={it._id} value={it._id}>{it.name}</option>)}
-          </select>
           <br/>
-*/}
          <SelectField 
           multiple={true}
           hintText="Select Type(s) Of Waste"
@@ -216,72 +213,74 @@ class FacilityCreator extends Component {
          </SelectField>
           <br/>
 
-        <Table
-          header={state.height}
-          fixedHeader={state.fixedHeader}
-          selectable={state.selectable}
-          multiSelectable={state.multiSelectable}
-        >
-          <TableHeader
-            displaySelectAll={state.showCheckboxes}
-            adjustForCheckbox={state.showCheckboxes}
-            enableSelectAll={state.enableSelectAll}
+          <Table
+            header={state.height}
+            fixedHeader={state.fixedHeader}
+            selectable={state.selectable}
+            multiSelectable={state.multiSelectable}
           >
-            <TableRow>
-              <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
-                Horários
-              </TableHeaderColumn>
-            </TableRow>
-            <TableRow>
-              <TableHeaderColumn>Dias</TableHeaderColumn>
-              <TableHeaderColumn>Começar</TableHeaderColumn>
-              <TableHeaderColumn>Fim</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            displayRowCheckbox={state.showCheckboxes}
-            deselectOnClickaway={state.deselectOnClickaway}
-            showRowHover={state.showRowHover}
-            stripedRows={state.stripedRows}
-          >
-            {this.state.calendar.map((it, idx) => (
-              <TableRow key={it.dayOfWeek}>
-                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
-                <TableRowColumn>
-                  <input
-                    className='facilityStartTime'
-                    value={it.startTime}
-                    onChange={(e) => { 
-                      var obj = {calendar: this.state.calendar}; //set key 'calendar' to this.state.calendar inside an object
-                      obj.calendar[idx].startTime = e.target.value;
-                      this.setState(obj) // pass object into setState to update this.state
-                    }}
-                    type='text'
-                    placeholder='Enter Start Time'
-                  />
-                </TableRowColumn>
-<TableRowColumn>
-                  <input
-                    className='facilityEndTime'
-                    value={it.endTime}
-                    onChange={(e) => { 
-                      var obj = {calendar: this.state.calendar};
-                      obj.calendar[idx].endTime = e.target.value;
-                      this.setState(obj)
-                    }}
-                    type='text'
-                    placeholder='Enter End Time'
-                  />
-                </TableRowColumn>
+            <TableHeader
+              displaySelectAll={state.showCheckboxes}
+              adjustForCheckbox={state.showCheckboxes}
+              enableSelectAll={state.enableSelectAll}
+            >
+              <TableRow>
+                <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
+                  Horários
+                </TableHeaderColumn>
               </TableRow>
+              <TableRow>
+                <TableHeaderColumn>Dias</TableHeaderColumn>
+                <TableHeaderColumn>Começar</TableHeaderColumn>
+                <TableHeaderColumn>Fim</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody
+              displayRowCheckbox={state.showCheckboxes}
+              deselectOnClickaway={state.deselectOnClickaway}
+              showRowHover={state.showRowHover}
+              stripedRows={state.stripedRows}
+            >
+              {this.state.calendar.map((it, idx) => (
+                <TableRow key={it.dayOfWeek}>
+                  <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
+                  <TableRowColumn>
+                    <input
+                      className='facilityStartTime'
+                      value={it.startTime}
+                      onChange={(e) => { 
+                        var obj = {calendar: this.state.calendar}; //set key 'calendar' to this.state.calendar inside an object
+                        obj.calendar[idx].startTime = e.target.value;
+                        this.setState(obj) // pass object into setState to update this.state
+                      }}
+                      type='text'
+                      placeholder='Enter Start Time'
+                    />
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <input
+                      className='facilityEndTime'
+                      value={it.endTime}
+                      onChange={(e) => { 
+                        var obj = {calendar: this.state.calendar};
+                        obj.calendar[idx].endTime = e.target.value;
+                        this.setState(obj)
+                      }}
+                      type='text'
+                      placeholder='Enter End Time'
+                    />
+                  </TableRowColumn>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
-          <button
-          type='submit'
+          <RaisedButton
+            type='submit'
+            primary={true} 
+            style={style}
           >
             Save
-          </button>
+          </RaisedButton>
 
         </form>
       </div>
