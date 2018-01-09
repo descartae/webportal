@@ -251,7 +251,7 @@ class FacilityCreator extends Component {
                         this.setState(obj) // pass object into setState to update this.state
                       }}
                       type='text'
-                      placeholder='Enter Start Time'
+                      placeholder='HHMM'
                     />
                   </TableRowColumn>
                   <TableRowColumn>
@@ -264,7 +264,7 @@ class FacilityCreator extends Component {
                         this.setState(obj)
                       }}
                       type='text'
-                      placeholder='Enter End Time'
+                      placeholder='HHMM'
                     />
                   </TableRowColumn>
                 </TableRow>
