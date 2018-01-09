@@ -11,6 +11,8 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 const facilityCreationMutation = gql`
   mutation AddFacility(
@@ -19,7 +21,7 @@ const facilityCreationMutation = gql`
     $municipality: String!,
     $state: String!,
     $zip: String!,
-    $typeOfWaste: [ID],
+    $typesOfWaste: [ID],
     $openHours: [OpenTimeInput],
   ) {
   addFacility(input: {
@@ -30,7 +32,7 @@ const facilityCreationMutation = gql`
       state: $state,
        zip: $zip
       },
-      typesOfWaste: $typeOfWaste,
+      typesOfWaste: $typesOfWaste,
       openHours: $openHours
     }) {
     success
@@ -66,7 +68,7 @@ class FacilityCreator extends Component {
       municipality: '',
       state: '',
       zip: '',
-      typeOfWaste: '',
+      typesOfWaste: [],
       calendar: generateEmptyCalendar(),
       daysOfWeek: ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
       startTime: '',
@@ -80,7 +82,7 @@ class FacilityCreator extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { name, address, municipality, zip, state, typeOfWaste, daysOfWeek, startTime, endTime, calendar } = this.state;
+    const { name, address, municipality, zip, state, typesOfWaste, daysOfWeek, startTime, endTime, calendar } = this.state;
     await this.props.facilityCreationMutation({
       variables: {
         name,
@@ -88,7 +90,7 @@ class FacilityCreator extends Component {
         municipality,
         state,
         zip,
-        typeOfWaste,
+        typesOfWaste,
         calendar,
         daysOfWeek,
         startTime,
@@ -101,15 +103,30 @@ class FacilityCreator extends Component {
     this.state.municipality = '';
     this.state.state = '';
     this.state.zip = '';
-    this.state.typeOfWaste = '';
+    this.state.typesOfWaste = [];
     this.state.calendar = generateEmptyCalendar();
     this.state.daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
     this.state.startTime = '';
     this.state.endTime = '';
     this.props.history.push('/');
   }
+
+  handleChange = (event, index, typesOfWaste) => this.setState({typesOfWaste});
+
+  menuItems(typesOfWaste) {
+    return typesOfWaste.map((it) => (
+      <MenuItem
+        key={it._id}
+        insetChildren={true}
+        checked={this.state.typesOfWaste.indexOf(it._id) > -1}
+        value={it._id}
+        primaryText={it.name}
+      />
+    ));
+  }
+
   render() {
-    const { loading, error, typesOfWaste } = this.props.typeOfWasteListQuery
+    const { loading, error, typesOfWaste } = this.props.typesOfWasteListQuery
 
     if (loading) {
       return (
@@ -182,10 +199,21 @@ class FacilityCreator extends Component {
               type='text'
               placeholder='Enter Facility Zip'
             />
-          <select onChange={(e) => this.setState({ typeOfWaste: e.target.value })} value={this.state.typeOfWaste} className='facilityWaste'>
+{/*           <select onChange={(e) => this.setState({ typesOfWaste: e.target.value })} value={this.state.typeOfWaste} className='facilityWaste'>
             <option value="" abled>Preferred Type of Waste</option>
             {typesOfWaste.map(it => <option key={it._id} value={it._id}>{it.name}</option>)}
           </select>
+          <br/>
+*/}
+         <SelectField 
+          multiple={true}
+          hintText="Select Type(s) Of Waste"
+          value={this.state.typesOfWaste}
+          onChange={this.handleChange}
+          className='facilityWaste'
+         >
+          {this.menuItems(typesOfWaste)}
+         </SelectField>
           <br/>
 
         <Table
@@ -261,7 +289,7 @@ class FacilityCreator extends Component {
   }
 }
 
-export const typeOfWasteListQuery = gql`
+export const typesOfWasteListQuery = gql`
   query TypeOfWasteListQuery {
     typesOfWaste {
       _id
@@ -270,4 +298,4 @@ export const typeOfWasteListQuery = gql`
   }
 `
 
-export default graphql(typeOfWasteListQuery, {name: 'typeOfWasteListQuery'})(graphql(facilityCreationMutation, {name: 'facilityCreationMutation'})(withRouter(FacilityCreator)));
+export default graphql(typesOfWasteListQuery, {name: 'typesOfWasteListQuery'})(graphql(facilityCreationMutation, {name: 'facilityCreationMutation'})(withRouter(FacilityCreator)));
