@@ -1,8 +1,7 @@
 import React, {Component}  from 'react';
 import { gql, graphql } from 'react-apollo';
-import { facilityListQuery } from './FacilityListing'
+import { facilityListQuery } from './FacilityListing';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {
   Table,
   TableBody,
@@ -63,6 +62,7 @@ function generateEmptyCalendar() {
 
 
 class FacilityCreator extends Component {
+
    constructor(props) {
     super(props);
 
@@ -80,10 +80,6 @@ class FacilityCreator extends Component {
     };
   }
 
- static propTypes = {
-    history: PropTypes.object.isRequired,
-  }
-
   async onSubmit(e) {
     e.preventDefault();
     const { name, address, municipality, zip, state, typesOfWaste, daysOfWeek, startTime, endTime, openHours } = this.state;
@@ -99,7 +95,6 @@ class FacilityCreator extends Component {
       },
       refetchQueries: [{ query: facilityListQuery }]
     });
-    console.log(this.state.openHours);
     this.state.name = '';
     this.state.address = '';
     this.state.municipality = '';
@@ -110,7 +105,7 @@ class FacilityCreator extends Component {
     this.state.daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
     this.state.startTime = '';
     this.state.endTime = '';
-    this.props.history.push('/');
+    this.props.history.go('0');
   }
 
   handleChange = (event, index, typesOfWaste) => this.setState({typesOfWaste});
