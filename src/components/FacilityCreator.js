@@ -46,10 +46,6 @@ const facilityCreationMutation = gql`
   }
 }
 `
-const style = {
-  margin: 12,
-}
-
 const customContentStyle = {
   width: '80%',
   maxWidth: 'none',
@@ -99,7 +95,7 @@ class FacilityCreator extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { name, address, municipality, zip, state, typesOfWaste, daysOfWeek, startTime, endTime, openHours } = this.state;
+    const { name, address, municipality, zip, state, typesOfWaste, openHours } = this.state;
     await this.props.facilityCreationMutation({
       variables: {
         name,
@@ -119,9 +115,6 @@ class FacilityCreator extends Component {
     this.state.zip = '';
     this.state.typesOfWaste = [];
     this.state.openHours = generateEmptyCalendar();
-    this.state.daysOfWeek = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
-    this.state.startTime = '';
-    this.state.endTime = '';
     this.props.history.go('0');
   }
 
