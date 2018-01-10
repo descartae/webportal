@@ -15,6 +15,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 const facilityCreationMutation = gql`
   mutation AddFacility(
@@ -49,6 +50,11 @@ const style = {
   margin: 12,
 }
 
+const customContentStyle = {
+  width: '80%',
+  maxWidth: 'none',
+};
+
 function generateEmptyCalendar() {
   var openHours = [];
   for (var day of ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]) {
@@ -65,22 +71,11 @@ function generateEmptyCalendar() {
 
 class FacilityCreator extends Component {
   
-  state = {
-    open: false,
-  };
-
-  handleOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleClose = () => {
-    this.setState({open: false});
-  };
-
   constructor(props) {
     super(props);
 
     this.state = {
+      open: false,
       name: '',
       address: '',
       municipality: '',
@@ -93,6 +88,14 @@ class FacilityCreator extends Component {
       endTime: '',
     };
   }
+
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
 
   async onSubmit(e) {
     e.preventDefault();
@@ -144,6 +147,13 @@ class FacilityCreator extends Component {
         primary={true}
         onClick={this.handleClose}
       />,
+      <RaisedButton
+        type="submit"
+        label="Save"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleClose}
+      />
     ];
 
     const { loading, error, typesOfWaste } = this.props.typesOfWasteListQuery
@@ -182,51 +192,48 @@ class FacilityCreator extends Component {
         <RaisedButton label="Create New Facility" onClick={this.handleOpen} />
         <Dialog
           title="Create New Facility"
-          actions={actions}
-          modal={false}
+          modal={true}
+          contentStyle={customContentStyle}
           open={this.state.open}
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
-        
-      <div className='container'>
         <form onSubmit={this.onSubmit.bind(this)}>
-          <input
+          <TextField
             className='facilityName'
             value={this.state.name}
             onChange={(e) => this.setState({name: e.target.value})}
-            type='text'
-            placeholder='Enter Facility Name'
-          />
-          <input
-              className='facilityAddress '
-              value={this.state.address}
-              onChange={(e) => this.setState({address: e.target.value})}
-              type='text'
-              placeholder='Enter Facility Address'
-          />
-          <input
-              className='facilityMunicipality'
-              value={this.state.municipality}
-              onChange={(e) => this.setState({municipality: e.target.value})}
-              type='text'
-              placeholder='Enter Facility Municipality'
-            />
-          <input
-              className='facilityState'
-              value={this.state.state}
-              onChange={(e) => this.setState({state: e.target.value})}
-              type='text'
-              placeholder='Enter Facility State'
-            />
-          <input
-              className='facilityZip'
-              value={this.state.zip}
-              onChange={(e) => this.setState({zip: e.target.value})}
-              type='text'
-              placeholder='Enter Facility Zip'
-            />
-          <br/>
+            hintText='Facility Name'
+            type='Facility Name'
+          /><br/>
+          <TextField
+            className='facilityAddress'
+            value={this.state.address}
+            onChange={(e) => this.setState({address: e.target.value})}
+            hintText='Address'
+            type='Address'
+          /><br/>
+          <TextField
+            className='facilityMunicipality'
+            value={this.state.municipality}
+            onChange={(e) => this.setState({municipality: e.target.value})}
+            hintText='Municipality'
+            type='Municipality'
+           /><br/>
+          <TextField
+            className='facilityState'
+            value={this.state.state}
+            onChange={(e) => this.setState({state: e.target.value})}
+            hintText='State'
+            type='State'
+          /><br/>
+          <TextField
+            className='facilityZip'
+            value={this.state.zip}
+            onChange={(e) => this.setState({zip: e.target.value})}
+            hintText='Zip'
+            type='Zip'
+           /><br/>
          <SelectField 
           multiple={true}
           hintText="Select Type(s) Of Waste"
@@ -270,7 +277,7 @@ class FacilityCreator extends Component {
                 <TableRow key={it.dayOfWeek}>
                   <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
                   <TableRowColumn>
-                    <input
+                    <TextField
                       className='facilityStartTime'
                       value={it.startTime}
                       onChange={(e) => { 
@@ -278,12 +285,12 @@ class FacilityCreator extends Component {
                         obj.openHours[idx].startTime = e.target.value;
                         this.setState(obj) // pass object into setState to update this.state
                       }}
-                      type='text'
-                      placeholder='HHMM'
+                      hintText='HHMM'
                     />
+                    <br/><br/>
                   </TableRowColumn>
                   <TableRowColumn>
-                    <input
+                    <TextField
                       className='facilityEndTime'
                       value={it.endTime}
                       onChange={(e) => { 
@@ -291,24 +298,18 @@ class FacilityCreator extends Component {
                         obj.openHours[idx].endTime = e.target.value;
                         this.setState(obj)
                       }}
-                      type='text'
-                      placeholder='HHMM'
+                      hintText='HHMM'
                     />
+                    <br/><br/>
                   </TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-          <RaisedButton
-            type='submit'
-            primary={true} 
-            style={style}
-          >
-            Save
-          </RaisedButton>
-
-        </form>
-      </div>
+          <div style={{ textAlign: 'right', padding: 8, margin: '24px -24px -24px -24px' }}>
+            {actions}
+          </div>
+          </form>
         </Dialog>
       </div>
     )
