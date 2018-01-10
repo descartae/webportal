@@ -13,6 +13,8 @@ import {
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 const facilityCreationMutation = gql`
   mutation AddFacility(
@@ -62,8 +64,20 @@ function generateEmptyCalendar() {
 
 
 class FacilityCreator extends Component {
+  
+  state = {
+    open: false,
+  };
 
-   constructor(props) {
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -123,6 +137,15 @@ class FacilityCreator extends Component {
   }
 
   render() {
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+    ];
+
     const { loading, error, typesOfWaste } = this.props.typesOfWasteListQuery
 
     if (loading) {
@@ -156,7 +179,17 @@ class FacilityCreator extends Component {
 
     return (
       <div className='container'>
-        <strong>Create New Facility</strong>
+        <RaisedButton label="Create New Facility" onClick={this.handleOpen} />
+        <Dialog
+          title="Create New Facility"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
+        >
+        
+      <div className='container'>
         <form onSubmit={this.onSubmit.bind(this)}>
           <input
             className='facilityName'
@@ -275,6 +308,8 @@ class FacilityCreator extends Component {
           </RaisedButton>
 
         </form>
+      </div>
+        </Dialog>
       </div>
     )
   }
