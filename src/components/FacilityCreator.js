@@ -200,7 +200,7 @@ class FacilityCreator extends Component {
         >
         <form onSubmit={this.onSubmit.bind(this)}>
           <TextField
-            className='facilityName'
+            className='nameOfFacility'
             value={this.state.name}
             onChange={(e) => this.setState({name: e.target.value})}
             hintText='Facility Name'
@@ -258,13 +258,13 @@ class FacilityCreator extends Component {
             >
               <TableRow>
                 <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
-                  Horários
+                  Schedule
                 </TableHeaderColumn>
               </TableRow>
               <TableRow>
-                <TableHeaderColumn>Dias</TableHeaderColumn>
-                <TableHeaderColumn>Começar</TableHeaderColumn>
-                <TableHeaderColumn>Fim</TableHeaderColumn>
+                <TableHeaderColumn>Day</TableHeaderColumn>
+                <TableHeaderColumn>Open</TableHeaderColumn>
+                <TableHeaderColumn>Close</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody
