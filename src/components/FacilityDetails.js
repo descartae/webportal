@@ -68,9 +68,9 @@ export default class FacilityDetails extends React.Component {
       <div className='facilityDetails'>
         <h3>{this.props.facility.name}</h3>
         <hr/>
-        <p><ActionRoom /> Endereço: {this.props.facility.location.address}, {this.props.facility.location.municipality}, {this.props.facility.location.state} {this.props.facility.location.zip}</p>
-        <p><CommunicationCall/> Contato: {this.props.facility.telephone}</p>
-        <p><strong>Tipo de resíduo</strong>:</p>
+        <p><ActionRoom /> Address: {this.props.facility.location.address}, {this.props.facility.location.municipality}, {this.props.facility.location.state} {this.props.facility.location.zip}</p>
+        <p><CommunicationCall/> Contact: {this.props.facility.telephone}</p>
+        <p><strong>Types of Waste</strong>:</p>
         { this.props.facility.typesOfWaste.map(it => (
           <div key={it._id} className='typesOfWastes'>
             {/* image fails to load
@@ -92,13 +92,13 @@ export default class FacilityDetails extends React.Component {
           >
             <TableRow>
               <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
-                <ActionSchedule/> Horários
+                <ActionSchedule/> Schedule
               </TableHeaderColumn>
             </TableRow>
             <TableRow>
-              <TableHeaderColumn>Dias</TableHeaderColumn>
-              <TableHeaderColumn>Começar</TableHeaderColumn>
-              <TableHeaderColumn>Fim</TableHeaderColumn>
+              <TableHeaderColumn>Day</TableHeaderColumn>
+              <TableHeaderColumn>Open</TableHeaderColumn>
+              <TableHeaderColumn>Close</TableHeaderColumn>
             </TableRow>
           </TableHeader>         
           <TableBody
