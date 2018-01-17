@@ -20,7 +20,6 @@ class FacilityPage extends React.Component {
     history: PropTypes.object.isRequired
   }
 
-
   render () {
     console.log(this.props.data)
     if (this.props.data.loading) {
@@ -36,7 +35,11 @@ class FacilityPage extends React.Component {
 
     return (
       <div>
-        <FacilityDetails facility={filter(FacilityDetails.fragments.facility, facility)} handleCancel={this.goBack}/>
+        <FacilityDetails 
+          facility={filter(FacilityDetails.fragments.facility, facility)} 
+          handleCancel={this.goBack}
+          afterChange={this.goBack}  
+        />
       </div>
     )
   }
@@ -49,7 +52,7 @@ class FacilityPage extends React.Component {
 
 const facilityPageQuery = gql`
   query FacilityPageQuery($facilityId: ID!) {
-  facility(_id: $facilityId) {
+    facility(_id: $facilityId) {
       ... FacilityDetailsFacility
     }
   }

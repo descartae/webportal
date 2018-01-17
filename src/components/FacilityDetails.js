@@ -1,7 +1,6 @@
-import React from 'react';
-import { propType } from 'graphql-anywhere';
-import gql from 'graphql-tag';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import { gql, graphql } from 'react-apollo';
+import { withRouter } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -14,58 +13,55 @@ import ActionRoom from 'material-ui/svg-icons/action/room';
 import CommunicationCall from 'material-ui/svg-icons/communication/call';
 import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer';
 import ActionSchedule from 'material-ui/svg-icons/action/schedule';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
+import UpdateFacility from './UpdateFacility';
 
-export default class FacilityDetails extends React.Component {
+const style = {
+  margin: 12,
+};
 
-
-  static fragments = {
-    facility: gql`
-      fragment FacilityDetailsFacility on Facility {
-            _id
-            name
-            telephone
-            website
-            location {
-              address
-              municipality
-              state
-              zip
-            }
-            typesOfWaste {
-              _id
-              name
-            }
-            openHours {
-              dayOfWeek
-              startTime
-              endTime
-            }
-          }
-    `
+const facilityDetailsQuery = gql`
+  query FacilityDetails($_id:ID!) {
+    facility(_id:$_id) {
+      _id
+      name
+      telephone
+      location {
+        municipality
+        state
+        zip
+      }
+      typesOfWaste {_id}
+      openHours {dayOfWeek}
+    }
   }
+`
 
-  static propTypes = {
-    facility: propType(FacilityDetails.fragments.facility).isRequired,
-    handleCancel: PropTypes.func.isRequired,
+class FacilityDetails extends Component {
+  constructor(props) {
+    super(props);
   }
-
+  
   render () {
-
-    const state = {
+     const state = {
       fixedHeader: true,
-      stripedRows: false,      
-      showRowHover: false,       
-      selectable: false,   
-      multiSelectable: false,     
+      stripedRows: false,
+      showRowHover: false,
+      selectable: false,
+      multiSelectable: false,
       enableSelectAll: false,
-      deselectOnClickaway: false,    
-      showCheckboxes: false, 
-      height: '300px',    
+      deselectOnClickaway: false,
+      showCheckboxes: false,
+      height: '100px',
     };
 
     return (
-<div className='container'>
+    <div className='container'>
       <div className='facilityDetails'>
+        <UpdateFacility/>
         <h3>{this.props.facility.name}</h3>
         <hr/>
         <p><ActionRoom /> Address: {this.props.facility.location.address}, {this.props.facility.location.municipality}, {this.props.facility.location.state} {this.props.facility.location.zip}</p>
@@ -117,11 +113,14 @@ export default class FacilityDetails extends React.Component {
           </TableBody>
         </Table>
         <br/>
-        <div className='flex justify-between'>
-            <button onClick={this.props.handleCancel}>Cancel</button>
-        </div>
+
       </div>
     </div>
     )
   }
-}; 
+
+};
+
+const FacilityDetailsWithMutations =  graphql(facilityDetailsQuery, {name : 'facilityDetailsQuery'})(withRouter(FacilityDetails))
+
+export default FacilityDetailsWithMutations
