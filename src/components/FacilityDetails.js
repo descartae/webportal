@@ -10,7 +10,7 @@ import {
 } from 'material-ui/Table';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import UpdateFacility from './UpdateFacility';
+import FacilityPage from './FacilityPage';
 import NotFound from './NotFound';
 
 const style = {
@@ -95,7 +95,7 @@ const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
             </TableBody>
           </Table>
           <br/>
-          <UpdateFacility facility={facility}/> 
+          <FacilityPage facility={facility}/> 
         </div>
       </div>
       )
