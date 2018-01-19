@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { gql, graphql } from 'react-apollo';
-import { withRouter } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -9,44 +8,30 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import ActionRoom from 'material-ui/svg-icons/action/room';
-import CommunicationCall from 'material-ui/svg-icons/communication/call';
-import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer';
-import ActionSchedule from 'material-ui/svg-icons/action/schedule';
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import UpdateFacility from './UpdateFacility';
+import NotFound from './NotFound';
 
 const style = {
   margin: 12,
 };
 
-const facilityDetailsQuery = gql`
-  query FacilityDetails($_id:ID!) {
-    facility(_id:$_id) {
-      _id
-      name
-      telephone
-      location {
-        municipality
-        state
-        zip
-      }
-      typesOfWaste {_id}
-      openHours {dayOfWeek}
-    }
-  }
-`
-
-class FacilityDetails extends Component {
-  constructor(props) {
-    super(props);
-  }
+const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
   
-  render () {
-     const state = {
+    if (loading) {
+      return (<div>Loading...</div>)
+    }
+
+    if (error) {
+      return <p>{ error.message }</p>
+    }
+
+    if (facility === null) {
+      return <NotFound/>
+    }
+
+    const state = {
       fixedHeader: true,
       stripedRows: false,
       showRowHover: false,
@@ -59,68 +44,102 @@ class FacilityDetails extends Component {
     };
 
     return (
-    <div className='container'>
-      <div className='facilityDetails'>
-        <UpdateFacility/>
-        <h3>{this.props.facility.name}</h3>
-        <hr/>
-        <p><ActionRoom /> Address: {this.props.facility.location.address}, {this.props.facility.location.municipality}, {this.props.facility.location.state} {this.props.facility.location.zip}</p>
-        <p><CommunicationCall/> Contact: {this.props.facility.telephone}</p>
-        <p><strong>Types of Waste</strong>:</p>
-        { this.props.facility.typesOfWaste.map(it => (
-          <div key={it._id} className='typesOfWastes'>
-            {/* image fails to load
-            <img src={it.icon} alt={it.name} /> */}
-           <MapsLocalOffer/> {it.name}
-          </div>
-        ))}
-        <br/>
-        <Table
-          header={state.height}
-          fixedHeader={state.fixedHeader}
-          selectable={state.selectable} 
-          multiSelectable={state.multiSelectable}
-        >
-          <TableHeader
-            displaySelectAll={state.showCheckboxes}
-            adjustForCheckbox={state.showCheckboxes}
-            enableSelectAll={state.enableSelectAll}
+      <div className='container'>
+        <div className='facilityDetails'>
+          <h3>{facility.name}</h3>
+          <p><strong>Address: </strong> {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
+          <p><strong>Contact: </strong> {facility.telephone}</p>
+          <p><strong>Types of Waste: </strong></p>
+          { facility.typesOfWaste.map(it => (
+            <div key={it._id} className='typesOfWastes'>
+             <img src={it.icons.iosSmallURL} alt={it.name} width='25'/> {it.name}
+            </div>
+          ))}
+          <br/>
+          <Table
+            style={{minWidth: '250px', maxWidth: '400px'}}
+            header={state.height}
+            fixedHeader={state.fixedHeader}
+            selectable={state.selectable} 
+            multiSelectable={state.multiSelectable}
           >
-            <TableRow>
-              <TableHeaderColumn colSpan="3" style={{textAlign: 'left'}}>
-                <ActionSchedule/> Schedule
-              </TableHeaderColumn>
-            </TableRow>
-            <TableRow>
-              <TableHeaderColumn>Day</TableHeaderColumn>
-              <TableHeaderColumn>Open</TableHeaderColumn>
-              <TableHeaderColumn>Close</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>         
-          <TableBody
-            displayRowCheckbox={state.showCheckboxes}
-            deselectOnClickaway={state.deselectOnClickaway}
-            showRowHover={state.showRowHover}
-            stripedRows={state.stripedRows}
-          >
-            {this.props.facility.openHours.map(it => (
-              <TableRow key={it.dayOfWeek}>
-                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
-                <TableRowColumn>{it.startTime}:00</TableRowColumn>
-                <TableRowColumn>{it.endTime}:00</TableRowColumn>
+            <TableHeader
+              displaySelectAll={state.showCheckboxes}
+              adjustForCheckbox={state.showCheckboxes}
+              enableSelectAll={state.enableSelectAll}
+            >
+              <TableRow>
+                <TableHeaderColumn colSpan="3" style={{textAlign: 'left', color: 'black'}}>
+                  <strong> Schedule </strong>
+                </TableHeaderColumn>
               </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-        <br/>
-
+              <TableRow>
+                <TableHeaderColumn><h4>Day</h4></TableHeaderColumn>
+                <TableHeaderColumn><h4>Open</h4></TableHeaderColumn>
+                <TableHeaderColumn><h4>Close</h4></TableHeaderColumn>
+              </TableRow>
+            </TableHeader>         
+            <TableBody
+              displayRowCheckbox={state.showCheckboxes}
+              deselectOnClickaway={state.deselectOnClickaway}
+              showRowHover={state.showRowHover}
+              stripedRows={state.stripedRows}
+            >
+              {facility.openHours.map(it => (
+                <TableRow key={it.dayOfWeek}>
+                  <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
+                  <TableRowColumn>{it.startTime}:00</TableRowColumn>
+                  <TableRowColumn>{it.endTime}:00</TableRowColumn>
+                </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+          <br/>
+          <UpdateFacility facility={facility}/> 
+        </div>
       </div>
-    </div>
-    )
+      )
+}
+
+export const facilityDetailsQuery = gql`
+  query FacilityDetails($facilityId: ID!) {
+    facility(_id: $facilityId)  {
+      _id
+      name
+      telephone
+      website
+      location {
+        address
+        municipality
+        state
+        zip
+      }
+      typesOfWaste {
+        _id
+        name
+				icons {
+        	iosSmallURL 
+          iosMediumURL 
+          iosLargeURL 
+          androidSmallURL 
+          androidMediumURL 
+          androidLargeURL
+        }
+        description
+      }
+      openHours {
+        dayOfWeek
+        startTime
+        endTime
+        }
+    }
   }
+`
 
-};
+export { FacilityDetails }
 
-const FacilityDetailsWithMutations =  graphql(facilityDetailsQuery, {name : 'facilityDetailsQuery'})(withRouter(FacilityDetails))
-
-export default FacilityDetailsWithMutations
+export const FacilityDetailsWithData = (graphql(facilityDetailsQuery, {
+  options: (props) => ({
+    variables: { facilityId: props.match.params.facilityId}
+  })
+})(FacilityDetails));
