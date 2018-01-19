@@ -8,7 +8,7 @@ import {
 
 import './App.css'
 import logo from './logo.png';
-import { FacilityListing, FacilityPage } from './components'
+import { FacilityListing, FacilityDetails } from './components'
 
 import {
   ApolloClient,
@@ -60,7 +60,7 @@ class App extends Component {
              <Link to="/" className="navbar"><img src={logo} className="App-logo" alt="logo" /> Descartaê</Link>
               <Switch>
                 <Route exact path="/" component={FacilityListing}/>
-                <Route path="/facilities/:facilityId" component={FacilityPage}/>
+                <Route path="/facilities/:facilityId" component={FacilityDetails}/>
               </Switch>
           </div>
         </BrowserRouter>
