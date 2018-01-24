@@ -83,7 +83,8 @@ class UpdateFacility extends Component {
 
       return (
         <div className='container'>
-          <RaisedButton label="Update Facility" onClick={this.handleOpen} />
+          <RaisedButton primary={true} label="Update Facility" onClick={this.handleOpen} />
+          <FlatButton secondary={true} label="Delete Facility" onClick={()=> this._deleteFacility()} />
           <Dialog
             title="Update Facility"
             modal={true}
@@ -134,6 +135,8 @@ class UpdateFacility extends Component {
     )
   };
 
+// TODO: After saving, facility details page should reload with updated information
+
   _updateFacility = () => {
     this.props.updateFacilityMutation({
       variables: {
@@ -146,12 +149,15 @@ class UpdateFacility extends Component {
         municipality: this.state.municipality, 
         zip: this.state.zip 
       }
-    }).then(this.props.afterChange)
+    }).then(this.props.history.push('/'))   
   };
 
-  handleDelete = () => {
-    this.props.deleteFacility({variables: { _id: this.props.facility._id }})
-      .then(this.props.afterChange)
+  _deleteFacility = () => {
+    this.props.deleteFacilityMutation({
+      variables: { 
+        _id: this.props.facility._id 
+      }
+    }).then(this.props.history.push('/'))
   };
 };
 
