@@ -148,7 +148,8 @@ class UpdateFacility extends Component {
         state: this.state.state, 
         municipality: this.state.municipality, 
         zip: this.state.zip 
-      }
+      }, 
+      refetchQueries: [{ query: facilityDetailsQuery }]
     }).then(this.props.history.push('/'))   
   };
 
