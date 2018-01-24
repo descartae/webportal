@@ -20,7 +20,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import { facilityDetailsQuery } from './FacilityDetails';
-
+import { facilityListQuery } from './FacilityListing';
 const style = {
   margin: 12,
 };
@@ -156,7 +156,8 @@ class UpdateFacility extends Component {
     this.props.deleteFacilityMutation({
       variables: { 
         _id: this.props.facility._id 
-      }
+      }, 
+      refetchQueries: [{ query: facilityListQuery }]
     }).then(this.props.history.push('/'))
   };
 };
