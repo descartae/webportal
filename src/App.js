@@ -7,12 +7,13 @@ import {
 
 import './App.css'
 import {
-  Auth,
   AppMenu,
-  Home,
-  FacilityListing,
-  FacilityDetails
 } from './components'
+
+import {
+  Home,
+  Facility
+} from './containers'
 
 import {
   ApolloClient,
@@ -21,8 +22,7 @@ import {
   toIdValue
 } from 'react-apollo'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import { MuiThemeProvider } from 'material-ui/styles'
 import Theme from './Theme'
 
 const networkInterface = createNetworkInterface({
@@ -30,7 +30,7 @@ const networkInterface = createNetworkInterface({
 })
 networkInterface.use([{
   applyMiddleware (req, next) {
-    // setTimeout(next, 500);
+    // setTimeout(next, 500)
     next()
   }
 }, {
@@ -71,25 +71,15 @@ const client = new ApolloClient({
 class App extends Component {
   render () {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(Theme)}>
+      <MuiThemeProvider theme={Theme}>
         <ApolloProvider client={client}>
           <BrowserRouter>
-            <div className='App'>
-              {
-                (localStorage.token)
-                ? (
-                  <AppMenu>
-                    <Switch>
-                      <Route exact path='/' component={Home} />
-                      <Route exact path='/facilities' component={FacilityListing} />
-                      <Route exact path='/facilities/:facilityId' component={FacilityDetails} />
-                    </Switch>
-                  </AppMenu>
-                )
-
-                : <Auth />
-              }
-            </div>
+            <AppMenu>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/facilities' component={Facility} />
+              </Switch>
+            </AppMenu>
           </BrowserRouter>
         </ApolloProvider>
       </MuiThemeProvider>

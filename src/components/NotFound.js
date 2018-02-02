@@ -1,8 +1,12 @@
 import React from 'react'
+import { SnackbarContent } from 'material-ui/Snackbar'
 
-const NotFound = ({ match }) => {
+const NotFound = () => {
   return (
-    <div className='NotFound'>404 Not Found</div>
+    <SnackbarContent
+      message='Conteúdo não encontrado'
+      style={{ margin: 10 }}
+    />
   )
 }
 

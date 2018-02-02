@@ -1,25 +1,21 @@
 import React from 'react'
 import NotFound from './NotFound'
 import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table'
-import ActionRoom from 'material-ui/svg-icons/action/room'
-import CommunicationCall from 'material-ui/svg-icons/communication/call'
-import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer'
-import ActionSchedule from 'material-ui/svg-icons/action/schedule'
-import {
-    gql,
-    graphql
+  gql,
+  graphql
 } from 'react-apollo'
 
-const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
+import Avatar from 'material-ui/Avatar'
+import Typography from 'material-ui/Typography'
+import Chip from 'material-ui/Chip'
+import Paper from 'material-ui/Paper'
+import { CircularProgress } from 'material-ui/Progress'
+
+const FacilityDetails = ({ google, data: { loading, error, facility } }) => {
   if (loading) {
-    return <p>Loading...</p>
+    return <div style={{ textAlign: 'center' }}><CircularProgress size={50} /></div>
   }
 
   if (error) {
@@ -29,78 +25,78 @@ const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
   if (facility === null) {
     return <NotFound />
   }
-  const state = {
-    fixedHeader: true,
-    stripedRows: false,
-    showRowHover: false,
-    selectable: false,
-    multiSelectable: false,
-    enableSelectAll: false,
-    deselectOnClickaway: false,
-    showCheckboxes: false,
-    height: '300px'
+
+  const weekDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+  const ptWeekDays = {
+    MONDAY: 'Segunda-feira',
+    TUESDAY: 'Terça-feira',
+    WEDNESDAY: 'Quarta-feira',
+    THURSDAY: 'Quinta-feira',
+    FRIDAY: 'Sexta-feira',
+    SATURDAY: 'Sábado',
+    SUNDAY: 'Domingo'
   }
+  const openHours = weekDays.map(d => {
+    const open = facility.openHours.find((it) => it.dayOfWeek === d)
+    if (open) return { dayOfWeek: d, ptDayOfWeek: ptWeekDays[d], time: `${open.startTime} - ${open.endTime}` }
+    return { dayOfWeek: d, ptDayOfWeek: ptWeekDays[d], time: 'Fechado' }
+  })
 
   return (
-    <div className='container'>
-      <div className='facilityDetails'>
-        <h3>{facility.name}</h3>
-        <hr />
-        <p><ActionRoom /> Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
-        <p><CommunicationCall /> Contato: {facility.telephone}</p>
-        <p><strong>Tipo de resíduo</strong>:
+    <div>
+      <Typography type='title'>
+        {facility.name}
+      </Typography>
+      <p>Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
+      <p>Contato: {facility.telephone}</p>
+      <Paper style={{
+        padding: 5,
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+      }}>
         { facility.typesOfWaste.map(it => (
-          <p key={it._id} className='typesOfWastes'>
-            {/* image fails to load
-            <img src={it.icon} alt={it.name} /> */}
-            <MapsLocalOffer /> {it.name}
-          </p>
+          <Chip
+            key={it._id}
+            avatar={<Avatar src={it.icons.androidMediumURL} />}
+            label={it.name}
+            style={{ margin: 5 }}
+        />
         ))}
-        </p>
-        <br />
-        <Table
-          header={state.height}
-          fixedHeader={state.fixedHeader}
-          selectable={state.selectable}
-          multiSelectable={state.multiSelectable}
-        >
-          <TableHeader
-            displaySelectAll={state.showCheckboxes}
-            adjustForCheckbox={state.showCheckboxes}
-            enableSelectAll={state.enableSelectAll}
-          >
-            <TableRow>
-              <TableHeaderColumn colSpan='3' style={{textAlign: 'left'}}>
-                <ActionSchedule /> Horários
-              </TableHeaderColumn>
-            </TableRow>
-            <TableRow>
-              <TableHeaderColumn>Dias</TableHeaderColumn>
-              <TableHeaderColumn>Começar</TableHeaderColumn>
-              <TableHeaderColumn>Fim</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            displayRowCheckbox={state.showCheckboxes}
-            deselectOnClickaway={state.deselectOnClickaway}
-            showRowHover={state.showRowHover}
-            stripedRows={state.stripedRows}
-          >
-            {facility.openHours.map(it => (
+      </Paper>
+
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Dia da semana</TableCell>
+            <TableCell>Horário</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {openHours.map(it => {
+            return (
               <TableRow key={it.dayOfWeek}>
-                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
-                <TableRowColumn>{it.startTime}:00</TableRowColumn>
-                <TableRowColumn>{it.endTime}:00</TableRowColumn>
+                <TableCell>{it.ptDayOfWeek}</TableCell>
+                <TableCell>{it.time}</TableCell>
               </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
+            )
+          })}
+        </TableBody>
+      </Table>
+
+      <Map google={google} zoom={14} containerStyle={{
+        position: 'relative',
+        width: '100%',
+        height: '300px'
+      }}>
+        <Marker name={'Current location'} />
+      </Map>
+
     </div>
   )
 }
 
-export const facilityDetailsQuery = gql`
+const facilityDetailsQuery = gql`
   query FacilityDetailsQuery($facilityId: ID!) {
   facility(_id: $facilityId) {
       _id
@@ -116,6 +112,9 @@ export const facilityDetailsQuery = gql`
       typesOfWaste {
         _id
         name
+        icons {
+          androidMediumURL
+        }
       }
       openHours {
         dayOfWeek
@@ -126,9 +125,12 @@ export const facilityDetailsQuery = gql`
   }
 `
 
-export { FacilityDetails }
-export const FacilityDetailsWithData = (graphql(facilityDetailsQuery, {
+const GoogleFacilityDetails = GoogleApiWrapper({
+  apiKey: 'myapikey'
+})(FacilityDetails)
+
+export default graphql(facilityDetailsQuery, {
   options: (props) => ({
-    variables: { facilityId: props.match.params.facilityId}
+    variables: { facilityId: props.match.params.facilityId }
   })
-})(FacilityDetails))
+})(GoogleFacilityDetails)

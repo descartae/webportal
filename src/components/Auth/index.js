@@ -4,17 +4,23 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'material-ui/Button'
 import './index.css'
 import logo from '../../logo.png'
 
-export class Auth extends Component {
+class Auth extends Component {
   constructor (props) {
     super(props)
     this.state = {
       email: 'user@example.com',
       password: 'example'
     }
+  }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    })
   }
 
   async onSubmit (e) {
@@ -38,24 +44,29 @@ export class Auth extends Component {
   render () {
     return (
       <div className='page-auth'>
-        <Paper className='container' zDepth={1} style={{
-        }}>
+        <Paper className='container'>
           <img src={logo} alt='logo' />
           <form onSubmit={this.onSubmit.bind(this)}>
 
             <TextField
+              label="E-mail"
+              type="email"
+              margin="normal"
               value={this.state.email}
-              onChange={(e) => this.setState({email: e.target.value})}
-              floatingLabelText='E-mail'
+              onChange={this.handleChange('email')}
             />
 
             <TextField
+              label="Senha"
+              type="password"
+              margin="normal"
               value={this.state.password}
-              onChange={(e) => this.setState({password: e.target.value})}
-              floatingLabelText='Senha'
+              onChange={this.handleChange('password')}
             />
 
-            <RaisedButton type='submit' className='submit' label='Entrar' primary />
+            <Button raised color="primary" type='submit' className='submit'>
+              Entrar
+            </Button>
           </form>
         </Paper>
       </div>
@@ -73,4 +84,4 @@ const authenticate = gql`
   }
 `
 
-export const AuthWithData = withRouter(graphql(authenticate)(Auth))
+export default withRouter(graphql(authenticate)(Auth))
