@@ -3,38 +3,56 @@ import {
   BrowserRouter,
   Link,
   Route,
-  Switch,
-} from 'react-router-dom';
+  Switch
+} from 'react-router-dom'
 
 import './App.css'
-import logo from './logo.png';
-import { FacilityListing, FacilityDetails } from './components'
+import logo from './logo.png'
+import {
+  Auth,
+  Home,
+  FacilityListing,
+  FacilityDetails
+} from './components'
 
 import {
   ApolloClient,
   ApolloProvider,
   createNetworkInterface,
-  toIdValue,
-} from 'react-apollo';
+  toIdValue
+} from 'react-apollo'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const networkInterface = createNetworkInterface({
   uri: process.env.REACT_APP_SERVER_URL
-});
+})
 networkInterface.use([{
-  applyMiddleware(req, next) {
-    setTimeout(next, 500);
-  },
-}]);
+  applyMiddleware (req, next) {
+    // setTimeout(next, 500);
+    next()
+  }
+}, {
+  applyMiddleware (req, next) {
+    req.request.server = req.request.query.server
+
+    if (!req.options.headers) {
+      req.options.headers = {}
+    }
+
+    const token = localStorage.getItem('token')
+    req.options.headers.authorization = token ? `Bearer ${token}` : null
+    next()
+  }
+}])
 
 function dataIdFromObject (result) {
   if (result.__typename) {
     if (result.id !== undefined) {
-      return `${result.__typename}:${result.id}`;
+      return `${result.__typename}:${result.id}`
     }
   }
-  return null;
+  return null
 }
 
 const client = new ApolloClient({
@@ -43,29 +61,37 @@ const client = new ApolloClient({
     Query: {
       facility: (_, args) => {
         return toIdValue(dataIdFromObject({ __typename: 'Facility', id: args['id'] }))
-      },
-    },
+      }
+    }
   },
-  dataIdFromObject,
-});
+  dataIdFromObject
+})
 
 class App extends Component {
-
   render () {
     return (
-    <MuiThemeProvider>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <div className='App'>
-             <Link to="/" className="navbar"><img src={logo} className="App-logo" alt="logo" /> Descartaê</Link>
-              <Switch>
-                <Route exact path="/" component={FacilityListing}/>
-                <Route path="/facilities/:facilityId" component={FacilityDetails}/>
-              </Switch>
-          </div>
-        </BrowserRouter>
-      </ApolloProvider>
-    </MuiThemeProvider> 
+      <MuiThemeProvider>
+        <ApolloProvider client={client}>
+          <BrowserRouter>
+            <div className='App'>
+              <Link to='/' className='navbar'><img src={logo} className='App-logo' alt='logo' /> Descartaê</Link>
+              {
+                (localStorage.token)
+                ? (
+                  <Switch>
+                    <Route exact path='/' component={Home} />
+                    <Route exact path='/login' component={Auth} />
+                    <Route path='/facilities' component={FacilityListing} />
+                    <Route path='/facilities/:facilityId' component={FacilityDetails} />
+                  </Switch>
+                )
+
+                : <Auth />
+              }
+            </div>
+          </BrowserRouter>
+        </ApolloProvider>
+      </MuiThemeProvider>
     )
   }
 }
