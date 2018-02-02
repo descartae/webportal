@@ -23,7 +23,7 @@ import {
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import { indigo500, orange500 } from 'material-ui/styles/colors'
+import Theme from './Theme'
 
 const networkInterface = createNetworkInterface({
   uri: process.env.REACT_APP_SERVER_URL
@@ -68,18 +68,10 @@ const client = new ApolloClient({
   dataIdFromObject
 })
 
-const muiTheme = getMuiTheme({
-  palette: {
-    primary: orange500,
-    accent: indigo500,
-    type: 'light'
-  }
-})
-
 class App extends Component {
   render () {
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={getMuiTheme(Theme)}>
         <ApolloProvider client={client}>
           <BrowserRouter>
             <div className='App'>

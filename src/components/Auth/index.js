@@ -38,7 +38,7 @@ export class Auth extends Component {
   render () {
     return (
       <div className='page-auth'>
-        <Paper className="container" zDepth={1} style={{
+        <Paper className='container' zDepth={1} style={{
         }}>
           <img src={logo} alt='logo' />
           <form onSubmit={this.onSubmit.bind(this)}>
@@ -46,16 +46,16 @@ export class Auth extends Component {
             <TextField
               value={this.state.email}
               onChange={(e) => this.setState({email: e.target.value})}
-              floatingLabelText="E-mail"
+              floatingLabelText='E-mail'
             />
 
             <TextField
               value={this.state.password}
               onChange={(e) => this.setState({password: e.target.value})}
-              floatingLabelText="Senha"
+              floatingLabelText='Senha'
             />
-            
-            <RaisedButton type='submit' className="submit" label="Entrar" primary={true} />
+
+            <RaisedButton type='submit' className='submit' label='Entrar' primary />
           </form>
         </Paper>
       </div>

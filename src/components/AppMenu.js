@@ -4,6 +4,9 @@ import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import AppBar from 'material-ui/AppBar'
 
+import Store from 'material-ui/svg-icons/action/store'
+import ExpandMore from 'material-ui/svg-icons/navigation/expand-more'
+
 import logo from './../logo.png'
 
 export class AppMenu extends Component {
@@ -28,13 +31,12 @@ export class AppMenu extends Component {
 
         <AppBar
           title='Descartaê'
-          iconClassNameRight='muidocs-icon-navigation-expand-more'
+          iconElementRight={<ExpandMore />}
           onLeftIconButtonClick={this.handleToggle}
         />
 
         <Drawer
           docked={false}
-          width={200}
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}
         >
@@ -42,7 +44,7 @@ export class AppMenu extends Component {
             <img src={logo} className='App-logo' alt='logo' />
           </div>
           <Link to='/facilities'>
-            <MenuItem onClick={this.handleClose}>Estabelecimentos</MenuItem>
+            <MenuItem leftIcon={<Store />} primaryText='Estabelecimentos' onClick={this.handleClose} />
           </Link>
         </Drawer>
 
