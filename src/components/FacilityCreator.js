@@ -121,21 +121,22 @@ class FacilityCreator extends Component {
               onChange={(e) => this.setState({state: e.target.value})}
               type='text'
               placeholder='Enter Facility State'
-            />
+          />
           <input
               className='facilityZip'
               value={this.state.Zip}
               onChange={(e) => this.setState({zip: e.target.value})}
               type='text'
               placeholder='Enter Facility Zip'
-            />
-          <select onChange={(e) => this.setState({ typeOfWaste: e.target.value })} value={this.state.typeOfWaste} className='facilityWaste'>
+          />
+          <select 
+            onChange={(e) => this.setState({ typeOfWaste: e.target.value })} 
+            value={this.state.typeOfWaste} 
+            className='facilityWaste'>
             <option value="" disabled>Preferred Type of Waste</option>
             {typesOfWaste.map(it => <option key={it._id} value={it._id}>{it.name}</option>)}
           </select>
-          <button
-          type='submit'
-          >
+          <button type='submit'>
             Save
           </button>
         </form>

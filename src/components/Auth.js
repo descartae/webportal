@@ -3,12 +3,12 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
 export class Auth extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       email: 'user@example.com',
       password: 'example'
-    };
+    }
   }
 
   async onSubmit (e) {

@@ -1,3 +1,4 @@
+export { AppMenu } from './AppMenu'
 export { Home } from './Home'
 export { AuthWithData as Auth } from './Auth'
 export { FacilityListingWithData as FacilityListing } from './FacilityListing'

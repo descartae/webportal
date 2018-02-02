@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
   BrowserRouter,
-  Link,
   Route,
   Switch
 } from 'react-router-dom'
@@ -10,6 +9,7 @@ import './App.css'
 import logo from './logo.png'
 import {
   Auth,
+  AppMenu,
   Home,
   FacilityListing,
   FacilityDetails
@@ -23,6 +23,9 @@ import {
 } from 'react-apollo'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import { createMuiTheme } from 'material-ui/styles'
+import { indigo500, orange500 } from 'material-ui/styles/colors'
 
 const networkInterface = createNetworkInterface({
   uri: process.env.REACT_APP_SERVER_URL
@@ -67,23 +70,31 @@ const client = new ApolloClient({
   dataIdFromObject
 })
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary: orange500,
+    accent: indigo500,
+    type: 'light'
+  }
+})
+
 class App extends Component {
   render () {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <ApolloProvider client={client}>
           <BrowserRouter>
             <div className='App'>
-              <Link to='/' className='navbar'><img src={logo} className='App-logo' alt='logo' /> Descartaê</Link>
               {
                 (localStorage.token)
                 ? (
-                  <Switch>
-                    <Route exact path='/' component={Home} />
-                    <Route exact path='/login' component={Auth} />
-                    <Route path='/facilities' component={FacilityListing} />
-                    <Route path='/facilities/:facilityId' component={FacilityDetails} />
-                  </Switch>
+                  <AppMenu>
+                    <Switch>
+                      <Route exact path='/' component={Home} />
+                      <Route path='/facilities' component={FacilityListing} />
+                      <Route path='/facilities/:facilityId' component={FacilityDetails} />
+                    </Switch>
+                  </AppMenu>
                 )
 
                 : <Auth />
