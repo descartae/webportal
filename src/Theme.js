@@ -1,5 +1,5 @@
 import {
-  lightGreen500, lightGreen700,
+  lightGreen700, lightGreen900,
   lightGreenA400,
   grey100, grey300, grey400, grey500,
   white, darkBlack, fullBlack
@@ -12,8 +12,8 @@ export default {
   fontFamily: 'Roboto, sans-serif',
   borderRadius: 2,
   palette: {
-    primary1Color: lightGreen500,
-    primary2Color: lightGreen700,
+    primary1Color: lightGreen700,
+    primary2Color: lightGreen900,
     primary3Color: grey400,
     accent1Color: lightGreenA400,
     accent2Color: grey100,
@@ -24,7 +24,7 @@ export default {
     canvasColor: white,
     borderColor: grey300,
     disabledColor: fade(darkBlack, 0.3),
-    pickerHeaderColor: lightGreen500,
+    pickerHeaderColor: lightGreen700,
     clockCircleColor: fade(darkBlack, 0.07),
     shadowColor: fullBlack
   }

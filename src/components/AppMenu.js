@@ -5,7 +5,6 @@ import MenuItem from 'material-ui/MenuItem'
 import AppBar from 'material-ui/AppBar'
 
 import Store from 'material-ui/svg-icons/action/store'
-import ExpandMore from 'material-ui/svg-icons/navigation/expand-more'
 
 import logo from './../logo.png'
 
@@ -31,7 +30,6 @@ export class AppMenu extends Component {
 
         <AppBar
           title='Descartaê'
-          iconElementRight={<ExpandMore />}
           onLeftIconButtonClick={this.handleToggle}
         />
 
