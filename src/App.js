@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 
 import './App.css'
-import logo from './logo.png'
 import {
   Auth,
   AppMenu,
@@ -24,7 +23,6 @@ import {
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import { createMuiTheme } from 'material-ui/styles'
 import { indigo500, orange500 } from 'material-ui/styles/colors'
 
 const networkInterface = createNetworkInterface({
