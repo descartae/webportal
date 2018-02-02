@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
 
 export class Home extends Component {
   async onClick () {

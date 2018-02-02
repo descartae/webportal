@@ -34,20 +34,20 @@ const facilityCreationMutation = gql`
 
 class FacilityCreator extends Component {
    constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      address: '',
-      municipality: '',
-      state: '',
-      zip: '',
-      typeOfWaste: ''
-    };
-  }
+      super(props);
+      this.state = {
+        name: '',
+        address: '',
+        municipality: '',
+        state: '',
+        zip: '',
+        typeOfWaste: ''
+      };
+    }
 
- static propTypes = {
-    history: PropTypes.object.isRequired,
-  }
+    static propTypes = {
+      history: PropTypes.object.isRequired,
+    }
 
   async onSubmit(e) {
     e.preventDefault();
