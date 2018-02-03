@@ -35,7 +35,7 @@ class FacilityListing extends Component {
     return (
       <List component="nav">
         { facilities.items.map(it => (
-        <ListItem button component={Link} to={`/facilities/${it._id}`} key={it._id}>
+        <ListItem button component={Link} to={`/facilities/view/${it._id}`} key={it._id}>
           <Checkbox
             checked={!!this.state.checked[it._id]}
             onClick={this.selectFacility(it._id)}
