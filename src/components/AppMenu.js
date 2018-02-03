@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
-import Drawer from 'material-ui/Drawer'
 
 import { withStyles } from 'material-ui/styles';
 
+import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -20,20 +20,30 @@ import logo from './../logo.png'
 
 import Auth from './Auth'
 
-const styles = {
-  root: {
-    width: '100%',
-  },
-  title: {
-    flex: 1,
-  },
-  menu: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
-
 class AppMenu extends Component {
+
+  static styles = (theme) => ({
+    title: {
+      flex: 1,
+      color: 'inherit',
+    },
+    menu: {
+      marginLeft: -12,
+      marginRight: 20,
+      color: 'inherit',
+    },
+    user: {
+      color: 'inherit',
+    },
+    logo: {
+      textAlign: 'center'
+    }
+  })
+  
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+
   constructor (props) {
     super(props)
     this.state = {
@@ -75,7 +85,7 @@ class AppMenu extends Component {
     }
 
     return (
-      <div className={classes.root}>
+      <div>
 
         <AppBar
           title='Descartaê'
@@ -83,22 +93,18 @@ class AppMenu extends Component {
           onClose={this.setDrawer(false)}>
 
           <Toolbar>
-
             <IconButton className={classes.menu} onClick={this.toggleDrawer}>
               <MenuIcon />
             </IconButton>
 
-            <Typography type="title" color="inherit" className={classes.title}>
+            <Typography className={classes.title} type="title">
               Descartaê
             </Typography>
 
-            <IconButton
-              aria-owns={!!menu ? 'AppMenu-UserMenu' : null}
-              aria-haspopup="true"
-              onClick={this.setMenu}
-              color="inherit">
+            <IconButton className={classes.user} onClick={this.setMenu}>
               <AccountCircle />
             </IconButton>
+
             <Menu
               id="AppMenu-UserMenu"
               anchorEl={menu}
@@ -125,18 +131,18 @@ class AppMenu extends Component {
           open={this.state.drawer}
           onClose={this.setDrawer(false)}>
 
-            <div style={{ textAlign: 'center' }}>
-              <img src={logo} className='App-logo' alt='logo' />
-            </div>
+          <div className={classes.logo}>
+            <img src={logo} alt='Descartaê' />
+          </div>
 
-            <Link to='/facilities'>
-              <ListItem button>
-                <ListItemIcon>
-                  <StoreIcon />
-                </ListItemIcon>
-                <ListItemText primary="Pontos de Coleta" />
-              </ListItem>
-            </Link> 
+          <Link to='/facilities'>
+            <ListItem button>
+              <ListItemIcon>
+                <StoreIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pontos de Coleta" />
+            </ListItem>
+          </Link> 
             
         </Drawer>
 
@@ -147,8 +153,4 @@ class AppMenu extends Component {
   }
 }
 
-AppMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(AppMenu);
+export default withStyles(AppMenu.styles, { withTheme: true })(AppMenu);
