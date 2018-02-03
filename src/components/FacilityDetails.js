@@ -56,6 +56,8 @@ class FacilityDetails extends Component {
       return { dayOfWeek: d, ptDayOfWeek: ptWeekDays[d], time: 'Fechado' }
     })
 
+    const { coordinates } = facility.location
+
     return (
       <div>
         <Typography type='title'>
@@ -100,12 +102,21 @@ class FacilityDetails extends Component {
           </TableBody>
         </Table>
 
-        <Map google={google} zoom={14} containerStyle={{
-          position: 'relative',
-          width: '100%',
-          height: '300px'
-        }}>
-          <Marker name={'Current location'} />
+        <Map google={google} zoom={14}
+          containerStyle={{
+            position: 'relative',
+            width: '100%',
+            height: '300px'
+          }}
+          initialCenter={{
+            lat: coordinates.latitude,
+            lng: coordinates.longitude
+          }}
+        >
+          <Marker position={{
+            lat: coordinates.latitude,
+            lng: coordinates.longitude
+          }}/>
         </Map>
       </div>
     )
@@ -124,6 +135,10 @@ const facilityDetailsQuery = gql`
         municipality
         state
         zip
+        coordinates {
+          latitude
+          longitude
+        }
       }
       typesOfWaste {
         _id
