@@ -6,8 +6,6 @@ import Paper from 'material-ui/Paper'
 
 class Facility extends Component {
   render () {
-    const { match } = this.props
-
     return (
       <div>
         <Grid container>
