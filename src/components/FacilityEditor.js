@@ -15,12 +15,16 @@ import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar'
 import { CircularProgress } from 'material-ui/Progress'
 
+import NotFound from './NotFound'
+import { facilityListQuery } from './FacilityListing'
+
 class FacilityEditor extends Component {
 
   static propTypes = {
     history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   }
 
   static styles = theme => ({
@@ -37,12 +41,41 @@ class FacilityEditor extends Component {
   })
   
   state = {
+    _id: null,
     name: '',
     address: '',
     municipality: '',
     state: '',
     zip: '',
     typeOfWaste: []
+  }
+
+  componentWillReceiveProps({ match, facilityDetailsQuery, typeOfWasteListQuery }) {
+    if (match.params.facilityId) {
+      if (facilityDetailsQuery.facility) {
+        const {
+          _id,
+          name,
+          location: {
+            address,
+            municipality,
+            state,
+            zip
+          },
+          typesOfWaste
+        } = facilityDetailsQuery.facility
+
+        this.setState({
+          _id, name, address, municipality,
+          state, zip, typeOfWaste: typesOfWaste.map(({ _id }) => _id)
+        })
+      }
+    } else {
+      this.setState({
+        _id: null, name: '', address: '', municipality: '', 
+        state: '', zip: '', typeOfWaste: []
+      })
+    }
   }
 
   handleChange = name => event => {
@@ -61,27 +94,29 @@ class FacilityEditor extends Component {
   async onSubmit(e) {
     e.preventDefault()
 
-    const { name, address, municipality, zip, state, typeOfWaste } = this.state;
-    const { data } = await this.props.facilityCreationMutation({
-      variables: {
-        name,
-        address,
-        municipality,
-        zip,
-        state,
-        typeOfWaste
-      },
-    })
+    const { _id, name, address, municipality, zip, state, typeOfWaste } = this.state
+    const variables = { name, address, municipality, zip, state, typeOfWaste }
 
-    if (data.addFacility) {
-      const { facility } = data.addFacility
-      this.props.history.push(`/facilities/view/${facility._id}`)
+    if (this.state._id) {
+      const { data } = await this.props.facilityEditMutation({ variables: { id: _id, ...variables } })
+      if (data.updateFacility) {
+        const { facility } = data.updateFacility
+        this.props.history.push(`/facilities/view/${facility._id}`)
+      }
+    } else {
+      const { data } = await this.props.facilityAddMutation({ variables })
+      if (data.addFacility) {
+        const { facility } = data.addFacility
+        this.props.history.push(`/facilities/view/${facility._id}`)
+      }
     }
   }
 
   render() {
     const { loading, error, typesOfWaste } = this.props.typeOfWasteListQuery
-    const { classes, theme } = this.props
+    const { classes, theme, match, facilityDetailsQuery: { facility } } = this.props
+
+    const isNew = !match.params.facilityId
 
     if (loading) {
       return <div style={{ textAlign: 'center' }}><CircularProgress size={50} /></div>
@@ -89,6 +124,10 @@ class FacilityEditor extends Component {
   
     if (error) {
       return <p>{ error.message }</p>
+    }
+
+    if (facility === null) {
+      return <NotFound />
     }
 
     const typesOfWasteMap = {}
@@ -99,7 +138,7 @@ class FacilityEditor extends Component {
     return (
       <div>
         <Typography type='title'>
-          Novo Ponto de Coleta
+          { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
 
         <form onSubmit={this.onSubmit.bind(this)}>
@@ -166,7 +205,6 @@ class FacilityEditor extends Component {
                   )}
                 </div>
               )}
-              // MenuProps={MenuProps}
             >
               {typesOfWaste.map(({_id, name}) => (
                 <MenuItem
@@ -186,7 +224,7 @@ class FacilityEditor extends Component {
           </FormControl>
 
           <Button raised color="primary" type='submit' className={classes.field}>
-            Criar
+            { isNew ? 'Criar' : 'Editar' }
           </Button>
         </form>
       </div>
@@ -194,8 +232,36 @@ class FacilityEditor extends Component {
   }
 }
 
-const facilityCreationMutation = gql`
-  mutation AddFacility(
+export const facilityDetailsQuery = gql`
+  query FacilityDetailsQuery($facilityId: ID!) {
+    facility(_id: $facilityId) {
+      _id
+      name
+      location {
+        address
+        municipality
+        state
+        zip
+        coordinates {
+          latitude
+          longitude
+        }
+      }
+      typesOfWaste {
+        _id
+        name
+      }
+      openHours {
+        dayOfWeek
+        startTime
+        endTime
+      }
+    }
+  }
+`
+
+export const facilityAddMutation = gql`
+  mutation AddFacility (
     $name: String!,
     $address: String!,
     $municipality: String!,
@@ -203,16 +269,18 @@ const facilityCreationMutation = gql`
     $zip: String!,
     $typeOfWaste: [ID]!
   ) {
-    addFacility(input: {
-      name: $name,
-      location: {
-        address: $address,
-        municipality: $municipality,
-        state: $state,
-        zip: $zip
-      },
-      typesOfWaste: $typeOfWaste
-    }) {
+    addFacility(
+      input: {
+        name: $name,
+        location: {
+          address: $address,
+          municipality: $municipality,
+          state: $state,
+          zip: $zip
+        },
+        typesOfWaste: $typeOfWaste
+      }
+    ) {
       success
       facility {
         _id
@@ -222,7 +290,40 @@ const facilityCreationMutation = gql`
   }
 `
 
-const typeOfWasteListQuery = gql`
+export const facilityEditMutation = gql`
+  mutation EditFacility (
+    $id: ID!
+    $name: String!,
+    $address: String!,
+    $municipality: String!,
+    $state: String!,
+    $zip: String!,
+    $typeOfWaste: [ID]!
+  ) {
+    updateFacility (
+      input: {
+        _id: $id,
+        patch: {
+          name: $name,
+          location: {
+            address: $address,
+            municipality: $municipality,
+            state: $state,
+            zip: $zip
+          },
+          typesOfWaste: $typeOfWaste
+        }
+      }
+    ) {
+      success
+      facility {
+        _id
+      }
+    }
+  }
+`
+
+export const typeOfWasteListQuery = gql`
   query TypeOfWasteListQuery {
     typesOfWaste {
       _id
@@ -236,6 +337,24 @@ const typeOfWasteListQuery = gql`
 
 export default compose(
   withStyles(FacilityEditor.styles, { withTheme: true }),
-  graphql(typeOfWasteListQuery, {name: 'typeOfWasteListQuery'}),
-  graphql(facilityCreationMutation, {name: 'facilityCreationMutation'}),
+  graphql(typeOfWasteListQuery, { name: 'typeOfWasteListQuery' }),
+  graphql(facilityDetailsQuery, {
+    name: 'facilityDetailsQuery',
+    skip: (props) => !props.match.params.facilityId,
+    options: (props) => ({
+      variables: { facilityId: props.match.params.facilityId }
+    })
+  }),
+  graphql(facilityAddMutation, {
+    name: 'facilityAddMutation',
+    options: {
+      refetchQueries: [ facilityListQuery.name ], 
+    }
+  }),
+  graphql(facilityEditMutation, {
+    name: 'facilityEditMutation',
+    options: {
+      refetchQueries: [ facilityListQuery.name ], 
+    } 
+  }),
 )(FacilityEditor)
