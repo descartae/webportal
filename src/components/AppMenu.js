@@ -133,7 +133,9 @@ class AppMenu extends Component {
           onClose={this.setDrawer(false)}>
 
           <div className={classes.logo}>
-            <img src={logo} className={classes.logoImg} alt='Descartaê' />
+            <Link to='/'>
+              <img src={logo} className={classes.logoImg} alt='Descartaê' />
+            </Link>
           </div>
 
           <Link to='/facilities'>
