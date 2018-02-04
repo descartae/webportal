@@ -37,9 +37,12 @@ class AppMenu extends Component {
     },
     logo: {
       textAlign: 'center'
+    },
+    logoImg: {
+      width: 80
     }
   })
-  
+
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
@@ -132,7 +135,7 @@ class AppMenu extends Component {
           onClose={this.setDrawer(false)}>
 
           <div className={classes.logo}>
-            <img src={logo} alt='Descartaê' />
+            <img src={logo} className={classes.logoImg} alt='Descartaê' />
           </div>
 
           <Link to='/facilities'>
@@ -142,8 +145,7 @@ class AppMenu extends Component {
               </ListItemIcon>
               <ListItemText primary="Pontos de Coleta" />
             </ListItem>
-          </Link> 
-            
+          </Link>
         </Drawer>
 
         {this.props.children}
