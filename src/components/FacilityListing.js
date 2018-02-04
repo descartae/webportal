@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom'
-import { gql, graphql } from 'react-apollo'
+import { gql, graphql, compose } from 'react-apollo'
+
+import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import { CircularProgress } from 'material-ui/Progress'
 import Checkbox from 'material-ui/Checkbox';
 
 class FacilityListing extends Component {
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  }
+
+  static styles = theme => ({
+
+  })
+
   state = {
     checked: {}
   }
@@ -42,7 +55,10 @@ class FacilityListing extends Component {
             tabIndex={-1}
             disableRipple
           />
-            <ListItemText primary={it.name} secondary={`${it.location.address}, ${it.location.municipality} ${it.location.state} ${it.location.zip}`} />
+            <ListItemText primary={it.name} secondary={`
+              ${it.location.address}, ${it.location.municipality}
+              ${it.location.state} ${it.location.zip}
+            `} />
         </ListItem>
         ))}
       </List>
@@ -50,7 +66,7 @@ class FacilityListing extends Component {
   }
 }
 
-const facilityListQuery = gql`
+export const facilityListQuery = gql`
   query FacilityListQuery($after: Cursor, $before: Cursor) {
     facilities(filters: {
       cursor: {
@@ -77,5 +93,13 @@ const facilityListQuery = gql`
     }
   }
 `
+facilityListQuery.name = 'FacilityListQuery'
 
-export default graphql(facilityListQuery)(FacilityListing)
+export default compose(
+  withStyles(FacilityListing.styles, { withTheme: true }),
+  graphql(facilityListQuery, {
+    options: (props) => ({
+      fetchPolicy: 'network-only',
+    })
+  }),
+)(FacilityListing)
