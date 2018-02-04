@@ -52,7 +52,7 @@ class FacilityEditor extends Component {
 
   componentWillReceiveProps({ match, facilityDetailsQuery, typeOfWasteListQuery }) {
     if (match.params.facilityId) {
-      if (facilityDetailsQuery.facility) {
+      if (facilityDetailsQuery && facilityDetailsQuery.facility) {
         const {
           _id,
           name,
@@ -114,7 +114,7 @@ class FacilityEditor extends Component {
 
   render() {
     const { loading, error, typesOfWaste } = this.props.typeOfWasteListQuery
-    const { classes, theme, match, facilityDetailsQuery: { facility } } = this.props
+    const { classes, theme, match, facilityDetailsQuery } = this.props
 
     const isNew = !match.params.facilityId
 
@@ -126,7 +126,7 @@ class FacilityEditor extends Component {
       return <p>{ error.message }</p>
     }
 
-    if (facility === null) {
+    if (!isNew && facilityDetailsQuery.facility === null) {
       return <NotFound />
     }
 
