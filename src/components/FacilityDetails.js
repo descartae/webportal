@@ -6,7 +6,6 @@ import { gql, graphql, compose } from 'react-apollo'
 
 import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
-import { CircularProgress } from 'material-ui/Progress'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import Typography from 'material-ui/Typography'
 import Chip from 'material-ui/Chip'
@@ -17,6 +16,7 @@ import EditIcon from 'material-ui-icons/Edit'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
 import NotFound from './NotFound'
+import Loading from './Loading'
 
 class FacilityDetails extends Component {
   static propTypes = {
@@ -51,7 +51,7 @@ class FacilityDetails extends Component {
     const { classes, theme, google, data: { loading, error, facility } } = this.props
 
     if (loading) {
-      return <div style={{ textAlign: 'center' }}><CircularProgress size={50} /></div>
+      return <Loading />
     }
 
     if (error) {

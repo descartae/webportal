@@ -10,12 +10,13 @@ import Select from 'material-ui/Select'
 
 import Input, { InputLabel } from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
+import { ListItemIcon, ListItemText } from 'material-ui/List'
 import { FormControl } from 'material-ui/Form'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
-import { CircularProgress } from 'material-ui/Progress'
 
 import NotFound from './NotFound'
+import Loading from './Loading'
 import { facilityListQuery } from './FacilityListing'
 
 class FacilityEditor extends Component {
@@ -123,12 +124,12 @@ class FacilityEditor extends Component {
 
   render () {
     const { loading, error, typesOfWaste } = this.props.typeOfWasteListQuery
-    const { classes, theme, match, facilityDetailsQuery } = this.props
+    const { classes, match, facilityDetailsQuery } = this.props
 
     const isNew = !match.params.facilityId
 
     if (loading) {
-      return <div style={{ textAlign: 'center' }}><CircularProgress size={50} /></div>
+      return <Loading />
     }
 
     if (error) {
@@ -215,18 +216,14 @@ class FacilityEditor extends Component {
                 </div>
               )}
             >
-              {typesOfWaste.map(({_id, name}) => (
+              {typesOfWaste.map(({ _id, name }) => (
                 <MenuItem
                   key={name}
-                  value={_id}
-                  style={{
-                    fontWeight:
-                      this.state.name.indexOf(name) === -1
-                        ? theme.typography.fontWeightRegular
-                        : theme.typography.fontWeightMedium
-                  }}
-                >
-                  {name}
+                  value={_id}>
+                  <ListItemIcon>
+                    <Avatar src={typesOfWasteMap[_id].icons.androidMediumURL} />
+                  </ListItemIcon>
+                  <ListItemText primary={name} />
                 </MenuItem>
               ))}
             </Select>
@@ -356,14 +353,8 @@ export default compose(
   }),
   graphql(facilityAddMutation, {
     name: 'facilityAddMutation',
-    options: {
-      refetchQueries: [ facilityListQuery.name ]
-    }
   }),
   graphql(facilityEditMutation, {
     name: 'facilityEditMutation',
-    options: {
-      refetchQueries: [ facilityListQuery.name ]
-    }
   })
 )(FacilityEditor)
