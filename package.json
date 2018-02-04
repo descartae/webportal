@@ -23,14 +23,17 @@
     "build:watch": "npm run clean && react-scripts start",
     "clean": "rm -rf build",
     "test": "standard && react-scripts test --env=jsdom",
-    "prettify": "standard --fix"
+    "prettify": "standard --harmony --fix"
   },
   "devDependencies": {
     "apollo-test-utils": "^0.1.2",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.17.0",
     "react-scripts": "1.0.14",
-    "standard": "^10.0.3"
+    "standard": "^11.0.0-beta.0"
   },
   "standard": {
+    "parser": "babel-eslint",
     "globals": [
       "localStorage"
     ]
