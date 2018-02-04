@@ -1,5 +1,7 @@
-import React, {Component}  from 'react';
+import React, { Component }  from 'react';
 import PropTypes from 'prop-types';
+
+import { Link } from 'react-router-dom'
 import { gql, graphql, compose } from 'react-apollo'
 
 import { withStyles } from 'material-ui/styles';
@@ -9,6 +11,8 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import Typography from 'material-ui/Typography'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
+import Button from 'material-ui/Button'
+import EditIcon from 'material-ui-icons/Edit';
 
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
@@ -17,16 +21,34 @@ import NotFound from './NotFound'
 class FacilityDetails extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   }
 
   static styles = theme => ({
     field: {
-      marginTop: 16, 
+      marginTop: 16,
+    },
+    edit: {
+      float: 'right'
+    },
+    typesOfWaste: {
+      padding: 5,
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap'
+    },
+    typeOfWaste: {
+      margin: 5
+    },
+    map: {
+      position: 'relative',
+      width: '100%',
+      height: '300px'
     }
   })
 
   render() {
-    const { classes, google, data: { loading, error, facility } } = this.props
+    const { classes, theme, google, data: { loading, error, facility } } = this.props
 
     if (loading) {
       return <div style={{ textAlign: 'center' }}><CircularProgress size={50} /></div>
@@ -60,6 +82,10 @@ class FacilityDetails extends Component {
 
     return (
       <div>
+        <Button fab mini color="secondary" component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
+          <EditIcon />
+        </Button>
+
         <Typography type='title'>
           {facility.name}
         </Typography>
@@ -67,18 +93,13 @@ class FacilityDetails extends Component {
         <p>Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
         <p>Contato: {facility.telephone}</p>
 
-        <Paper style={{
-          padding: 5,
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
-        }}>
+        <Paper className={classes.typesOfWaste} elevation={0}>
           { facility.typesOfWaste.map(it => (
             <Chip
               key={it._id}
               avatar={<Avatar src={it.icons.androidMediumURL} />}
               label={it.name}
-              style={{ margin: 5 }}
+              className={classes.typeOfWaste}
             />
           ))}
         </Paper>
@@ -103,11 +124,7 @@ class FacilityDetails extends Component {
         </Table>
 
         <Map google={google} zoom={14}
-          containerStyle={{
-            position: 'relative',
-            width: '100%',
-            height: '300px'
-          }}
+          containerStyle={FacilityDetails.styles(theme).map}
           initialCenter={{
             lat: coordinates.latitude,
             lng: coordinates.longitude
@@ -123,7 +140,7 @@ class FacilityDetails extends Component {
   }
 }
 
-const facilityDetailsQuery = gql`
+export const facilityDetailsQuery = gql`
   query FacilityDetailsQuery($facilityId: ID!) {
   facility(_id: $facilityId) {
       _id
@@ -160,6 +177,7 @@ export default compose(
   withStyles(FacilityDetails.styles, { withTheme: true }),
   graphql(facilityDetailsQuery, {
     options: (props) => ({
+      fetchPolicy: 'network-only',
       variables: { facilityId: props.match.params.facilityId }
     })
   }),
