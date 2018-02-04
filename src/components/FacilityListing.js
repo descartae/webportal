@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import { Link } from 'react-router-dom'
 import { gql, graphql, compose } from 'react-apollo'
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import { CircularProgress } from 'material-ui/Progress'
-import Checkbox from 'material-ui/Checkbox';
+import Checkbox from 'material-ui/Checkbox'
 
 class FacilityListing extends Component {
-
   static propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
@@ -25,7 +24,7 @@ class FacilityListing extends Component {
 
   selectFacility = (id) => (e) => {
     e.preventDefault()
-    
+
     const state = this.state.checked
     state[id] = !state[id]
     if (!state[id]) {
@@ -34,7 +33,7 @@ class FacilityListing extends Component {
     this.setState({ checked: state })
   }
 
-  render() {
+  render () {
     const { data: { loading, error, facilities } } = this.props
 
     if (loading) {
@@ -46,20 +45,20 @@ class FacilityListing extends Component {
     }
 
     return (
-      <List component="nav">
+      <List component='nav'>
         { facilities.items.map(it => (
-        <ListItem button component={Link} to={`/facilities/view/${it._id}`} key={it._id}>
-          <Checkbox
-            checked={!!this.state.checked[it._id]}
-            onClick={this.selectFacility(it._id)}
-            tabIndex={-1}
-            disableRipple
-          />
+          <ListItem button component={Link} to={`/facilities/view/${it._id}`} key={it._id}>
+            <Checkbox
+              checked={!!this.state.checked[it._id]}
+              onClick={this.selectFacility(it._id)}
+              tabIndex={-1}
+              disableRipple
+            />
             <ListItemText primary={it.name} secondary={`
               ${it.location.address}, ${it.location.municipality}
               ${it.location.state} ${it.location.zip}
             `} />
-        </ListItem>
+          </ListItem>
         ))}
       </List>
     )
@@ -99,7 +98,7 @@ export default compose(
   withStyles(FacilityListing.styles, { withTheme: true }),
   graphql(facilityListQuery, {
     options: (props) => ({
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'network-only'
     })
-  }),
+  })
 )(FacilityListing)

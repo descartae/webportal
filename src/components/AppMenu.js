@@ -1,39 +1,38 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles'
 
 import Drawer from 'material-ui/Drawer'
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import Menu, { MenuItem } from 'material-ui/Menu';
+import AppBar from 'material-ui/AppBar'
+import Toolbar from 'material-ui/Toolbar'
+import Typography from 'material-ui/Typography'
+import IconButton from 'material-ui/IconButton'
+import MenuIcon from 'material-ui-icons/Menu'
+import AccountCircle from 'material-ui-icons/AccountCircle'
+import Menu, { MenuItem } from 'material-ui/Menu'
 
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import StoreIcon from 'material-ui-icons/Store';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import StoreIcon from 'material-ui-icons/Store'
 
 import logo from './../logo.png'
 
 import Auth from './Auth'
 
 class AppMenu extends Component {
-
   static styles = (theme) => ({
     title: {
       flex: 1,
-      color: 'inherit',
+      color: 'inherit'
     },
     menu: {
       marginLeft: -12,
       marginRight: 20,
-      color: 'inherit',
+      color: 'inherit'
     },
     user: {
-      color: 'inherit',
+      color: 'inherit'
     },
     logo: {
       textAlign: 'center'
@@ -44,7 +43,7 @@ class AppMenu extends Component {
   })
 
   static propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   constructor (props) {
@@ -67,21 +66,21 @@ class AppMenu extends Component {
 
   setDrawer = (drawer) => () => {
     this.setState({
-      drawer,
-    });
+      drawer
+    })
   };
 
   setMenu = event => {
-    this.setState({ menu: event.currentTarget });
+    this.setState({ menu: event.currentTarget })
   };
 
   closeMenu = () => {
-    this.setState({ menu: null });
+    this.setState({ menu: null })
   };
 
   render () {
-    const { classes } = this.props;
-    const { menu } = this.state;
+    const { classes } = this.props
+    const { menu } = this.state
 
     if (!localStorage.getItem('token')) {
       return <Auth {...this.props} />
@@ -92,7 +91,7 @@ class AppMenu extends Component {
 
         <AppBar
           title='Descartaê'
-          position="static"
+          position='static'
           onClose={this.setDrawer(false)}>
 
           <Toolbar>
@@ -100,7 +99,7 @@ class AppMenu extends Component {
               <MenuIcon />
             </IconButton>
 
-            <Typography className={classes.title} type="title">
+            <Typography className={classes.title} type='title'>
               Descartaê
             </Typography>
 
@@ -109,15 +108,14 @@ class AppMenu extends Component {
             </IconButton>
 
             <Menu
-              id="AppMenu-UserMenu"
               anchorEl={menu}
               anchorOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'right'
               }}
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'right'
               }}
               open={!!menu}
               onClose={this.closeMenu}>
@@ -143,7 +141,7 @@ class AppMenu extends Component {
               <ListItemIcon>
                 <StoreIcon />
               </ListItemIcon>
-              <ListItemText primary="Pontos de Coleta" />
+              <ListItemText primary='Pontos de Coleta' />
             </ListItem>
           </Link>
         </Drawer>
@@ -155,4 +153,4 @@ class AppMenu extends Component {
   }
 }
 
-export default withStyles(AppMenu.styles, { withTheme: true })(AppMenu);
+export default withStyles(AppMenu.styles, { withTheme: true })(AppMenu)

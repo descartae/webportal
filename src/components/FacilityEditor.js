@@ -1,17 +1,17 @@
-import React, {Component}  from 'react';
-import PropTypes from 'prop-types';
-import { gql, graphql, compose } from 'react-apollo';
-import { withStyles } from 'material-ui/styles';
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import { gql, graphql, compose } from 'react-apollo'
+import { withStyles } from 'material-ui/styles'
 
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
-import Select from 'material-ui/Select';
+import Select from 'material-ui/Select'
 
-import Input, { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl } from 'material-ui/Form';
-import Chip from 'material-ui/Chip';
+import Input, { InputLabel } from 'material-ui/Input'
+import { MenuItem } from 'material-ui/Menu'
+import { FormControl } from 'material-ui/Form'
+import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 import { CircularProgress } from 'material-ui/Progress'
 
@@ -19,27 +19,26 @@ import NotFound from './NotFound'
 import { facilityListQuery } from './FacilityListing'
 
 class FacilityEditor extends Component {
-
   static propTypes = {
     history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
     paper: {
-      padding: 16,
+      padding: 16
     },
     typesOfWaste: {
       display: 'flex',
-      flexWrap: 'wrap',
+      flexWrap: 'wrap'
     },
     field: {
-      marginTop: 16, 
+      marginTop: 16
     }
   })
-  
+
   state = {
     _id: null,
     name: '',
@@ -50,7 +49,7 @@ class FacilityEditor extends Component {
     typeOfWaste: []
   }
 
-  componentWillReceiveProps({ match, facilityDetailsQuery, typeOfWasteListQuery }) {
+  componentWillReceiveProps ({ match, facilityDetailsQuery, typeOfWasteListQuery }) {
     if (match.params.facilityId) {
       if (facilityDetailsQuery && facilityDetailsQuery.facility) {
         const {
@@ -66,32 +65,42 @@ class FacilityEditor extends Component {
         } = facilityDetailsQuery.facility
 
         this.setState({
-          _id, name, address, municipality,
-          state, zip, typeOfWaste: typesOfWaste.map(({ _id }) => _id)
+          _id,
+          name,
+          address,
+          municipality,
+          state,
+          zip,
+          typeOfWaste: typesOfWaste.map(({ _id }) => _id)
         })
       }
     } else {
       this.setState({
-        _id: null, name: '', address: '', municipality: '', 
-        state: '', zip: '', typeOfWaste: []
+        _id: null,
+        name: '',
+        address: '',
+        municipality: '',
+        state: '',
+        zip: '',
+        typeOfWaste: []
       })
     }
   }
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     })
   }
 
   handleTypeOfWasteDelete = type => event => {
-    const typeOfWaste = [...this.state.typeOfWaste];
-    const typeToDelete = typeOfWaste.indexOf(type);
-    typeOfWaste.splice(typeToDelete, 1);
-    this.setState({ typeOfWaste });
+    const typeOfWaste = [...this.state.typeOfWaste]
+    const typeToDelete = typeOfWaste.indexOf(type)
+    typeOfWaste.splice(typeToDelete, 1)
+    this.setState({ typeOfWaste })
   }
 
-  async onSubmit(e) {
+  async onSubmit (e) {
     e.preventDefault()
 
     const { _id, name, address, municipality, zip, state, typeOfWaste } = this.state
@@ -112,7 +121,7 @@ class FacilityEditor extends Component {
     }
   }
 
-  render() {
+  render () {
     const { loading, error, typesOfWaste } = this.props.typeOfWasteListQuery
     const { classes, theme, match, facilityDetailsQuery } = this.props
 
@@ -121,7 +130,7 @@ class FacilityEditor extends Component {
     if (loading) {
       return <div style={{ textAlign: 'center' }}><CircularProgress size={50} /></div>
     }
-  
+
     if (error) {
       return <p>{ error.message }</p>
     }
@@ -143,7 +152,7 @@ class FacilityEditor extends Component {
 
         <form onSubmit={this.onSubmit.bind(this)}>
           <TextField
-            label="Nome"
+            label='Nome'
             value={this.state.name}
             onChange={this.handleChange('name')}
             fullWidth
@@ -151,7 +160,7 @@ class FacilityEditor extends Component {
           />
 
           <TextField
-            label="Endereço"
+            label='Endereço'
             value={this.state.address}
             onChange={this.handleChange('address')}
             fullWidth
@@ -159,7 +168,7 @@ class FacilityEditor extends Component {
           />
 
           <TextField
-            label="Cidade"
+            label='Cidade'
             value={this.state.municipality}
             onChange={this.handleChange('municipality')}
             fullWidth
@@ -167,7 +176,7 @@ class FacilityEditor extends Component {
           />
 
           <TextField
-            label="Estado"
+            label='Estado'
             value={this.state.state}
             onChange={this.handleChange('state')}
             fullWidth
@@ -175,7 +184,7 @@ class FacilityEditor extends Component {
           />
 
           <TextField
-            label="CEP"
+            label='CEP'
             value={this.state.zip}
             onChange={this.handleChange('zip')}
             fullWidth
@@ -192,7 +201,7 @@ class FacilityEditor extends Component {
               renderValue={selected => (
                 <div className={classes.typesOfWaste} style={{
                   display: 'flex',
-                  flexWrap: 'wrap',
+                  flexWrap: 'wrap'
                 }}>
                   {selected.map(value =>
                     <Chip
@@ -214,7 +223,7 @@ class FacilityEditor extends Component {
                     fontWeight:
                       this.state.name.indexOf(name) === -1
                         ? theme.typography.fontWeightRegular
-                        : theme.typography.fontWeightMedium,
+                        : theme.typography.fontWeightMedium
                   }}
                 >
                   {name}
@@ -223,7 +232,7 @@ class FacilityEditor extends Component {
             </Select>
           </FormControl>
 
-          <Button raised color="primary" type='submit' className={classes.field}>
+          <Button raised color='primary' type='submit' className={classes.field}>
             { isNew ? 'Criar' : 'Editar' }
           </Button>
         </form>
@@ -348,13 +357,13 @@ export default compose(
   graphql(facilityAddMutation, {
     name: 'facilityAddMutation',
     options: {
-      refetchQueries: [ facilityListQuery.name ], 
+      refetchQueries: [ facilityListQuery.name ]
     }
   }),
   graphql(facilityEditMutation, {
     name: 'facilityEditMutation',
     options: {
-      refetchQueries: [ facilityListQuery.name ], 
-    } 
-  }),
+      refetchQueries: [ facilityListQuery.name ]
+    }
+  })
 )(FacilityEditor)

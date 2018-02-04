@@ -1,10 +1,10 @@
-import React, { Component }  from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import { Link } from 'react-router-dom'
 import { gql, graphql, compose } from 'react-apollo'
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
 import { CircularProgress } from 'material-ui/Progress'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
@@ -12,7 +12,7 @@ import Typography from 'material-ui/Typography'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 import Button from 'material-ui/Button'
-import EditIcon from 'material-ui-icons/Edit';
+import EditIcon from 'material-ui-icons/Edit'
 
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
@@ -21,12 +21,12 @@ import NotFound from './NotFound'
 class FacilityDetails extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
     field: {
-      marginTop: 16,
+      marginTop: 16
     },
     edit: {
       float: 'right'
@@ -47,7 +47,7 @@ class FacilityDetails extends Component {
     }
   })
 
-  render() {
+  render () {
     const { classes, theme, google, data: { loading, error, facility } } = this.props
 
     if (loading) {
@@ -82,7 +82,7 @@ class FacilityDetails extends Component {
 
     return (
       <div>
-        <Button fab mini color="secondary" component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
+        <Button fab mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
           <EditIcon />
         </Button>
 
@@ -133,7 +133,7 @@ class FacilityDetails extends Component {
           <Marker position={{
             lat: coordinates.latitude,
             lng: coordinates.longitude
-          }}/>
+          }} />
         </Map>
       </div>
     )

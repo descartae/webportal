@@ -7,7 +7,7 @@ import {
 
 import './App.css'
 import {
-  AppMenu,
+  AppMenu
 } from './components'
 
 import {

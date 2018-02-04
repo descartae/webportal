@@ -19,7 +19,7 @@ class Auth extends Component {
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     })
   }
 
@@ -49,22 +49,22 @@ class Auth extends Component {
           <form onSubmit={this.onSubmit.bind(this)}>
 
             <TextField
-              label="E-mail"
-              type="email"
-              margin="normal"
+              label='E-mail'
+              type='email'
+              margin='normal'
               value={this.state.email}
               onChange={this.handleChange('email')}
             />
 
             <TextField
-              label="Senha"
-              type="password"
-              margin="normal"
+              label='Senha'
+              type='password'
+              margin='normal'
               value={this.state.password}
               onChange={this.handleChange('password')}
             />
 
-            <Button raised color="primary" type='submit' className='submit'>
+            <Button raised color='primary' type='submit' className='submit'>
               Entrar
             </Button>
           </form>

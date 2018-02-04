@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { Route, Switch, Link } from 'react-router-dom'
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles'
 
 import FacilityListing from '../components/FacilityListing'
 import FacilityDetails from '../components/FacilityDetails'
@@ -11,13 +11,12 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
-import AddIcon from 'material-ui-icons/Add';
+import AddIcon from 'material-ui-icons/Add'
 
 class Facility extends Component {
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
@@ -27,8 +26,8 @@ class Facility extends Component {
       right: 20,
       bottom: 20,
       left: 'auto',
-      position: 'fixed',
-    },
+      position: 'fixed'
+    }
   })
 
   render () {
@@ -40,27 +39,27 @@ class Facility extends Component {
           <Grid container>
             <Grid item xs={12}>
               <Typography type='headline'>
-                Pontos de coleta 
+                Pontos de coleta
               </Typography>
             </Grid>
             <Grid item xs={6}>
               <FacilityListing />
             </Grid>
             { !match.isExact ? (
-            <Grid item xs={6} >
-              <Paper style={{ padding: 16 }}>
-                <Switch>
-                  <Route path={`${match.url}/add`} component={FacilityEditor} />
-                  <Route path={`${match.url}/edit/:facilityId`} component={FacilityEditor} />
-                  <Route path={`${match.url}/view/:facilityId`} component={FacilityDetails} />
-                </Switch>
-              </Paper>
-            </Grid>
+              <Grid item xs={6} >
+                <Paper style={{ padding: 16 }}>
+                  <Switch>
+                    <Route path={`${match.url}/add`} component={FacilityEditor} />
+                    <Route path={`${match.url}/edit/:facilityId`} component={FacilityEditor} />
+                    <Route path={`${match.url}/view/:facilityId`} component={FacilityDetails} />
+                  </Switch>
+                </Paper>
+              </Grid>
             ) : null }
           </Grid>
         </Paper>
 
-        <Button fab color="secondary" component={Link} to={`/facilities/add`} className={classes.add}>
+        <Button fab color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
           <AddIcon />
         </Button>
       </div>
@@ -68,4 +67,4 @@ class Facility extends Component {
   }
 }
 
-export default withStyles(Facility.styles, { withTheme: true })(Facility);
+export default withStyles(Facility.styles, { withTheme: true })(Facility)
