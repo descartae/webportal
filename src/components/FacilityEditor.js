@@ -37,11 +37,11 @@ class FacilityEditor extends Component {
   })
   
   state = {
-    name: 'sdfsdf',
-    address: 'Rua Pedro de Carvalho 89',
-    municipality: 'Rio de Janeiro',
-    state: 'Rio de Janeiro',
-    zip: '25250525',
+    name: '',
+    address: '',
+    municipality: '',
+    state: '',
+    zip: '',
     typeOfWaste: []
   }
 
