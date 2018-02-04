@@ -43,7 +43,7 @@ class Facility extends Component {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <FacilityListing />
+              <FacilityListing pageSize={5} />
             </Grid>
             { !match.isExact ? (
               <Grid item xs={6} >
