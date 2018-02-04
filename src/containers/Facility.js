@@ -11,7 +11,7 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
-import Icon from 'material-ui/Icon';
+import AddIcon from 'material-ui-icons/Add';
 
 class Facility extends Component {
 
@@ -21,7 +21,7 @@ class Facility extends Component {
   }
 
   static styles = theme => ({
-    fabAdd: {
+    add: {
       margin: 0,
       top: 'auto',
       right: 20,
@@ -44,7 +44,7 @@ class Facility extends Component {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <FacilityListing {...this.props} />
+              <FacilityListing />
             </Grid>
             { !match.isExact ? (
             <Grid item xs={6} >
@@ -60,8 +60,8 @@ class Facility extends Component {
           </Grid>
         </Paper>
 
-        <Button fab color="secondary" component={Link} to={`/facilities/add`} className={classes.fabAdd}>
-          <Icon>add_icon</Icon>
+        <Button fab color="secondary" component={Link} to={`/facilities/add`} className={classes.add}>
+          <AddIcon />
         </Button>
       </div>
     )
