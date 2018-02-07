@@ -7,7 +7,6 @@ import { gql, graphql, compose } from 'react-apollo'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
-import MobileStepper from 'material-ui/MobileStepper';
 import Button from 'material-ui/Button';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
@@ -17,34 +16,24 @@ import Loading from './Loading'
 class FacilityListing extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    pageSize: PropTypes.number.isRequired
   }
 
   static styles = theme => ({
+    prev: { float: 'left' },
+    next: { float: 'right' },
   })
 
   state = {
     checked: {},
-    step: 0
   }
 
   handlePrev = () => {
     if (this.props.loading) return
-    this.setState({
-      step: Math.max(this.state.step - 1, 0),
-    })
     this.props.data.prevPage()
   };
 
   handleNext = () => {
     if (this.props.loading) return
-    const { data: { facilities: { cursors: { count } } }, pageSize } = this.props
-    this.setState({
-      step: Math.min(
-        this.state.step + 1,
-        Math.ceil(count / pageSize) - 1
-      ),
-    });
     this.props.data.nextPage()
   };
 
@@ -60,7 +49,7 @@ class FacilityListing extends Component {
   }
 
   render () {
-    const { data: { loading, error, facilities }, pageSize } = this.props
+    const { classes, data: { loading, error, facilities } } = this.props
 
     if (loading) {
       return <Loading />
@@ -70,7 +59,7 @@ class FacilityListing extends Component {
       return <p>{ error.message }</p>
     }
 
-    const { items, cursors } = facilities
+    const { items } = facilities
 
     return (
       <div>
@@ -91,22 +80,15 @@ class FacilityListing extends Component {
           ))}
         </List>
 
-        <MobileStepper
-          type="dots"
-          steps={Math.ceil(cursors.count / pageSize)}
-          position="static"
-          activeStep={this.state.step}
-          backButton={
-            <Button size="small" onClick={this.handlePrev}>
-              <KeyboardArrowLeft />
-            </Button>
-          }
-          nextButton={
-            <Button size="small" onClick={this.handleNext}>
-              <KeyboardArrowRight />
-            </Button>
-          }
-        />
+        <div>
+          <Button size="small" className={classes.prev} onClick={this.handlePrev}>
+            <KeyboardArrowLeft />
+          </Button>
+
+          <Button size="small" className={classes.next} onClick={this.handleNext}>
+            <KeyboardArrowRight />
+          </Button>
+        </div>
       </div>
     )
   }
@@ -124,7 +106,6 @@ export const facilityListQuery = gql`
       cursors {
         after
         before
-        count
       }
 
       items {
