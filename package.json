@@ -7,7 +7,7 @@
     "dotenv-safe": "^4.0.4",
     "false": "0.0.4",
     "graphql-tools": "^0.10.1",
-    "material-ui": "^0.19.4",
+    "material-ui": "^0.20.0",
     "react": "^16.0.0",
     "react-apollo": "^1.4.16",
     "react-dom": "^16.0.0",

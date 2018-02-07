@@ -5,7 +5,7 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
 import './index.css'
-
+import './icon.css'
 
 const rootComponent = (
   <App />
