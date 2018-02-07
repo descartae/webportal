@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import Paper from 'material-ui/Paper'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import './index.css'
+import logo from '../../logo.png'
 
 export class Auth extends Component {
   constructor (props) {
@@ -22,6 +28,7 @@ export class Auth extends Component {
       const { success, sessionToken } = authenticate
       if (success) {
         localStorage.setItem('token', sessionToken)
+        this.props.history.go()
       }
     }
 
@@ -30,28 +37,27 @@ export class Auth extends Component {
 
   render () {
     return (
-      <div className='auth'>
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <label>
-            E-mail:
-            <input
-              type='text'
-              name='email'
+      <div className='page-auth'>
+        <Paper className='container' zDepth={1} style={{
+        }}>
+          <img src={logo} alt='logo' />
+          <form onSubmit={this.onSubmit.bind(this)}>
+
+            <TextField
               value={this.state.email}
               onChange={(e) => this.setState({email: e.target.value})}
+              floatingLabelText='E-mail'
             />
-          </label>
-          <label>
-            Senha:
-            <input
-              type='password  '
-              name='password'
+
+            <TextField
               value={this.state.password}
               onChange={(e) => this.setState({password: e.target.value})}
+              floatingLabelText='Senha'
             />
-          </label>
-          <button type='submit'>Entrar</button>
-        </form>
+
+            <RaisedButton type='submit' className='submit' label='Entrar' primary />
+          </form>
+        </Paper>
       </div>
     )
   }
@@ -67,4 +73,4 @@ const authenticate = gql`
   }
 `
 
-export const AuthWithData = graphql(authenticate)(Auth)
+export const AuthWithData = withRouter(graphql(authenticate)(Auth))

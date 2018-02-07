@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 
 import './App.css'
-import logo from './logo.png'
 import {
   Auth,
   AppMenu,
@@ -24,8 +23,7 @@ import {
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import { createMuiTheme } from 'material-ui/styles'
-import { indigo500, orange500 } from 'material-ui/styles/colors'
+import Theme from './Theme'
 
 const networkInterface = createNetworkInterface({
   uri: process.env.REACT_APP_SERVER_URL
@@ -70,18 +68,10 @@ const client = new ApolloClient({
   dataIdFromObject
 })
 
-const muiTheme = getMuiTheme({
-  palette: {
-    primary: orange500,
-    accent: indigo500,
-    type: 'light'
-  }
-})
-
 class App extends Component {
   render () {
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={getMuiTheme(Theme)}>
         <ApolloProvider client={client}>
           <BrowserRouter>
             <div className='App'>
@@ -91,8 +81,8 @@ class App extends Component {
                   <AppMenu>
                     <Switch>
                       <Route exact path='/' component={Home} />
-                      <Route path='/facilities' component={FacilityListing} />
-                      <Route path='/facilities/:facilityId' component={FacilityDetails} />
+                      <Route exact path='/facilities' component={FacilityListing} />
+                      <Route exact path='/facilities/:facilityId' component={FacilityDetails} />
                     </Switch>
                   </AppMenu>
                 )

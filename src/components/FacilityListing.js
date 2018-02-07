@@ -26,7 +26,7 @@ const FacilityListing = ({ data: { loading, error, facilities } }) => {
         { facilities.items.map(it =>
             (<div key={it._id} className='facility'>
               <ListItem>
-                <Link to={it._id < 0 ? `/` : `facilities/${it._id}`}>
+                <Link to={it._id < 0 ? `/` : `/facilities/${it._id}`}>
                   {it.name}
                 </Link>
               </ListItem>
