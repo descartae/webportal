@@ -99,7 +99,7 @@ class AppMenu extends Component {
               <MenuIcon />
             </IconButton>
 
-            <Typography className={classes.title} type='title'>
+            <Typography className={classes.title} variant='title'>
               Descartaê
             </Typography>
 

@@ -38,7 +38,7 @@ class Facility extends Component {
         <Paper style={{ padding: 16 }}>
           <Grid container>
             <Grid item xs={12}>
-              <Typography type='headline'>
+              <Typography variant='headline'>
                 Pontos de coleta
               </Typography>
             </Grid>
@@ -59,7 +59,7 @@ class Facility extends Component {
           </Grid>
         </Paper>
 
-        <Button fab color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
+        <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
           <AddIcon />
         </Button>
       </div>

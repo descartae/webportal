@@ -65,7 +65,7 @@ class Auth extends Component {
             />
 
             <div>
-              <Button raised color='primary' type='submit' className='submit'>
+              <Button variant='raised' color='primary' type='submit' className='submit'>
                 Entrar
               </Button>
             </div>

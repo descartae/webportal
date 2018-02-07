@@ -11,7 +11,7 @@ class Facility extends Component {
         <Grid container>
           <Grid item xs={12}>
             <Paper style={{ padding: 16 }}>
-              <Typography type='headline'>
+              <Typography variant='headline'>
                 Bem-vindo ao Descartaê!
               </Typography>
             </Paper>

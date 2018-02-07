@@ -146,7 +146,7 @@ class FacilityEditor extends Component {
 
     return (
       <div>
-        <Typography type='title'>
+        <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
 
@@ -228,7 +228,7 @@ class FacilityEditor extends Component {
             </Select>
           </FormControl>
 
-          <Button raised color='primary' type='submit' className={classes.field}>
+          <Button variant='raised' color='primary' type='submit' className={classes.field}>
             { isNew ? 'Criar' : 'Editar' }
           </Button>
         </form>

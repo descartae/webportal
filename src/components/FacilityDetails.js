@@ -82,11 +82,11 @@ class FacilityDetails extends Component {
 
     return (
       <div>
-        <Button fab mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
+        <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
           <EditIcon />
         </Button>
 
-        <Typography type='title'>
+        <Typography variant='title'>
           {facility.name}
         </Typography>
 
