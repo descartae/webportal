@@ -1,19 +1,24 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
+import PropTypes from 'prop-types'
+import { gql, graphql, compose } from 'react-apollo'
+import { withStyles } from 'material-ui/styles'
+
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import logo from '../logo.png'
 
 class Auth extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      email: 'user@example.com',
-      password: 'example'
-    }
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
+  }
+
+  state = {
+    email: 'user@example.com',
+    password: 'example'
   }
 
   static styles = theme => ({
@@ -35,7 +40,6 @@ class Auth extends Component {
       margin: 10
     }
   })
-
 
   handleChange = name => event => {
     this.setState({
@@ -109,4 +113,7 @@ const authenticate = gql`
   }
 `
 
-export default withRouter(graphql(authenticate)(Auth))
+export default compose(
+  withStyles(Auth.styles, { withTheme: true }),
+  graphql(authenticate)
+)(Auth)
