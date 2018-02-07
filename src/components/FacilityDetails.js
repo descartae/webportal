@@ -182,6 +182,6 @@ export default compose(
     })
   }),
   GoogleApiWrapper({
-    apiKey: 'myapikey'
+    apiKey: process.env.REACT_APP_MAPS_API_KEY
   })
 )(FacilityDetails)

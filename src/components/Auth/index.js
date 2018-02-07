@@ -64,9 +64,11 @@ class Auth extends Component {
               onChange={this.handleChange('password')}
             />
 
-            <Button raised color='primary' type='submit' className='submit'>
-              Entrar
-            </Button>
+            <div>
+              <Button raised color='primary' type='submit' className='submit'>
+                Entrar
+              </Button>
+            </div>
           </form>
         </Paper>
       </div>

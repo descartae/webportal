@@ -17,7 +17,6 @@ import Avatar from 'material-ui/Avatar'
 
 import NotFound from './NotFound'
 import Loading from './Loading'
-import { facilityListQuery } from './FacilityListing'
 
 class FacilityEditor extends Component {
   static propTypes = {
