@@ -5,8 +5,7 @@ import gql from 'graphql-tag'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
-import './index.css'
-import logo from '../../logo.png'
+import logo from '../logo.png'
 
 class Auth extends Component {
   constructor (props) {
@@ -16,6 +15,27 @@ class Auth extends Component {
       password: 'example'
     }
   }
+
+  static styles = theme => ({
+    root: {
+      textAlign: 'center'
+    },
+    container: {
+      width: 300,
+      margin: 20,
+      padding: 10,
+      textAlign: 'center',
+      display: 'inline-block'
+    },
+    logo: {
+      height: 120,
+      margin: 10
+    },
+    submit: {
+      margin: 10
+    }
+  })
+
 
   handleChange = name => event => {
     this.setState({
@@ -42,10 +62,13 @@ class Auth extends Component {
   }
 
   render () {
+
+    const { classes } = this.props
+
     return (
-      <div className='page-auth'>
-        <Paper className='container'>
-          <img src={logo} alt='logo' />
+      <div className={classes.root}>
+        <Paper className={classes.container}>
+          <img src={logo} alt='logo' className={classes.logo} />
           <form onSubmit={this.onSubmit.bind(this)}>
 
             <TextField
@@ -65,7 +88,7 @@ class Auth extends Component {
             />
 
             <div>
-              <Button variant='raised' color='primary' type='submit' className='submit'>
+              <Button variant='raised' color='primary' type='submit' className={classes.submit}>
                 Entrar
               </Button>
             </div>
