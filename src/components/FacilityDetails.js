@@ -1,103 +1,143 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import { Link } from 'react-router-dom'
+import { gql, graphql, compose } from 'react-apollo'
+
+import { withStyles } from 'material-ui/styles'
+import Paper from 'material-ui/Paper'
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
+import Typography from 'material-ui/Typography'
+import Chip from 'material-ui/Chip'
+import Avatar from 'material-ui/Avatar'
+import Button from 'material-ui/Button'
+import EditIcon from 'material-ui-icons/Edit'
+
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
+
 import NotFound from './NotFound'
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table'
-import ActionRoom from 'material-ui/svg-icons/action/room'
-import CommunicationCall from 'material-ui/svg-icons/communication/call'
-import MapsLocalOffer from 'material-ui/svg-icons/maps/local-offer'
-import ActionSchedule from 'material-ui/svg-icons/action/schedule'
-import {
-    gql,
-    graphql
-} from 'react-apollo'
+import Loading from './Loading'
 
-const FacilityDetails = ({ data: { loading, error, facility }, match }) => {
-  if (loading) {
-    return <p>Loading...</p>
+class FacilityDetails extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
   }
 
-  if (error) {
-    return <p>{ error.message }</p>
-  }
+  static styles = theme => ({
+    field: {
+      marginTop: 16
+    },
+    edit: {
+      float: 'right'
+    },
+    typesOfWaste: {
+      padding: 5,
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap'
+    },
+    typeOfWaste: {
+      margin: 5
+    },
+    map: {
+      position: 'relative',
+      width: '100%',
+      height: '300px'
+    }
+  })
 
-  if (facility === null) {
-    return <NotFound />
-  }
-  const state = {
-    fixedHeader: true,
-    stripedRows: false,
-    showRowHover: false,
-    selectable: false,
-    multiSelectable: false,
-    enableSelectAll: false,
-    deselectOnClickaway: false,
-    showCheckboxes: false,
-    height: '300px'
-  }
+  render () {
+    const { classes, theme, google, data: { loading, error, facility } } = this.props
 
-  return (
-    <div className='container'>
-      <div className='facilityDetails'>
-        <h3>{facility.name}</h3>
-        <hr />
-        <p><ActionRoom /> Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
-        <p><CommunicationCall /> Contato: {facility.telephone}</p>
-        <p><strong>Tipo de resíduo</strong>:
-        { facility.typesOfWaste.map(it => (
-          <p key={it._id} className='typesOfWastes'>
-            {/* image fails to load
-            <img src={it.icon} alt={it.name} /> */}
-            <MapsLocalOffer /> {it.name}
-          </p>
-        ))}
-        </p>
-        <br />
-        <Table
-          header={state.height}
-          fixedHeader={state.fixedHeader}
-          selectable={state.selectable}
-          multiSelectable={state.multiSelectable}
-        >
-          <TableHeader
-            displaySelectAll={state.showCheckboxes}
-            adjustForCheckbox={state.showCheckboxes}
-            enableSelectAll={state.enableSelectAll}
-          >
+    if (loading) {
+      return <Loading />
+    }
+
+    if (error) {
+      return <p>{ error.message }</p>
+    }
+
+    if (facility === null) {
+      return <NotFound />
+    }
+
+    const weekDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+    const ptWeekDays = {
+      MONDAY: 'Segunda-feira',
+      TUESDAY: 'Terça-feira',
+      WEDNESDAY: 'Quarta-feira',
+      THURSDAY: 'Quinta-feira',
+      FRIDAY: 'Sexta-feira',
+      SATURDAY: 'Sábado',
+      SUNDAY: 'Domingo'
+    }
+    const openHours = weekDays.map(d => {
+      const open = facility.openHours.find((it) => it.dayOfWeek === d)
+      if (open) return { dayOfWeek: d, ptDayOfWeek: ptWeekDays[d], time: `${open.startTime} - ${open.endTime}` }
+      return { dayOfWeek: d, ptDayOfWeek: ptWeekDays[d], time: 'Fechado' }
+    })
+
+    const { coordinates } = facility.location
+
+    return (
+      <div>
+        <Button fab mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
+          <EditIcon />
+        </Button>
+
+        <Typography type='title'>
+          {facility.name}
+        </Typography>
+
+        <p>Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
+        <p>Contato: {facility.telephone}</p>
+
+        <Paper className={classes.typesOfWaste} elevation={0}>
+          { facility.typesOfWaste.map(it => (
+            <Chip
+              key={it._id}
+              avatar={<Avatar src={it.icons.androidMediumURL} />}
+              label={it.name}
+              className={classes.typeOfWaste}
+            />
+          ))}
+        </Paper>
+
+        <Table>
+          <TableHead>
             <TableRow>
-              <TableHeaderColumn colSpan='3' style={{textAlign: 'left'}}>
-                <ActionSchedule /> Horários
-              </TableHeaderColumn>
+              <TableCell>Dia da semana</TableCell>
+              <TableCell>Horário</TableCell>
             </TableRow>
-            <TableRow>
-              <TableHeaderColumn>Dias</TableHeaderColumn>
-              <TableHeaderColumn>Começar</TableHeaderColumn>
-              <TableHeaderColumn>Fim</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            displayRowCheckbox={state.showCheckboxes}
-            deselectOnClickaway={state.deselectOnClickaway}
-            showRowHover={state.showRowHover}
-            stripedRows={state.stripedRows}
-          >
-            {facility.openHours.map(it => (
-              <TableRow key={it.dayOfWeek}>
-                <TableRowColumn>{it.dayOfWeek}</TableRowColumn>
-                <TableRowColumn>{it.startTime}:00</TableRowColumn>
-                <TableRowColumn>{it.endTime}:00</TableRowColumn>
-              </TableRow>
-              ))}
+          </TableHead>
+          <TableBody>
+            {openHours.map(it => {
+              return (
+                <TableRow key={it.dayOfWeek}>
+                  <TableCell>{it.ptDayOfWeek}</TableCell>
+                  <TableCell>{it.time}</TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
+
+        <Map google={google} zoom={14}
+          containerStyle={FacilityDetails.styles(theme).map}
+          initialCenter={{
+            lat: coordinates.latitude,
+            lng: coordinates.longitude
+          }}
+        >
+          <Marker position={{
+            lat: coordinates.latitude,
+            lng: coordinates.longitude
+          }} />
+        </Map>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export const facilityDetailsQuery = gql`
@@ -112,10 +152,17 @@ export const facilityDetailsQuery = gql`
         municipality
         state
         zip
+        coordinates {
+          latitude
+          longitude
+        }
       }
       typesOfWaste {
         _id
         name
+        icons {
+          androidMediumURL
+        }
       }
       openHours {
         dayOfWeek
@@ -126,9 +173,15 @@ export const facilityDetailsQuery = gql`
   }
 `
 
-export { FacilityDetails }
-export const FacilityDetailsWithData = (graphql(facilityDetailsQuery, {
-  options: (props) => ({
-    variables: { facilityId: props.match.params.facilityId}
+export default compose(
+  withStyles(FacilityDetails.styles, { withTheme: true }),
+  graphql(facilityDetailsQuery, {
+    options: (props) => ({
+      fetchPolicy: 'network-only',
+      variables: { facilityId: props.match.params.facilityId }
+    })
+  }),
+  GoogleApiWrapper({
+    apiKey: 'myapikey'
   })
-})(FacilityDetails))
+)(FacilityDetails)
