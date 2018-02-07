@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import { withRouter } from 'react-router'
 import { withStyles } from 'material-ui/styles'
 
 import Drawer from 'material-ui/Drawer'
@@ -43,7 +44,10 @@ class AppMenu extends Component {
   })
 
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
   };
 
   constructor (props) {
@@ -83,7 +87,7 @@ class AppMenu extends Component {
     const { menu } = this.state
 
     if (!localStorage.getItem('token')) {
-      return <Auth {...this.props} />
+      return <Auth />
     }
 
     return (
@@ -155,4 +159,4 @@ class AppMenu extends Component {
   }
 }
 
-export default withStyles(AppMenu.styles, { withTheme: true })(AppMenu)
+export default withRouter(withStyles(AppMenu.styles, { withTheme: true })(AppMenu))

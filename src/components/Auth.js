@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
+import { withRouter } from 'react-router'
 import { withStyles } from 'material-ui/styles'
 
 import Paper from 'material-ui/Paper'
@@ -114,6 +115,7 @@ const authenticate = gql`
 `
 
 export default compose(
+  withRouter,
   withStyles(Auth.styles, { withTheme: true }),
   graphql(authenticate)
 )(Auth)
