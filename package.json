@@ -19,7 +19,7 @@
     "serve": "^6.3.1"
   },
   "scripts": {
-    "start": "npm run build:digest && node -r dotenv-safe/config $(npm bin)/serve build",
+    "start": "npm run build:digest && node -r dotenv-safe/config $(npm bin)/serve --single build",
     "build:digest": "npm run clean && react-scripts build",
     "build:watch": "npm run clean && react-scripts start",
     "clean": "rm -rf build",
