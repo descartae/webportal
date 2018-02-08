@@ -10,13 +10,9 @@ import {
   UserEditor
 } from './user'
 
-import {
-  PorousSwitch,
-  PorousRoute
-} from './router'
-
 export { default as AppMenu } from './AppMenu'
 export { default as Auth } from './Auth'
+export { default as ForRole } from './ForRole'
 
 export const facility = {
   FacilityListing,
@@ -28,9 +24,4 @@ export const user = {
   UserListing,
   UserDetails,
   UserEditor
-}
-
-export const router = {
-  PorousSwitch,
-  PorousRoute
 }

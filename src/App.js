@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {
   BrowserRouter,
+  Switch,
+  Route
 } from 'react-router-dom'
 
-import './App.css'
 import {
-  AppMenu,
-  router
+  AppMenu
 } from './components'
 
 import {
@@ -68,8 +68,6 @@ const client = new ApolloClient({
   dataIdFromObject
 })
 
-const { PorousSwitch, PorousRoute } = router
-
 class App extends Component {
   render () {
     return (
@@ -77,11 +75,11 @@ class App extends Component {
         <ApolloProvider client={client}>
           <BrowserRouter>
             <AppMenu>
-              <PorousSwitch>
-                <PorousRoute exact path='/' component={Home} />
-                <PorousRoute path='/facilities' component={Facility} />
-                <PorousRoute path='/users' component={User} />
-              </PorousSwitch>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/facilities' component={Facility} />
+                <Route path='/users' component={User} />
+              </Switch>
             </AppMenu>
           </BrowserRouter>
         </ApolloProvider>

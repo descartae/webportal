@@ -23,6 +23,7 @@ import PeopleIcon from 'material-ui-icons/People'
 import logo from './../logo.png'
 
 import Auth from './Auth'
+import ForRole from './ForRole'
 
 class AppMenu extends Component {
   static styles = (theme) => ({
@@ -53,7 +54,11 @@ class AppMenu extends Component {
     match: PropTypes.object.isRequired
   }
 
-  constructor(props) {
+  static childContextTypes = {
+    auth: PropTypes.object
+  }
+
+  constructor (props) {
     super(props)
 
     const token = localStorage.getItem('token')
@@ -64,6 +69,12 @@ class AppMenu extends Component {
       menu: null,
       logged: hasToken,
       data: hasToken ? jwt.decode(token) : null
+    }
+  }
+
+  getChildContext () {
+    return {
+      auth: this.state.data
     }
   }
 
@@ -93,7 +104,7 @@ class AppMenu extends Component {
 
   render () {
     const { classes } = this.props
-    const { menu, logged, data } = this.state
+    const { menu, logged } = this.state
 
     if (!logged) {
       return <Auth />
@@ -160,22 +171,19 @@ class AppMenu extends Component {
             </ListItem>
           </Link>
 
-          <Link to='/users' hidden={data.roles.indexOf('ADMIN') === -1}>
-            <ListItem button>
-              <ListItemIcon>
-                <PeopleIcon />
-              </ListItemIcon>
-              <ListItemText primary='Usuários' />
-            </ListItem>
-          </Link>
+          <ForRole roles={['ADMIN']}>
+            <Link to='/users'>
+              <ListItem button>
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary='Usuários' />
+              </ListItem>
+            </Link>
+          </ForRole>
         </Drawer>
 
-        {
-          React.Children.map(
-            this.props.children,
-            (child => React.cloneElement(child, { logged, auth: data }))
-          )
-        }
+        { this.props.children }
 
       </div>
     )

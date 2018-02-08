@@ -9,6 +9,8 @@ import {
   FacilityEditor
 } from '../components/facility'
 
+import { ForRole } from '../components'
+
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
@@ -64,9 +66,11 @@ class Facility extends Component {
           </Grid>
         </Paper>
 
-        <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
-          <AddIcon />
-        </Button>
+        <ForRole roles={['ADMIN', 'MAINTAINER']}>
+          <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
+            <AddIcon />
+          </Button>
+        </ForRole>
       </div>
     )
   }

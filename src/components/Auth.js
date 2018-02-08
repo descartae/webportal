@@ -67,7 +67,6 @@ class Auth extends Component {
   }
 
   render () {
-
     const { classes } = this.props
 
     return (

@@ -15,6 +15,7 @@ import EditIcon from 'material-ui-icons/Edit'
 
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
+import ForRole from '../ForRole'
 import NotFound from '../NotFound'
 import Loading from '../Loading'
 
@@ -48,7 +49,10 @@ class FacilityDetails extends Component {
   })
 
   render () {
-    const { classes, theme, google, data: { loading, error, facility } } = this.props
+    const {
+      classes, theme, google,
+      data: { loading, error, facility }
+    } = this.props
 
     if (loading) {
       return <Loading />
@@ -82,9 +86,11 @@ class FacilityDetails extends Component {
 
     return (
       <div>
-        <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
-          <EditIcon />
-        </Button>
+        <ForRole roles={['ADMIN', 'MAINTAINER']}>
+          <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
+            <EditIcon />
+          </Button>
+        </ForRole>
 
         <Typography variant='title'>
           {facility.name}
