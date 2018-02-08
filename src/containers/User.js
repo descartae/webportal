@@ -15,10 +15,13 @@ import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 
+import Unauthorized from '../components/Unauthorized'
+
 class User extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
@@ -36,7 +39,11 @@ class User extends Component {
   })
 
   render () {
-    const { match, classes } = this.props
+    const { match, classes, auth } = this.props
+
+    if (auth.roles.indexOf('ADMIN') === -1) {
+      return (<Unauthorized />)
+    }
 
     return (
       <div>

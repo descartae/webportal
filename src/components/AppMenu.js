@@ -170,7 +170,12 @@ class AppMenu extends Component {
           </Link>
         </Drawer>
 
-        {React.cloneElement(this.props.children, { logged, auth: data })}
+        {
+          React.Children.map(
+            this.props.children,
+            (child => React.cloneElement(child, { logged, auth: data }))
+          )
+        }
 
       </div>
     )
