@@ -4,7 +4,7 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 
-class Facility extends Component {
+class Home extends Component {
   render () {
     return (
       <div>
@@ -22,4 +22,4 @@ class Facility extends Component {
   }
 }
 
-export default Facility
+export default Home
