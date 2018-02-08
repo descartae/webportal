@@ -20,7 +20,10 @@ import Unauthorized from '../components/Unauthorized'
 class User extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
     auth: PropTypes.object.isRequired
   }
 
@@ -39,9 +42,10 @@ class User extends Component {
   })
 
   render () {
-    const { match, classes, auth } = this.props
+    const { match, classes } = this.props
+    const { auth: { roles } } = this.context
 
-    if (auth.roles.indexOf('ADMIN') === -1) {
+    if (roles.indexOf('ADMIN') === -1) {
       return (<Unauthorized />)
     }
 

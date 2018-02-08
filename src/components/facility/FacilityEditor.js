@@ -16,6 +16,7 @@ import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 
 import NotFound from '../NotFound'
+import Unauthorized from '../Unauthorized'
 import Loading from '../Loading'
 
 class FacilityEditor extends Component {
@@ -24,6 +25,10 @@ class FacilityEditor extends Component {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    auth: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
@@ -122,6 +127,11 @@ class FacilityEditor extends Component {
   }
 
   render () {
+    const { auth: { roles } } = this.context
+    if (roles.indexOf('ADMIN') === -1 && roles.indexOf('MAINTAINER') === -1) {
+      return (<Unauthorized />)
+    }
+
     const { loading: loading1, error: error1, typesOfWaste } = this.props.typeOfWasteListQuery
     const { loading: loading2, error: error2, facility } = this.props.facilityDetailsQuery || {}
     const { classes, match } = this.props
