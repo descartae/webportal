@@ -18,6 +18,7 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
+import PeopleIcon from 'material-ui-icons/People'
 
 import logo from './../logo.png'
 
@@ -162,7 +163,7 @@ class AppMenu extends Component {
           <Link to='/users' hidden={data.roles.indexOf('ADMIN') === -1}>
             <ListItem button>
               <ListItemIcon>
-                <StoreIcon />
+                <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary='Usuários' />
             </ListItem>
