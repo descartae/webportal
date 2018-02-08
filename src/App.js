@@ -12,7 +12,8 @@ import {
 
 import {
   Home,
-  Facility
+  Facility,
+  User
 } from './containers'
 
 import {
@@ -78,6 +79,7 @@ class App extends Component {
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/facilities' component={Facility} />
+                <Route path='/users' component={User} />
               </Switch>
             </AppMenu>
           </BrowserRouter>

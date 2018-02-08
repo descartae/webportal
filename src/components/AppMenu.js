@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import jwt from 'jsonwebtoken'
+
 import { withRouter } from 'react-router'
 import { withStyles } from 'material-ui/styles'
 
@@ -48,19 +50,25 @@ class AppMenu extends Component {
     theme: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired
-  };
+  }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
+
+    const token = localStorage.getItem('token')
+    const hasToken = !!token
+
     this.state = {
       drawer: false,
       menu: null,
-      logged: !!localStorage.getItem('token')
+      logged: hasToken,
+      data: hasToken ? jwt.decode(token) : null
     }
   }
 
   logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('token_data')
     this.setState({ logged: false })
   }
 
@@ -84,9 +92,9 @@ class AppMenu extends Component {
 
   render () {
     const { classes } = this.props
-    const { menu } = this.state
+    const { menu, logged, data } = this.state
 
-    if (!localStorage.getItem('token')) {
+    if (!logged) {
       return <Auth />
     }
 
@@ -148,6 +156,15 @@ class AppMenu extends Component {
                 <StoreIcon />
               </ListItemIcon>
               <ListItemText primary='Pontos de Coleta' />
+            </ListItem>
+          </Link>
+
+          <Link to='/users' hidden={data.roles.indexOf('ADMIN') === -1}>
+            <ListItem button>
+              <ListItemIcon>
+                <StoreIcon />
+              </ListItemIcon>
+              <ListItemText primary='Usuários' />
             </ListItem>
           </Link>
         </Drawer>
