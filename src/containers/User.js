@@ -29,6 +29,9 @@ class User extends Component {
       bottom: 20,
       left: 'auto',
       position: 'fixed'
+    },
+    paper: {
+      padding: 16
     }
   })
 
@@ -37,7 +40,7 @@ class User extends Component {
 
     return (
       <div>
-        <Paper style={{ padding: 16 }}>
+        <Paper className={classes.paper}>
           <Grid container>
             <Grid item xs={12}>
               <Typography variant='headline'>
@@ -49,7 +52,7 @@ class User extends Component {
             </Grid>
             { !match.isExact ? (
               <Grid item xs={6} >
-                <Paper style={{ padding: 16 }}>
+                <Paper className={classes.paper}>
                   <Switch>
                     <Route path={`${match.url}/add`} component={UserEditor} />
                     <Route path={`${match.url}/edit/:userId`} component={UserEditor} />
