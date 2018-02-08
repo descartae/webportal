@@ -15,8 +15,8 @@ import EditIcon from 'material-ui-icons/Edit'
 
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
-import NotFound from './NotFound'
-import Loading from './Loading'
+import NotFound from '../NotFound'
+import Loading from '../Loading'
 
 class FacilityDetails extends Component {
   static propTypes = {
@@ -142,7 +142,7 @@ class FacilityDetails extends Component {
 
 export const facilityDetailsQuery = gql`
   query FacilityDetailsQuery($facilityId: ID!) {
-  facility(_id: $facilityId) {
+    facility(_id: $facilityId) {
       _id
       name
       telephone

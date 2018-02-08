@@ -15,8 +15,8 @@ import { FormControl } from 'material-ui/Form'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 
-import NotFound from './NotFound'
-import Loading from './Loading'
+import NotFound from '../NotFound'
+import Loading from '../Loading'
 
 class FacilityEditor extends Component {
   static propTypes = {
@@ -122,20 +122,21 @@ class FacilityEditor extends Component {
   }
 
   render () {
-    const { loading, error, typesOfWaste } = this.props.typeOfWasteListQuery
-    const { classes, match, facilityDetailsQuery } = this.props
+    const { loading: loading1, error: error1, typesOfWaste } = this.props.typeOfWasteListQuery
+    const { loading: loading2, error: error2, facility } = this.props.facilityDetailsQuery || {}
+    const { classes, match } = this.props
 
     const isNew = !match.params.facilityId
 
-    if (loading) {
+    if (loading1 || loading2) {
       return <Loading />
     }
 
-    if (error) {
-      return <p>{ error.message }</p>
+    if (error1 || error2) {
+      return <p>{ (error1 || error2).message }</p>
     }
 
-    if (!isNew && facilityDetailsQuery.facility === null) {
+    if (!isNew && facility === null) {
       return <NotFound />
     }
 

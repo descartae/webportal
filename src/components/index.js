@@ -1,5 +1,7 @@
 export { default as AppMenu } from './AppMenu'
 export { default as Auth } from './Auth'
-export { default as FacilityListing } from './FacilityListing'
-export { default as FacilityDetails } from './FacilityDetails'
-export { default as FacilityEditor } from './FacilityEditor'
+export {
+  FacilityListing,
+  FacilityDetails,
+  FacilityEditor
+} from './facility'

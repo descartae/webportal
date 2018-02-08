@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import { Route, Switch, Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 
-import FacilityListing from '../components/FacilityListing'
-import FacilityDetails from '../components/FacilityDetails'
-import FacilityEditor from '../components/FacilityEditor'
+import {
+  FacilityDetails,
+  FacilityListing,
+  FacilityEditor
+} from '../components/facility'
 
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'

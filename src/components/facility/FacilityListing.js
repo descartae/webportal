@@ -11,7 +11,7 @@ import Button from 'material-ui/Button';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
-import Loading from './Loading'
+import Loading from '../Loading'
 
 class FacilityListing extends Component {
   static propTypes = {
@@ -121,7 +121,6 @@ export const facilityListQuery = gql`
     }
   }
 `
-facilityListQuery.name = 'FacilityListQuery'
 
 export default compose(
   withStyles(FacilityListing.styles, { withTheme: true }),
