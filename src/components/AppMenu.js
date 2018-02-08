@@ -169,7 +169,7 @@ class AppMenu extends Component {
           </Link>
         </Drawer>
 
-        {this.props.children}
+        {React.cloneElement(this.props.children, { logged, auth: data })}
 
       </div>
     )
