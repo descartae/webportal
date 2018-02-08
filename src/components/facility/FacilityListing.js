@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom'
 import { gql, graphql, compose } from 'react-apollo'
 
 import { withStyles } from 'material-ui/styles'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
 import Button from 'material-ui/Button'
+import Badge from 'material-ui/Badge'
+import IconButton from 'material-ui/IconButton'
+import FeedbackIcon from 'material-ui-icons/Feedback'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 
@@ -76,6 +79,18 @@ class FacilityListing extends Component {
                 ${it.location.address}, ${it.location.municipality}
                 ${it.location.state} ${it.location.zip}
               `} />
+
+              <ListItemSecondaryAction>
+                <IconButton component={Link} to={`/facilities/view/${it._id}/feedbacks`}>
+                  {it.feedbacks.unresolved > 0 ? (
+                    <Badge badgeContent={it.feedbacks.unresolved} color='primary'>
+                      <FeedbackIcon />
+                    </Badge>
+                  ) : (
+                    <FeedbackIcon />
+                  )}
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>
@@ -116,6 +131,10 @@ export const facilityListQuery = gql`
           municipality
           state
           zip
+        }
+
+        feedbacks {
+          unresolved
         }
       }
     }

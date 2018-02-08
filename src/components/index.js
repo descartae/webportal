@@ -1,7 +1,9 @@
 import {
   FacilityListing,
   FacilityDetails,
-  FacilityEditor
+  FacilityEditor,
+  FacilityFeedbackListing,
+  FacilityFeedbackDetails
 } from './facility'
 
 import {
@@ -17,7 +19,9 @@ export { default as ForRole } from './ForRole'
 export const facility = {
   FacilityListing,
   FacilityDetails,
-  FacilityEditor
+  FacilityEditor,
+  FacilityFeedbackListing,
+  FacilityFeedbackDetails
 }
 
 export const user = {

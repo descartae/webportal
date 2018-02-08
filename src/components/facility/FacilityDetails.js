@@ -12,6 +12,10 @@ import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 import Button from 'material-ui/Button'
 import EditIcon from 'material-ui-icons/Edit'
+import AccessTimeIcon from 'material-ui-icons/AccessTime'
+import LocationOnIcon from 'material-ui-icons/LocationOn'
+import FeedbackIcon from 'material-ui-icons/Feedback'
+import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
@@ -45,12 +49,45 @@ class FacilityDetails extends Component {
       position: 'relative',
       width: '100%',
       height: '300px'
+    },
+    mapDialog: {
+      width: '500px',
+      height: '300px'
+    },
+    timeTableDialog: {
+      width: '400px',
+      height: '500px'
+    },
+
+    buttonIcon: {
+      marginRight: theme.spacing.unit
     }
   })
 
+  state = {
+    mapDialog: false,
+    timeTableDialog: false
+  }
+
+  handleMapDialogOpen = () => {
+    this.setState({ mapDialog: true })
+  };
+
+  handleMapDialogClose = () => {
+    this.setState({ mapDialog: false })
+  };
+
+  handleTimeTableOpen = () => {
+    this.setState({ timeTableDialog: true })
+  };
+
+  handleTimeTableClose = () => {
+    this.setState({ timeTableDialog: false })
+  };
+
   render () {
     const {
-      classes, theme, google,
+      classes, theme, google, match,
       data: { loading, error, facility }
     } = this.props
 
@@ -110,37 +147,76 @@ class FacilityDetails extends Component {
           ))}
         </Paper>
 
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Dia da semana</TableCell>
-              <TableCell>Horário</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {openHours.map(it => {
-              return (
-                <TableRow key={it.dayOfWeek}>
-                  <TableCell>{it.ptDayOfWeek}</TableCell>
-                  <TableCell>{it.time}</TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
+        <p>
+          <Button onClick={this.handleTimeTableOpen} className={classes.buttonIcon} color='primary' variant='raised' size='small'>
+            <AccessTimeIcon className={classes.buttonIcon} />
+            Horários
+          </Button>
 
-        <Map google={google} zoom={14}
-          containerStyle={FacilityDetails.styles(theme).map}
-          initialCenter={{
-            lat: coordinates.latitude,
-            lng: coordinates.longitude
-          }}
-        >
-          <Marker position={{
-            lat: coordinates.latitude,
-            lng: coordinates.longitude
-          }} />
-        </Map>
+          <Button onClick={this.handleMapDialogOpen} className={classes.buttonIcon} color='primary' variant='raised' size='small'>
+            <LocationOnIcon className={classes.buttonIcon} />
+            Mapa
+          </Button>
+
+          <Button component={Link} to={`${match.url}/feedbacks`} className={classes.buttonIcon} color='primary' variant='raised' size='small'>
+            <FeedbackIcon className={classes.buttonIcon} />
+            Feedbacks
+          </Button>
+        </p>
+
+        <Dialog
+          open={this.state.timeTableDialog}
+          onClose={this.handleTimeTableClose}
+          classes={{ paper: classes.timeTableDialog }}>
+          <DialogContent>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Dia da semana</TableCell>
+                  <TableCell>Horário</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {openHours.map(it => {
+                  return (
+                    <TableRow key={it.dayOfWeek}>
+                      <TableCell>{it.ptDayOfWeek}</TableCell>
+                      <TableCell>{it.time}</TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleTimeTableClose} color='primary' autoFocus>
+              Fechar
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.mapDialog}
+          onClose={this.handleMapDialogClose}
+          classes={{ paper: classes.mapDialog }}>
+          <Map google={google} zoom={14}
+            containerStyle={FacilityDetails.styles(theme).map}
+            initialCenter={{
+              lat: coordinates.latitude,
+              lng: coordinates.longitude
+            }}>
+            <Marker position={{
+              lat: coordinates.latitude,
+              lng: coordinates.longitude
+            }} />
+          </Map>
+          <DialogActions>
+            <Button onClick={this.handleMapDialogClose} color='primary' autoFocus>
+              Fechar
+            </Button>
+          </DialogActions>
+        </Dialog>
+
       </div>
     )
   }

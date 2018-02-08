@@ -6,7 +6,9 @@ import { withStyles } from 'material-ui/styles'
 import {
   FacilityDetails,
   FacilityListing,
-  FacilityEditor
+  FacilityEditor,
+  FacilityFeedbackListing,
+  FacilityFeedbackDetails
 } from '../components/facility'
 
 import { ForRole } from '../components'
@@ -16,6 +18,7 @@ import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
+import Dialog, { DialogContent } from 'material-ui/Dialog'
 
 class Facility extends Component {
   static propTypes = {
@@ -34,6 +37,15 @@ class Facility extends Component {
     },
     paper: {
       padding: 16
+    },
+    dialog: {
+      width: 500
+    },
+    feedbackList: {
+      height: 200,
+      maxHeight: 200,
+      overflowY: 'auto',
+      overflowX: 'hidden'
     }
   })
 
@@ -58,6 +70,7 @@ class Facility extends Component {
                   <Switch>
                     <Route path={`${match.url}/add`} component={FacilityEditor} />
                     <Route path={`${match.url}/edit/:facilityId`} component={FacilityEditor} />
+                    <Route path={`${match.url}/edit/:facilityId/feedbacks`} component={FacilityEditor} />
                     <Route path={`${match.url}/view/:facilityId`} component={FacilityDetails} />
                   </Switch>
                 </Paper>
@@ -65,6 +78,36 @@ class Facility extends Component {
             ) : null }
           </Grid>
         </Paper>
+
+        <Route path={`${match.url}/view/:facilityId/feedbacks`} render={
+          (routeProps) => (
+            <Dialog
+              open
+              classes={{
+                paper: classes.dialog
+              }}
+              onClose={() =>
+                routeProps.history.push(routeProps.match.url.split('/feedbacks')[0])
+              }>
+              <DialogContent>
+                <Paper>
+                  <Route path={`${match.url}/view/:facilityId/feedbacks`} render={
+                    routeProps => <FacilityFeedbackListing {...routeProps} pageSize={10} classes={{
+                      root: classes.feedbackList
+                    }} />
+                  } />
+                </Paper>
+
+                <Route exact path={`${match.url}/view/:facilityId/feedbacks/:feedbackId`} render={
+                  routeProps => (
+                    <Paper className={classes.paper}>
+                      <FacilityFeedbackDetails {...routeProps} />
+                    </Paper>
+                  )} />
+
+              </DialogContent>
+            </Dialog>
+          )} />
 
         <ForRole roles={['ADMIN', 'MAINTAINER']}>
           <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
