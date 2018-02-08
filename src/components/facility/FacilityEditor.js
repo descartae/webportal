@@ -352,9 +352,9 @@ export default compose(
     })
   }),
   graphql(facilityAddMutation, {
-    name: 'facilityAddMutation',
+    name: 'facilityAddMutation'
   }),
   graphql(facilityEditMutation, {
-    name: 'facilityEditMutation',
+    name: 'facilityEditMutation'
   })
 )(FacilityEditor)

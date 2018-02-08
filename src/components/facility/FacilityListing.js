@@ -7,24 +7,24 @@ import { gql, graphql, compose } from 'react-apollo'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
-import Button from 'material-ui/Button';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import Button from 'material-ui/Button'
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
+import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 
 import Loading from '../Loading'
 
 class FacilityListing extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
     prev: { float: 'left' },
-    next: { float: 'right' },
+    next: { float: 'right' }
   })
 
   state = {
-    checked: {},
+    checked: {}
   }
 
   handlePrev = () => {
@@ -81,11 +81,11 @@ class FacilityListing extends Component {
         </List>
 
         <div>
-          <Button size="small" className={classes.prev} onClick={this.handlePrev}>
+          <Button size='small' className={classes.prev} onClick={this.handlePrev}>
             <KeyboardArrowLeft />
           </Button>
 
-          <Button size="small" className={classes.next} onClick={this.handleNext}>
+          <Button size='small' className={classes.next} onClick={this.handleNext}>
             <KeyboardArrowRight />
           </Button>
         </div>
@@ -141,51 +141,51 @@ export default compose(
       ...rest
     }) => ({
 
-        ...rest,
+      ...rest,
 
-        data: {
-          ...dataRest,
+      data: {
+        ...dataRest,
 
-          variables,
-          facilities,
-          fetchMore,
+        variables,
+        facilities,
+        fetchMore,
 
-          prevPage: () =>
-            fetchMore({
-              query: facilityListQuery,
-              variables: {
-                ...variables,
-                before: facilities.cursors.before,
-              },
-              updateQuery: (
-                { facilities: oldFacilities },
-                { fetchMoreResult: { facilities } }
-              ) => ({
-                facilities:
-                  facilities.items.length > 0 ?
-                    facilities :
-                    oldFacilities
-              })
-            }),
-
-          nextPage: () =>
-            fetchMore({
-              query: facilityListQuery,
-              variables: {
-                ...variables,
-                after: facilities.cursors.after,
-              },
-              updateQuery: (
-                { facilities: oldFacilities },
-                { fetchMoreResult: { facilities } }
-              ) => ({
-                facilities:
-                  facilities.items.length > 0 ?
-                    facilities :
-                    oldFacilities
-              })
+        prevPage: () =>
+          fetchMore({
+            query: facilityListQuery,
+            variables: {
+              ...variables,
+              before: facilities.cursors.before
+            },
+            updateQuery: (
+              { facilities: oldFacilities },
+              { fetchMoreResult: { facilities } }
+            ) => ({
+              facilities:
+                  facilities.items.length > 0
+                    ? facilities
+                    : oldFacilities
             })
-        }
+          }),
+
+        nextPage: () =>
+          fetchMore({
+            query: facilityListQuery,
+            variables: {
+              ...variables,
+              after: facilities.cursors.after
+            },
+            updateQuery: (
+              { facilities: oldFacilities },
+              { fetchMoreResult: { facilities } }
+            ) => ({
+              facilities:
+                  facilities.items.length > 0
+                    ? facilities
+                    : oldFacilities
+            })
+          })
+      }
     })
   })
 )(FacilityListing)

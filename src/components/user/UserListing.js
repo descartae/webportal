@@ -7,24 +7,24 @@ import { gql, graphql, compose } from 'react-apollo'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
-import Button from 'material-ui/Button';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import Button from 'material-ui/Button'
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
+import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 
 import Loading from '../Loading'
 
 class UserListing extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
     prev: { float: 'left' },
-    next: { float: 'right' },
+    next: { float: 'right' }
   })
 
   state = {
-    checked: {},
+    checked: {}
   }
 
   handlePrev = () => {
@@ -78,11 +78,11 @@ class UserListing extends Component {
         </List>
 
         <div>
-          <Button size="small" className={classes.prev} onClick={this.handlePrev}>
+          <Button size='small' className={classes.prev} onClick={this.handlePrev}>
             <KeyboardArrowLeft />
           </Button>
 
-          <Button size="small" className={classes.next} onClick={this.handleNext}>
+          <Button size='small' className={classes.next} onClick={this.handleNext}>
             <KeyboardArrowRight />
           </Button>
         </div>
@@ -135,51 +135,51 @@ export default compose(
       ...rest
     }) => ({
 
-        ...rest,
+      ...rest,
 
-        data: {
-          ...dataRest,
+      data: {
+        ...dataRest,
 
-          variables,
-          users,
-          fetchMore,
+        variables,
+        users,
+        fetchMore,
 
-          prevPage: () =>
-            fetchMore({
-              query: userListQuery,
-              variables: {
-                ...variables,
-                before: users.cursors.before,
-              },
-              updateQuery: (
-                { users: oldUsers },
-                { fetchMoreResult: { users } }
-              ) => ({
-                users:
-                  users.items.length > 0 ?
-                    users :
-                    oldUsers
-              })
-            }),
-
-          nextPage: () =>
-            fetchMore({
-              query: userListQuery,
-              variables: {
-                ...variables,
-                after: users.cursors.after,
-              },
-              updateQuery: (
-                { users: oldUsers },
-                { fetchMoreResult: { users } }
-              ) => ({
-                users:
-                  users.items.length > 0 ?
-                    users :
-                    oldUsers
-              })
+        prevPage: () =>
+          fetchMore({
+            query: userListQuery,
+            variables: {
+              ...variables,
+              before: users.cursors.before
+            },
+            updateQuery: (
+              { users: oldUsers },
+              { fetchMoreResult: { users } }
+            ) => ({
+              users:
+                  users.items.length > 0
+                    ? users
+                    : oldUsers
             })
-        }
+          }),
+
+        nextPage: () =>
+          fetchMore({
+            query: userListQuery,
+            variables: {
+              ...variables,
+              after: users.cursors.after
+            },
+            updateQuery: (
+              { users: oldUsers },
+              { fetchMoreResult: { users } }
+            ) => ({
+              users:
+                  users.items.length > 0
+                    ? users
+                    : oldUsers
+            })
+          })
+      }
     })
   })
 )(UserListing)

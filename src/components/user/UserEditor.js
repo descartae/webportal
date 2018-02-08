@@ -131,7 +131,7 @@ class UserEditor extends Component {
     const roles = [
       { _id: 'ADMIN', name: 'Administrador' },
       { _id: 'MAINTAINER', name: 'Bibliotecário' },
-      { _id: 'CONSUMER', name: 'Somente leitura' },
+      { _id: 'CONSUMER', name: 'Somente leitura' }
     ]
 
     const rolesMap = {}
@@ -294,9 +294,9 @@ export default compose(
     })
   }),
   graphql(userAddMutation, {
-    name: 'userAddMutation',
+    name: 'userAddMutation'
   }),
   graphql(userEditMutation, {
-    name: 'userEditMutation',
+    name: 'userEditMutation'
   })
 )(UserEditor)

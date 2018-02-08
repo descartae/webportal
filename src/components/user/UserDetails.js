@@ -59,7 +59,7 @@ class UserDetails extends Component {
     const roles = {
       ADMIN: 'Administrador',
       MAINTAINER: 'Bibliotecário',
-      CONSUMER: 'Somente leitura',
+      CONSUMER: 'Somente leitura'
     }
 
     return (
