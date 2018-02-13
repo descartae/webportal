@@ -1,32 +1,42 @@
 {
-  "name": "client",
+  "name": "descartae-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "apollo-client": "^1.1.1",
     "dotenv-safe": "^4.0.4",
     "false": "0.0.4",
-    "graphql-anywhere": "^4.0.2",
+    "google-maps-react": "^1.1.2",
     "graphql-tools": "^0.10.1",
-    "material-ui": "^0.19.4",
-    "prop-types": "^15.6.0",
+    "jsonwebtoken": "^8.1.1",
+    "material-ui": "^1.0.0-beta.31",
+    "material-ui-icons": "^1.0.0-beta.17",
     "react": "^16.0.0",
     "react-apollo": "^1.4.16",
     "react-dom": "^16.0.0",
+    "react-google-map": "^3.1.1",
     "react-router-dom": "^4.2.2",
     "serve": "^6.3.1"
   },
   "scripts": {
-    "start": "npm run build:digest && node -r dotenv-safe/config $(npm bin)/serve build",
+    "start": "npm run build:digest && node -r dotenv-safe/config $(npm bin)/serve --single build",
     "build:digest": "npm run clean && react-scripts build",
     "build:watch": "npm run clean && react-scripts start",
     "clean": "rm -rf build",
     "test": "standard && react-scripts test --env=jsdom",
-    "prettify": "standard --fix"
+    "prettify": "standard --harmony --fix"
   },
   "devDependencies": {
     "apollo-test-utils": "^0.1.2",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.17.0",
     "react-scripts": "1.0.14",
-    "standard": "^10.0.3"
+    "standard": "^11.0.0-beta.0"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "localStorage"
+    ]
   }
 }

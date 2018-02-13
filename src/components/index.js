@@ -1,4 +1,31 @@
-export { FacilityListingWithData as FacilityListing } from './FacilityListing'
-export { FacilityDetailsWithData as FacilityDetails } from './FacilityDetails'
-export { FacilityCreatorWithData as FacilityCreator } from './FacilityCreator'
-export { FacilityPageWithData as FacilityPage } from './FacilityPage' 
+import {
+  FacilityListing,
+  FacilityDetails,
+  FacilityEditor,
+  FacilityFeedbackListing,
+  FacilityFeedbackDetails
+} from './facility'
+
+import {
+  UserListing,
+  UserDetails,
+  UserEditor
+} from './user'
+
+export { default as AppMenu } from './AppMenu'
+export { default as Auth } from './Auth'
+export { default as ForRole } from './ForRole'
+
+export const facility = {
+  FacilityListing,
+  FacilityDetails,
+  FacilityEditor,
+  FacilityFeedbackListing,
+  FacilityFeedbackDetails
+}
+
+export const user = {
+  UserListing,
+  UserDetails,
+  UserEditor
+}

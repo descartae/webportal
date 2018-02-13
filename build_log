@@ -1,0 +1,607 @@
+Sending build context to Docker daemon  16.11MB
+Step 1/5 : FROM node:7.1.0-alpine
+ ---> b1b3e6b6395f
+Step 2/5 : WORKDIR /opt/app
+Removing intermediate container ca5f86d6cfd2
+ ---> 523da0958e60
+Step 3/5 : COPY . /opt/app
+ ---> 659c206d8a68
+Step 4/5 : RUN cd /opt/app && npm install
+ ---> Running in 9905cac6c1fe
+[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mit worked if it ends with[0m[91m ok
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91musing[0m[91m npm@3.10.9
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91musing[0m[91m node@v7.1.0
+[0m[91mnpm info[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/apollo-client
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/dotenv-safe
+[0m[91mnpm [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/false
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/google-maps-react
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/graphql-tools
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m http request GET https://registry.npmjs.org/jsonwebtoken
+npm info attempt registry request try #1 at 11:17:15 PM
+npm http request GET https://registry.npmjs.org/material-ui
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/material-ui-icons
+[0m[91mnpm info attempt registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp request GET https://registry.npmjs.org/react
+[0m[91mnpm info attempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/react-apollo
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/react-dom
+[0m[91mnpm [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/react-google-map
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/react-router-dom
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:15 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/serve
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/material-ui-icons
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/react-google-map
+[0m[91mnpm http 200 https://registry.npmjs.org/react-router-dom
+[0m[91mnpm http 200 https://registry.npmjs.org/jsonwebtoken
+[0m[91mnpm http 200 https://registry.npmjs.org/react-dom
+[0m[91mnpm http 200 https://registry.npmjs.org/dotenv-safe
+[0m[91mnpm http 200 https://registry.npmjs.org/false
+[0m[91mnpm http 200 https://registry.npmjs.org/google-maps-react
+[0m[91mnpm http 200 https://registry.npmjs.org/react
+[0m[91mnpm http 200 https://registry.npmjs.org/serve
+[0m[91mnpm http 200 https://registry.npmjs.org/graphql-tools
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/material-ui
+[0m[91mnpm http 200 https://registry.npmjs.org/react-apollo
+[0m[91mnpm info retry fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:16 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/dotenv-safe/-/dotenv-safe-4.0.4.tgz
+[0m[91mnpm info retry[0m[91m fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:16 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/false/-/false-0.0.4.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:16 PM
+[0m[91mnpm http fetch[0m[91m GET https://registry.npmjs.org/react-google-map/-/react-google-map-3.1.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm [0m[91minfo[0m[91m attempt[0m[91m registry request try #1 at 11:17:16 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.2.2.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm[0m[91m info attempt registry request try #1 at 11:17:16 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/google-maps-react/-/google-maps-react-1.1.2.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm[0m[91m info attempt[0m[91m registry request try #1 at 11:17:16 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/react-dom/-/react-dom-16.2.0.tgz
+[0m[91mnpm info[0m[91m retry fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm info [0m[91mattempt registry request try #1 at 11:17:16 PM
+[0m[91mnpm [0m[91mhttp fetch GET https://registry.npmjs.org/react/-/react-16.2.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:16 PM
+[0m[91mnpm info attempt[0m[91m registry request try #1 at 11:17:16 PM
+npm[0m[91m [0m[91mhttp[0m[91m fetch GET https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-8.1.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/dotenv-safe/-/dotenv-safe-4.0.4.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/false/-/false-0.0.4.tgz
+[0m[91mnpm[0m[91m info retry fetch attempt 1 at 11:17:17 PM
+[0m[91mnpm info [0m[91mattempt registry request try #1 at 11:17:17 PM
+[0m[91mnpm http[0m[91m fetch GET https://registry.npmjs.org/material-ui-icons/-/material-ui-icons-1.0.0-beta.17.tgz
+[0m[91mnpm http[0m[91m fetch 200 https://registry.npmjs.org/react-google-map/-/react-google-map-3.1.1.tgz
+[0m[91mnpm [0m[91mhttp [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.2.2.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/google-maps-react/-/google-maps-react-1.1.2.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:17 PM
+npm info attempt registry request try #1 at 11:17:17 PM
+npm http fetch GET https://registry.npmjs.org/serve/-/serve-6.4.9.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-8.1.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react/-/react-16.2.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react-dom/-/react-dom-16.2.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/material-ui-icons/-/material-ui-icons-1.0.0-beta.17.tgz
+[0m[91mnpm [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/serve/-/serve-6.4.9.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:17 PM
+[0m[91mnpm info [0m[91mattempt registry request try #1 at 11:17:17 PM
+[0m[91mnpm http fetch[0m[91m GET https://registry.npmjs.org/graphql-tools/-/graphql-tools-0.10.1.tgz
+[0m[91mnpm [0m[91mhttp 200 https://registry.npmjs.org/apollo-client
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/graphql-tools/-/graphql-tools-0.10.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:17 PM
+npm info attempt registry request try #1 at 11:17:17 PM
+npm http fetch GET https://registry.npmjs.org/material-ui/-/material-ui-1.0.0-beta.33.tgz
+[0m[91mnpm info retry[0m[91m fetch attempt 1 at 11:17:17 PM
+npm[0m[91m info attempt registry request try #1 at 11:17:17 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/react-apollo/-/react-apollo-1.4.16.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/material-ui/-/material-ui-1.0.0-beta.33.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react-apollo/-/react-apollo-1.4.16.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:17 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:17 PM
+npm [0m[91mhttp fetch GET https://registry.npmjs.org/apollo-client/-/apollo-client-1.9.3.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/apollo-client/-/apollo-client-1.9.3.tgz
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest GET https://registry.npmjs.org/apollo-link-core
+[0m[91mnpm[0m[91m info[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest GET https://registry.npmjs.org/graphql
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/graphql-anywhere
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/graphql-tag
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/redux
+[0m[91mnpm[0m[91m info[0m[91m [0m[91mattempt registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/symbol-observable
+[0m[91mnpm[0m[91m [0m[91minfo [0m[91mattempt registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/whatwg-fetch
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:18 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/@types%2fgraphql
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/apollo-link-core
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/symbol-observable
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/graphql-tag
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/whatwg-fetch
+[0m[91mnpm[0m[91m http[0m[91m [0m[91m200 https://registry.npmjs.org/graphql-anywhere
+[0m[91mnpm http 200 https://registry.npmjs.org/redux
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/graphql
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m attempt registry request try #1 at 11:17:19 PM
+npm http fetch GET https://registry.npmjs.org/apollo-link-core/-/apollo-link-core-0.5.4.tgz
+[0m[91mnpm[0m[91m info retry fetch attempt 1 at 11:17:19 PM
+npm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.2.0.tgz
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/graphql-tag/-/graphql-tag-2.7.3.tgz
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz
+[0m[91mnpm[0m[91m http [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/apollo-link-core/-/apollo-link-core-0.5.4.tgz
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m fetch 200 https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.2.0.tgz
+[0m[91mnpm[0m[91m http [0m[91m200[0m[91m https://registry.npmjs.org/@types%2fgraphql
+[0m[91mnpm [0m[91mhttp fetch[0m[91m 200 https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/graphql-tag/-/graphql-tag-2.7.3.tgz
+[0m[91mnpm[0m[91m info [0m[91mretry[0m[91m fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m attempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/graphql-anywhere/-/graphql-anywhere-3.1.0.tgz
+[0m[91mnpm[0m[91m info [0m[91mretry fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m info[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m fetch[0m[91m GET https://registry.npmjs.org/redux/-/redux-3.7.2.tgz
+[0m[91mnpm[0m[91m info[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m fetch[0m[91m GET https://registry.npmjs.org/graphql/-/graphql-0.10.5.tgz
+[0m[91mnpm[0m[91m http[0m[91m [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/graphql-anywhere/-/graphql-anywhere-3.1.0.tgz
+[0m[91mnpm[0m[91m http[0m[91m fetch[0m[91m 200 https://registry.npmjs.org/redux/-/redux-3.7.2.tgz
+[0m[91mnpm[0m[91m http[0m[91m [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/graphql/-/graphql-0.10.5.tgz
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/@types/graphql/-/graphql-0.10.2.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/@types/graphql/-/graphql-0.10.2.tgz
+[0m[91mnpm[0m[91m info[0m[91m [0m[91mattempt registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m http [0m[91mrequest[0m[91m GET https://registry.npmjs.org/zen-observable-ts
+[0m[91mnpm[0m[91m http[0m[91m 200[0m[91m https://registry.npmjs.org/zen-observable-ts
+[0m[91mnpm [0m[91minfo [0m[91mretry fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo [0m[91mattempt[0m[91m registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/zen-observable-ts/-/zen-observable-ts-0.4.4.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/zen-observable-ts/-/zen-observable-ts-0.4.4.tgz
+[0m[91mnpm [0m[91minfo attempt[0m[91m registry request try #1 at 11:17:19 PM
+npm[0m[91m http[0m[91m request[0m[91m GET https://registry.npmjs.org/iterall
+[0m[91mnpm[0m[91m [0m[91mhttp 200[0m[91m https://registry.npmjs.org/iterall
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91minfo [0m[91mattempt registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch GET https://registry.npmjs.org/iterall/-/iterall-1.1.4.tgz
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/iterall/-/iterall-1.1.4.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:19 PM
+[0m[91mnpm http request[0m[91m GET https://registry.npmjs.org/lodash
+[0m[91mnpm info attempt registry request try #1 at 11:17:19 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/lodash-es
+[0m[91mnpm info attempt registry request try #1 at 11:17:19 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/loose-envify
+[0m[91mnpm http 200 https://registry.npmjs.org/loose-envify
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash-es
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash
+[0m[91mnpm info retry fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:19 PM
+[0m[91mnpm[0m[91m http fetch GET https://registry.npmjs.org/loose-envify/-/loose-envify-1.3.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/loose-envify/-/loose-envify-1.3.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:19 PM
+npm info attempt registry request try #1 at 11:17:19 PM
+npm http fetch GET https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.5.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.5.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:19 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:19 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash/-/lodash-4.17.5.tgz
+[0m[91mnpm [0m[91mhttp fetch 200 https://registry.npmjs.org/lodash/-/lodash-4.17.5.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/js-tokens
+[0m[91mnpm http 200 https://registry.npmjs.org/js-tokens
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/js-tokens/-/js-tokens-3.0.2.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/js-tokens/-/js-tokens-3.0.2.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/dotenv
+[0m[91mnpm http 200 https://registry.npmjs.org/dotenv
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info[0m[91m attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/dotenv/-/dotenv-4.0.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/dotenv/-/dotenv-4.0.0.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm[0m[91m http request GET https://registry.npmjs.org/history
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/invariant
+[0m[91mnpm http 200 https://registry.npmjs.org/invariant
+[0m[91mnpm http 200 https://registry.npmjs.org/history
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info [0m[91mattempt[0m[91m registry request try #1 at 11:17:20 PM
+[0m[91mnpm http[0m[91m fetch GET https://registry.npmjs.org/invariant/-/invariant-2.2.2.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+npm info attempt registry request try #1 at 11:17:20 PM
+npm http fetch GET https://registry.npmjs.org/history/-/history-3.3.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/invariant/-/invariant-2.2.2.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/history/-/history-3.3.0.tgz
+[0m[91mnpm[0m[91m info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/query-string
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/warning
+[0m[91mnpm http 200 https://registry.npmjs.org/warning
+[0m[91mnpm http 200 https://registry.npmjs.org/query-string
+[0m[91mnpm [0m[91minfo retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm[0m[91m info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm[0m[91m http fetch GET https://registry.npmjs.org/warning/-/warning-3.0.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+npm http fetch GET https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/warning/-/warning-3.0.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/object-assign
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/strict-uri-encode
+[0m[91mnpm[0m[91m http 200 https://registry.npmjs.org/object-assign
+[0m[91mnpm http 200 https://registry.npmjs.org/strict-uri-encode
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+npm http fetch GET https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz
+[0m[91mnpm info[0m[91m retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/deprecated-decorator
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/uuid
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/@types/graphql/-/graphql-0.8.6.tgz
+[0m[91mnpm http 200 https://registry.npmjs.org/deprecated-decorator
+[0m[91mnpm http 200 https://registry.npmjs.org/uuid
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/deprecated-decorator/-/deprecated-decorator-0.1.6.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:20 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/uuid/-/uuid-3.2.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/uuid/-/uuid-3.2.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/deprecated-decorator/-/deprecated-decorator-0.1.6.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/@types/graphql/-/graphql-0.8.6.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/jws
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/lodash.includes
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/lodash.isboolean
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request[0m[91m GET https://registry.npmjs.org/lodash.isinteger
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/lodash.isnumber
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/lodash.isplainobject
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/lodash.isstring
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/lodash.once
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/ms
+[0m[91mnpm info attempt registry request try #1 at 11:17:20 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/xtend
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash.isinteger
+[0m[91mnpm http 200 https://registry.npmjs.org/jws
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash.once
+[0m[91mnpm http 200 https://registry.npmjs.org/ms
+[0m[91mnpm http 200 https://registry.npmjs.org/xtend
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash.includes
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash.isstring
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash.isnumber
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash.isboolean
+[0m[91mnpm http 200 https://registry.npmjs.org/lodash.isplainobject
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jws/-/jws-3.1.4.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash.once/-/lodash.once-4.1.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/ms/-/ms-2.1.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm [0m[91mhttp[0m[91m fetch GET https://registry.npmjs.org/xtend/-/xtend-4.0.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash.includes/-/lodash.includes-4.3.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jws/-/jws-3.1.4.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash.once/-/lodash.once-4.1.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/ms/-/ms-2.1.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash.includes/-/lodash.includes-4.3.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/xtend/-/xtend-4.0.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/base64url
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/jwa
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/safe-buffer
+[0m[91mnpm http 200 https://registry.npmjs.org/jwa
+[0m[91mnpm http 200 https://registry.npmjs.org/safe-buffer
+[0m[91mnpm http 200 https://registry.npmjs.org/base64url
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jwa/-/jwa-1.1.5.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.1.tgz
+[0m[91mnpm[0m[91m info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/base64url/-/base64url-2.0.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/base64url/-/base64url-2.0.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jwa/-/jwa-1.1.5.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/buffer-equal-constant-time
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/ecdsa-sig-formatter
+[0m[91mnpm http 200 https://registry.npmjs.org/buffer-equal-constant-time
+[0m[91mnpm http 200 https://registry.npmjs.org/ecdsa-sig-formatter
+[0m[91mnpm[0m[91m info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http fetch GET https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http fetch GET https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.9.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.9.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/@types%2fjss
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/@types%2freact-transition-group
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request[0m[91m GET https://registry.npmjs.org/babel-runtime
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/brcast
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/classnames
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/deepmerge
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/dom-helpers
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/hoist-non-react-statics
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request[0m[91m GET https://registry.npmjs.org/jss
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/jss-camel-case
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm[0m[91m [0m[91mhttp request GET https://registry.npmjs.org/jss-default-unit
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/jss-global
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/jss-nested
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/jss-props-sort
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/jss-vendor-prefixer
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/keycode
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/normalize-scroll-left
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http request GET https://registry.npmjs.org/prop-types
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm[0m[91m http request GET https://registry.npmjs.org/react-event-listener
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/react-jss
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/react-popper
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/react-scrollbar-size
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/react-transition-group
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http [0m[91mrequest GET https://registry.npmjs.org/recompose
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/scroll
+[0m[91mnpm http 200 https://registry.npmjs.org/brcast
+[0m[91mnpm http 200 https://registry.npmjs.org/deepmerge
+[0m[91mnpm http 200 https://registry.npmjs.org/classnames
+[0m[91mnpm http 200 https://registry.npmjs.org/hoist-non-react-statics
+[0m[91mnpm http 200 https://registry.npmjs.org/dom-helpers
+[0m[91mnpm http 200 https://registry.npmjs.org/jss-global
+[0m[91mnpm http 200 https://registry.npmjs.org/jss-camel-case
+[0m[91mnpm http 200 https://registry.npmjs.org/jss-props-sort
+[0m[91mnpm http 200 https://registry.npmjs.org/jss-default-unit
+[0m[91mnpm http 200 https://registry.npmjs.org/jss-nested
+[0m[91mnpm http 200 https://registry.npmjs.org/babel-runtime
+[0m[91mnpm http 200 https://registry.npmjs.org/normalize-scroll-left
+[0m[91mnpm http 200 https://registry.npmjs.org/react-scrollbar-size
+[0m[91mnpm http 200 https://registry.npmjs.org/scroll
+[0m[91mnpm http 200 https://registry.npmjs.org/keycode
+[0m[91mnpm http 200 https://registry.npmjs.org/react-transition-group
+[0m[91mnpm http 200 https://registry.npmjs.org/prop-types
+[0m[91mnpm http 200 https://registry.npmjs.org/react-event-listener
+[0m[91mnpm http 200 https://registry.npmjs.org/jss-vendor-prefixer
+[0m[91mnpm http 200 https://registry.npmjs.org/recompose
+[0m[91mnpm http 200 https://registry.npmjs.org/@types%2fjss
+[0m[91mnpm http 200 https://registry.npmjs.org/@types%2freact-transition-group
+[0m[91mnpm http 200 https://registry.npmjs.org/react-popper
+[0m[91mnpm http 200 https://registry.npmjs.org/jss
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/brcast/-/brcast-3.0.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http [0m[91mfetch GET https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+npm http fetch GET https://registry.npmjs.org/classnames/-/classnames-2.2.5.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+npm info attempt registry request try #1 at 11:17:21 PM
+npm http fetch GET https://registry.npmjs.org/dom-helpers/-/dom-helpers-3.3.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/deepmerge/-/deepmerge-2.0.1.tgz
+[0m[91mnpm http 200 https://registry.npmjs.org/react-jss
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jss-global/-/jss-global-3.0.0.tgz
+[0m[91mnpm http fetch[0m[91m 200 https://registry.npmjs.org/brcast/-/brcast-3.0.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jss-props-sort/-/jss-props-sort-6.0.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jss-camel-case/-/jss-camel-case-6.1.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/classnames/-/classnames-2.2.5.tgz
+[0m[91mnpm http [0m[91mfetch 200 https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/deepmerge/-/deepmerge-2.0.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/dom-helpers/-/dom-helpers-3.3.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jss-global/-/jss-global-3.0.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jss-default-unit/-/jss-default-unit-8.0.2.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jss-props-sort/-/jss-props-sort-6.0.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jss-camel-case/-/jss-camel-case-6.1.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:21 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:21 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jss-nested/-/jss-nested-6.0.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jss-default-unit/-/jss-default-unit-8.0.2.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/babel-runtime/-/babel-runtime-6.26.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jss-nested/-/jss-nested-6.0.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/babel-runtime/-/babel-runtime-6.26.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/normalize-scroll-left/-/normalize-scroll-left-0.1.2.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/scroll/-/scroll-2.0.1.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt[0m[91m registry request try #1 at 11:17:22 PM
+npm http fetch GET https://registry.npmjs.org/react-scrollbar-size/-/react-scrollbar-size-2.1.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/keycode/-/keycode-2.1.9.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/react-transition-group/-/react-transition-group-2.2.1.tgz
+[0m[91mnpm WARN deprecated react-popper@0.7.5: please use 0.7.4 or 8.0.0 and above
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/prop-types/-/prop-types-15.6.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+npm info attempt registry request try #1 at 11:17:22 PM
+npm[0m[91m http fetch GET https://registry.npmjs.org/react-event-listener/-/react-event-listener-0.5.3.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+npm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jss-vendor-prefixer/-/jss-vendor-prefixer-7.0.0.tgz
+[0m[91mnpm http fetch[0m[91m 200 https://registry.npmjs.org/normalize-scroll-left/-/normalize-scroll-left-0.1.2.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/scroll/-/scroll-2.0.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react-scrollbar-size/-/react-scrollbar-size-2.1.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+npm http fetch GET https://registry.npmjs.org/@types/jss/-/jss-9.3.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt[0m[91m registry request try #1 at 11:17:22 PM
+npm[0m[91m http fetch GET https://registry.npmjs.org/recompose/-/recompose-0.26.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/keycode/-/keycode-2.1.9.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react-transition-group/-/react-transition-group-2.2.1.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/prop-types/-/prop-types-15.6.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react-event-listener/-/react-event-listener-0.5.3.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+npm http fetch GET https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-2.0.7.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+npm http fetch GET https://registry.npmjs.org/react-popper/-/react-popper-0.7.5.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jss-vendor-prefixer/-/jss-vendor-prefixer-7.0.0.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm info[0m[91m attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/jss/-/jss-9.8.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/recompose/-/recompose-0.26.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react-popper/-/react-popper-0.7.5.tgz
+[0m[91mnpm info retry fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm[0m[91m info attempt[0m[91m registry request try #1 at 11:17:22 PM
+[0m[91mnpm http fetch GET https://registry.npmjs.org/react-jss/-/react-jss-8.3.3.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/jss/-/jss-9.8.0.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/react-jss/-/react-jss-8.3.3.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-2.0.7.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/@types/jss/-/jss-9.3.0.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:22 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/@types%2freact
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/@types%2freact
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:22 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:22 PM
+[0m[91mnpm[0m[91m http fetch GET https://registry.npmjs.org/@types/react/-/react-16.0.37.tgz
+[0m[91mnpm [0m[91mhttp[0m[91m fetch[0m[91m 200 https://registry.npmjs.org/@types/react/-/react-16.0.37.tgz
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:23 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/core-js
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:23 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mrequest[0m[91m GET https://registry.npmjs.org/regenerator-runtime
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/regenerator-runtime
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91m200[0m[91m https://registry.npmjs.org/core-js
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:23 PM
+[0m[91mnpm[0m[91m info[0m[91m [0m[91mattempt[0m[91m registry request try #1 at 11:17:23 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mretry[0m[91m fetch attempt 1 at 11:17:23 PM
+[0m[91mnpm[0m[91m [0m[91minfo[0m[91m [0m[91mattempt registry request try #1 at 11:17:23 PM
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m GET https://registry.npmjs.org/core-js/-/core-js-2.5.3.tgz
+[0m[91mnpm[0m[91m [0m[91mhttp[0m[91m [0m[91mfetch[0m[91m 200 https://registry.npmjs.org/core-js/-/core-js-2.5.3.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/is-in-browser
+[0m[91mnpm http 200 https://registry.npmjs.org/is-in-browser
+[0m[91mnpm info retry fetch attempt 1 at 11:17:23 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+npm[0m[91m http fetch GET https://registry.npmjs.org/is-in-browser/-/is-in-browser-1.1.3.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/is-in-browser/-/is-in-browser-1.1.3.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/hyphenate-style-name
+[0m[91mnpm http 200 https://registry.npmjs.org/hyphenate-style-name
+[0m[91mnpm info retry fetch attempt 1 at 11:17:23 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+npm[0m[91m http fetch GET https://registry.npmjs.org/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/css-vendor
+[0m[91mnpm http 200 https://registry.npmjs.org/css-vendor
+[0m[91mnpm info retry fetch attempt 1 at 11:17:23 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+npm http fetch GET https://registry.npmjs.org/css-vendor/-/css-vendor-0.3.8.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/css-vendor/-/css-vendor-0.3.8.tgz
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+[0m[91mnpm http request GET https://registry.npmjs.org/fbjs
+[0m[91mnpm http 200 https://registry.npmjs.org/fbjs
+[0m[91mnpm info retry fetch attempt 1 at 11:17:23 PM
+[0m[91mnpm info attempt registry request try #1 at 11:17:23 PM
+npm http fetch GET https://registry.npmjs.org/fbjs/-/fbjs-0.8.16.tgz
+[0m[91mnpm http fetch 200 https://registry.npmjs.org/fbjs/-/fbjs-0.8.16.tgz
+[0m

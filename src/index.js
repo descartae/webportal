@@ -6,7 +6,6 @@ import registerServiceWorker from './registerServiceWorker'
 
 import './index.css'
 
-
 const rootComponent = (
   <App />
 )
