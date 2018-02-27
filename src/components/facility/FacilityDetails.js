@@ -12,6 +12,7 @@ import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 import Button from 'material-ui/Button'
 import EditIcon from 'material-ui-icons/Edit'
+import DeleteIcon from 'material-ui-icons/Delete'
 import AccessTimeIcon from 'material-ui-icons/AccessTime'
 import LocationOnIcon from 'material-ui-icons/LocationOn'
 import FeedbackIcon from 'material-ui-icons/Feedback'
@@ -34,6 +35,9 @@ class FacilityDetails extends Component {
       marginTop: 16
     },
     edit: {
+      float: 'right'
+    },
+    delete: {
       float: 'right'
     },
     typesOfWaste: {
@@ -124,9 +128,13 @@ class FacilityDetails extends Component {
     return (
       <div>
         <ForRole roles={['ADMIN', 'MAINTAINER']}>
+          <Button variant='fab' mini color='primary' component={Link} to={`/facilities/delete/${facility._id}`} className={classes.delete}>
+            <DeleteIcon />
+          </Button>
           <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
             <EditIcon />
           </Button>
+
         </ForRole>
 
         <Typography variant='title'>
@@ -254,7 +262,17 @@ export const facilityDetailsQuery = gql`
     }
   }
 `
-
+export const facilityDeleteMutation = gql`
+  mutation DisableFacility(
+    $facilityId: ID!
+  ) {
+    disableFacility(input: {
+      _id: $facilityId
+    }) {
+      success
+    }
+  }
+`
 export default compose(
   withStyles(FacilityDetails.styles, { withTheme: true }),
   graphql(facilityDetailsQuery, {
