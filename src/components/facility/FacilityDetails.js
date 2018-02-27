@@ -89,6 +89,16 @@ class FacilityDetails extends Component {
     this.setState({ timeTableDialog: false })
   };
 
+  async onDelete (e) {
+    e.preventDefault()
+
+    // call the Disable Facility mutation. Need to use async for await
+    await this.props.DisableFacility()
+
+    // redirect to list view
+    this.props.history.push('/facilities')
+  }
+
   render () {
     const {
       classes, theme, google, match,
@@ -128,7 +138,7 @@ class FacilityDetails extends Component {
     return (
       <div>
         <ForRole roles={['ADMIN', 'MAINTAINER']}>
-          <Button variant='fab' mini color='primary' component={Link} to={`/facilities/delete/${facility._id}`} className={classes.delete}>
+          <Button variant='fab' mini color='primary' onClick={this.onDelete.bind(this)} className={classes.delete}>
             <DeleteIcon />
           </Button>
           <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
@@ -275,6 +285,12 @@ export const facilityDeleteMutation = gql`
 `
 export default compose(
   withStyles(FacilityDetails.styles, { withTheme: true }),
+  graphql(facilityDeleteMutation, {
+    options: (props) => ({
+      variables: { facilityId: props.match.params.facilityId }
+    }),
+    name: 'DisableFacility'
+  }),
   graphql(facilityDetailsQuery, {
     options: (props) => ({
       fetchPolicy: 'network-only',
