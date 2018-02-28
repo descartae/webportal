@@ -300,9 +300,6 @@ export default compose(
     }
   }),
   graphql(UserEditMutation, {
-    name: 'UserEditMutation',
-    options: {
-      refetchQueries: [UserListQuery.name]
-    }
+    name: 'UserEditMutation'
   })
 )(UserEditor)
