@@ -12,6 +12,8 @@ import Typography from 'material-ui/Typography'
 
 import logo from '../logo.png'
 
+const signupEnabled = process.env.REACT_APP_SIGNUP === 'true'
+
 class Auth extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -58,7 +60,7 @@ class Auth extends Component {
   async onLogin (e) {
     e.preventDefault()
 
-    const { data: { authenticate } } = await this.props.authenticate({
+    const { data: { authenticate } } = await this.props.AuthenticateMutation({
       variables: { email: this.state.email, password: this.state.password }
     })
 
@@ -76,7 +78,6 @@ class Auth extends Component {
   async onCreateUser (e) {
     e.preventDefault()
 
-    // setting the dialog state to be true
     this.setState({
       dialogOpen: true
     })
@@ -91,7 +92,7 @@ class Auth extends Component {
   async onSignUp (e) {
     e.preventDefault()
 
-    const { data: { addSelfUser } } = await this.props.signUp({
+    const { data: { addSelfUser } } = await this.props.SignUpMutation({
       variables: { name: this.state.name, email: this.state.email, password: this.state.password }
     })
 
@@ -138,62 +139,70 @@ class Auth extends Component {
             </div>
           </form>
 
-          <Button variant='raised' color='primary' className={classes.submit} onClick={this.onCreateUser.bind(this)}>
-            Criar Conta
-          </Button>
+          { signupEnabled ? (
 
-          <Dialog
-            open={this.state.dialogOpen}
-            onClose={this.handleDialogClose}>
-            <DialogContent>
+          <div>
 
-              <Typography variant='title'>
-                Criar nova conta
-              </Typography>
+            <Button variant='raised' color='primary' className={classes.submit} onClick={this.onCreateUser.bind(this)}>
+              Criar Conta
+            </Button>
 
-              <p>Preencha os campos abaixo para criar uma nova conta.</p>
+            <Dialog
+              open={this.state.dialogOpen}
+              onClose={this.handleDialogClose}>
+              <DialogContent>
 
-              <form onSubmit={this.onSignUp.bind(this)}>
-                <TextField
-                  label='Nome'
-                  value={this.state.name}
-                  fullWidth
-                  margin='normal'
-                  onChange={this.handleChange('name')}
-                  className={classes.field}
-                />
-                <TextField
-                  label='E-mail'
-                  type='email'
-                  fullWidth
-                  margin='normal'
-                  value={this.state.email}
-                  onChange={this.handleChange('email')}
-                />
+                <Typography variant='title'>
+                  Criar nova conta
+                </Typography>
 
-                <TextField
-                  label='Senha'
-                  type='password'
-                  fullWidth
-                  margin='normal'
-                  value={this.state.password}
-                  onChange={this.handleChange('password')}
-                />
+                <p>Preencha os campos abaixo para criar uma nova conta.</p>
 
-                <div className={classes.centerer}>
-                  <Button variant='raised' color='primary' type='submit' className={classes.submit}>
-                    Criar
-                  </Button>
-                </div>
-              </form>
+                <form onSubmit={this.onSignUp.bind(this)}>
+                  <TextField
+                    label='Nome'
+                    value={this.state.name}
+                    fullWidth
+                    margin='normal'
+                    onChange={this.handleChange('name')}
+                    className={classes.field}
+                  />
+                  <TextField
+                    label='E-mail'
+                    type='email'
+                    fullWidth
+                    margin='normal'
+                    value={this.state.email}
+                    onChange={this.handleChange('email')}
+                  />
 
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleDialogClose} color='primary' autoFocus>
-                Fechar
-              </Button>
-            </DialogActions>
-          </Dialog>
+                  <TextField
+                    label='Senha'
+                    type='password'
+                    fullWidth
+                    margin='normal'
+                    value={this.state.password}
+                    onChange={this.handleChange('password')}
+                  />
+
+                  <div className={classes.centerer}>
+                    <Button variant='raised' color='primary' type='submit' className={classes.submit}>
+                      Criar
+                    </Button>
+                  </div>
+                </form>
+
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleDialogClose} color='primary' autoFocus>
+                  Fechar
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+          </div>
+
+          ) : null }
 
         </Paper>
       </div>
@@ -201,8 +210,8 @@ class Auth extends Component {
   }
 }
 
-const authenticate = gql`
-  mutation authenticate($email: String!, $password: String!) {
+const AuthenticateMutation = gql`
+  mutation AuthenticateMutation ($email: String!, $password: String!) {
     authenticate(credentials: {email: $email, password: $password}) {
       success
       error
@@ -211,8 +220,8 @@ const authenticate = gql`
   }
 `
 
-const signUp = gql`
-  mutation signUp($name: String!, $email: String!, $password: String!) {
+const SignUpMutation = gql`
+  mutation SignUpMutation ($name: String!, $email: String!, $password: String!) {
     addSelfUser(input:{
       name: $name
       email: $email
@@ -226,10 +235,10 @@ const signUp = gql`
 export default compose(
   withRouter,
   withStyles(Auth.styles, { withTheme: true }),
-  graphql(authenticate, {
-    name: 'authenticate'
+  graphql(AuthenticateMutation, {
+    name: 'AuthenticateMutation'
   }),
-  graphql(signUp, {
-    name: 'signUp'
+  graphql(SignUpMutation, {
+    name: 'SignUpMutation'
   })
 )(Auth)
