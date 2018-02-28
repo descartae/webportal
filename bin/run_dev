@@ -1,5 +1,5 @@
 #!/bin/bash
 
+docker-compose down
 ./bin/run_build
-
 docker-compose up
