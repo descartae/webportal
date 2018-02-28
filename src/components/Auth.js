@@ -51,12 +51,11 @@ class Auth extends Component {
 
   handleModelClose (e) {
     e.preventDefault()
-    
-    //set prev state to false
+
+    // set prev state to false
     this.setState({
       dialogOpen: false
-    })  
-
+    })
   }
 
   async onSubmit (e) {
@@ -80,12 +79,10 @@ class Auth extends Component {
   async onCreate (e) {
     e.preventDefault()
 
-    // setting the dialog state to be true 
+    // setting the dialog state to be true
     this.setState({
       dialogOpen: true
     })
-
-    
   }
 
   async onSignUp (e) {
@@ -103,7 +100,6 @@ class Auth extends Component {
     }
 
     return false
-    
   }
 
   render () {
@@ -137,53 +133,52 @@ class Auth extends Component {
               </Button>
             </div>
           </form>
-              <Button variant='raised' color='primary' onClick={this.onCreate.bind(this)}>
+          <Button variant='raised' color='primary' onClick={this.onCreate.bind(this)}>
                 Create Account
-              </Button>
+          </Button>
 
-        <Dialog
-          open={this.state.dialogOpen}
-          onClose={this.handleModelClose}
-          classes={{ paper: classes.dialogOpen }}>
-          <DialogContent>
+          <Dialog
+            open={this.state.dialogOpen}
+            onClose={this.handleModelClose}
+            classes={{ paper: classes.dialogOpen }}>
+            <DialogContent>
 
-        <form onSubmit={this.onSignUp.bind(this)}>
-          <TextField
-            label='Nome'
-            value={this.state.name}
-            onChange={this.handleChange('name')}
-            fullWidth
-            className={classes.field}
-          />
-          <TextField
-              label='E-mail'
-              type='email'
-              margin='normal'
-              value={this.state.email}
-              onChange={this.handleChange('email')}
-            />
+              <form onSubmit={this.onSignUp.bind(this)}>
+                <TextField
+                  label='Nome'
+                  value={this.state.name}
+                  onChange={this.handleChange('name')}
+                  fullWidth
+                  className={classes.field}
+                />
+                <TextField
+                  label='E-mail'
+                  type='email'
+                  margin='normal'
+                  value={this.state.email}
+                  onChange={this.handleChange('email')}
+                />
 
-            <TextField
-              label='Senha'
-              type='password'
-              margin='normal'
-              value={this.state.password}
-              onChange={this.handleChange('password')}
-            />
-            <Button variant='raised' color='primary' type='submit' className={classes.submit}>
+                <TextField
+                  label='Senha'
+                  type='password'
+                  margin='normal'
+                  value={this.state.password}
+                  onChange={this.handleChange('password')}
+                />
+                <Button variant='raised' color='primary' type='submit' className={classes.submit}>
                 Entrar
-            </Button>
-          </form>
+                </Button>
+              </form>
 
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleModelClose} color='primary' autoFocus>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleModelClose} color='primary' autoFocus>
               Fechar
-            </Button>
-          </DialogActions>
-        </Dialog>
+              </Button>
+            </DialogActions>
+          </Dialog>
 
-            
         </Paper>
       </div>
     )
