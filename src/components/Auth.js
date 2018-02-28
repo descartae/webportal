@@ -7,8 +7,10 @@ import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
-import logo from '../logo.png'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
+import Typography from 'material-ui/Typography'
+
+import logo from '../logo.png'
 
 class Auth extends Component {
   static propTypes = {
@@ -20,7 +22,8 @@ class Auth extends Component {
 
   state = {
     email: '',
-    password: ''
+    password: '',
+    dialogOpen: false
   }
 
   static styles = theme => ({
@@ -33,6 +36,9 @@ class Auth extends Component {
       padding: 10,
       textAlign: 'center',
       display: 'inline-block'
+    },
+    centerer: {
+      textAlign: 'center'
     },
     logo: {
       height: 120,
@@ -49,16 +55,7 @@ class Auth extends Component {
     })
   }
 
-  handleModelClose (e) {
-    e.preventDefault()
-
-    // set prev state to false
-    this.setState({
-      dialogOpen: false
-    })
-  }
-
-  async onSubmit (e) {
+  async onLogin (e) {
     e.preventDefault()
 
     const { data: { authenticate } } = await this.props.authenticate({
@@ -76,12 +73,18 @@ class Auth extends Component {
     return false
   }
 
-  async onCreate (e) {
+  async onCreateUser (e) {
     e.preventDefault()
 
     // setting the dialog state to be true
     this.setState({
       dialogOpen: true
+    })
+  }
+
+  handleDialogClose = event => {
+    this.setState({
+      dialogOpen: false
     })
   }
 
@@ -95,7 +98,7 @@ class Auth extends Component {
     if (addSelfUser) {
       const { success } = addSelfUser
       if (success) {
-        this.onSubmit(e)
+        this.onLogin(e)
       }
     }
 
@@ -109,7 +112,7 @@ class Auth extends Component {
       <div className={classes.root}>
         <Paper className={classes.container}>
           <img src={logo} alt='logo' className={classes.logo} />
-          <form onSubmit={this.onSubmit.bind(this)}>
+          <form onSubmit={this.onLogin.bind(this)}>
 
             <TextField
               label='E-mail'
@@ -123,6 +126,7 @@ class Auth extends Component {
               label='Senha'
               type='password'
               margin='normal'
+              autoComplete='off'
               value={this.state.password}
               onChange={this.handleChange('password')}
             />
@@ -133,27 +137,35 @@ class Auth extends Component {
               </Button>
             </div>
           </form>
-          <Button variant='raised' color='primary' onClick={this.onCreate.bind(this)}>
-                Create Account
+
+          <Button variant='raised' color='primary' className={classes.submit} onClick={this.onCreateUser.bind(this)}>
+            Criar Conta
           </Button>
 
           <Dialog
             open={this.state.dialogOpen}
-            onClose={this.handleModelClose}
-            classes={{ paper: classes.dialogOpen }}>
+            onClose={this.handleDialogClose}>
             <DialogContent>
+
+              <Typography variant='title'>
+                Criar nova conta
+              </Typography>
+
+              <p>Preencha os campos abaixo para criar uma nova conta.</p>
 
               <form onSubmit={this.onSignUp.bind(this)}>
                 <TextField
                   label='Nome'
                   value={this.state.name}
-                  onChange={this.handleChange('name')}
                   fullWidth
+                  margin='normal'
+                  onChange={this.handleChange('name')}
                   className={classes.field}
                 />
                 <TextField
                   label='E-mail'
                   type='email'
+                  fullWidth
                   margin='normal'
                   value={this.state.email}
                   onChange={this.handleChange('email')}
@@ -162,19 +174,23 @@ class Auth extends Component {
                 <TextField
                   label='Senha'
                   type='password'
+                  fullWidth
                   margin='normal'
                   value={this.state.password}
                   onChange={this.handleChange('password')}
                 />
-                <Button variant='raised' color='primary' type='submit' className={classes.submit}>
-                Entrar
-                </Button>
+
+                <div className={classes.centerer}>
+                  <Button variant='raised' color='primary' type='submit' className={classes.submit}>
+                    Criar
+                  </Button>
+                </div>
               </form>
 
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleModelClose} color='primary' autoFocus>
-              Fechar
+              <Button onClick={this.handleDialogClose} color='primary' autoFocus>
+                Fechar
               </Button>
             </DialogActions>
           </Dialog>
