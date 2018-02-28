@@ -29,7 +29,6 @@ function generateEmptyCalendar() {
       endTime: '',
     });
   }
-  console.log(openHours);
   return openHours;
 }
 
