@@ -92,8 +92,8 @@ class FacilityDetails extends Component {
   async onDelete (e) {
     e.preventDefault()
 
-    // call the Disable Facility mutation. Need to use async for await
-    await this.props.DisableFacility()
+    // call the disable Facility mutation. Need to use async for await
+    await this.props.disableFacility()
 
     // redirect to list view
     this.props.history.push('/facilities')
@@ -273,7 +273,7 @@ export const facilityDetailsQuery = gql`
   }
 `
 export const facilityDeleteMutation = gql`
-  mutation DisableFacility(
+  mutation disableFacility(
     $facilityId: ID!
   ) {
     disableFacility(input: {
@@ -289,7 +289,7 @@ export default compose(
     options: (props) => ({
       variables: { facilityId: props.match.params.facilityId }
     }),
-    name: 'DisableFacility'
+    name: 'disableFacility'
   }),
   graphql(facilityDetailsQuery, {
     options: (props) => ({
