@@ -20,6 +20,18 @@ import Unauthorized from '../Unauthorized'
 import Loading from '../Loading'
 import { Paper } from 'material-ui'
 
+function generateEmptyCalendar () {
+  var openHours = []
+  for (var day of ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']) {
+    openHours.push({
+      dayOfWeek: day,
+      startTime: '',
+      endTime: ''
+    })
+  }
+  return openHours
+}
+
 class FacilityEditor extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -99,7 +111,7 @@ class FacilityEditor extends Component {
         state: '',
         zip: '',
         typesOfWaste: [],
-        openHours: []
+        openHours: generateEmptyCalendar()
       })
     }
   }

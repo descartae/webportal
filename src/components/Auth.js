@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import logo from '../logo.png'
+import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 
 class Auth extends Component {
   static propTypes = {
@@ -18,8 +19,8 @@ class Auth extends Component {
   }
 
   state = {
-    email: 'user@example.com',
-    password: 'example'
+    email: '',
+    password: ''
   }
 
   static styles = theme => ({
@@ -48,10 +49,19 @@ class Auth extends Component {
     })
   }
 
+  handleModelClose (e) {
+    e.preventDefault()
+
+    // set prev state to false
+    this.setState({
+      dialogOpen: false
+    })
+  }
+
   async onSubmit (e) {
     e.preventDefault()
 
-    const { data: { authenticate } } = await this.props.mutate({
+    const { data: { authenticate } } = await this.props.authenticate({
       variables: { email: this.state.email, password: this.state.password }
     })
 
@@ -60,6 +70,32 @@ class Auth extends Component {
       if (success) {
         localStorage.setItem('token', sessionToken)
         this.props.history.go()
+      }
+    }
+
+    return false
+  }
+
+  async onCreate (e) {
+    e.preventDefault()
+
+    // setting the dialog state to be true
+    this.setState({
+      dialogOpen: true
+    })
+  }
+
+  async onSignUp (e) {
+    e.preventDefault()
+
+    const { data: { addSelfUser } } = await this.props.signUp({
+      variables: { name: this.state.name, email: this.state.email, password: this.state.password }
+    })
+
+    if (addSelfUser) {
+      const { success } = addSelfUser
+      if (success) {
+        this.onSubmit(e)
       }
     }
 
@@ -97,6 +133,52 @@ class Auth extends Component {
               </Button>
             </div>
           </form>
+          <Button variant='raised' color='primary' onClick={this.onCreate.bind(this)}>
+                Create Account
+          </Button>
+
+          <Dialog
+            open={this.state.dialogOpen}
+            onClose={this.handleModelClose}
+            classes={{ paper: classes.dialogOpen }}>
+            <DialogContent>
+
+              <form onSubmit={this.onSignUp.bind(this)}>
+                <TextField
+                  label='Nome'
+                  value={this.state.name}
+                  onChange={this.handleChange('name')}
+                  fullWidth
+                  className={classes.field}
+                />
+                <TextField
+                  label='E-mail'
+                  type='email'
+                  margin='normal'
+                  value={this.state.email}
+                  onChange={this.handleChange('email')}
+                />
+
+                <TextField
+                  label='Senha'
+                  type='password'
+                  margin='normal'
+                  value={this.state.password}
+                  onChange={this.handleChange('password')}
+                />
+                <Button variant='raised' color='primary' type='submit' className={classes.submit}>
+                Entrar
+                </Button>
+              </form>
+
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleModelClose} color='primary' autoFocus>
+              Fechar
+              </Button>
+            </DialogActions>
+          </Dialog>
+
         </Paper>
       </div>
     )
@@ -104,7 +186,7 @@ class Auth extends Component {
 }
 
 const authenticate = gql`
-  mutation($email: String!, $password: String!) {
+  mutation authenticate($email: String!, $password: String!) {
     authenticate(credentials: {email: $email, password: $password}) {
       success
       error
@@ -113,8 +195,25 @@ const authenticate = gql`
   }
 `
 
+const signUp = gql`
+  mutation signUp($name: String!, $email: String!, $password: String!) {
+    addSelfUser(input:{
+      name: $name
+      email: $email
+      password: $password
+    }){
+      success
+    }
+  }
+`
+
 export default compose(
   withRouter,
   withStyles(Auth.styles, { withTheme: true }),
-  graphql(authenticate)
+  graphql(authenticate, {
+    name: 'authenticate'
+  }),
+  graphql(signUp, {
+    name: 'signUp'
+  })
 )(Auth)
