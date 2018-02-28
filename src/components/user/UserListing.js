@@ -29,12 +29,12 @@ class UserListing extends Component {
 
   handlePrev = () => {
     if (this.props.loading) return
-    this.props.data.prevPage()
+    this.props.UserListQuery.prevPage()
   };
 
   handleNext = () => {
     if (this.props.loading) return
-    this.props.data.nextPage()
+    this.props.UserListQuery.nextPage()
   };
 
   selectUser = (id) => (e) => {
@@ -49,7 +49,7 @@ class UserListing extends Component {
   }
 
   render () {
-    const { classes, data: { loading, error, users } } = this.props
+    const { classes, UserListQuery: { loading, error, users } } = this.props
 
     if (loading) {
       return <Loading />
@@ -91,7 +91,16 @@ class UserListing extends Component {
   }
 }
 
-export const userListQuery = gql`
+export const UserFieldsFragment = gql`
+  fragment UserFieldsFragment on User {
+    _id
+    name
+    email
+    roles
+  }
+`
+
+export const UserListQuery = gql`
   query UserListQuery($before: Cursor, $after: Cursor, $quantity: Int!) {
     users(filters: {
       hasRole: true
@@ -107,38 +116,38 @@ export const userListQuery = gql`
       }
 
       items {
-        _id
-        name
-        email
-        roles
+        ...UserFieldsFragment
       }
     }
   }
+
+  ${UserFieldsFragment}
 `
+UserListQuery.name = 'UserListQuery'
 
 export default compose(
   withStyles(UserListing.styles, { withTheme: true }),
-  graphql(userListQuery, {
+  graphql(UserListQuery, {
+    name: 'UserListQuery',
     options: (props) => ({
-      fetchPolicy: 'network-only',
       variables: {
         quantity: props.pageSize
       }
     }),
     props: ({
-      data: {
+      UserListQuery: {
         variables,
         users,
         fetchMore,
-        ...dataRest
+        ...queryRest
       },
       ...rest
     }) => ({
 
       ...rest,
 
-      data: {
-        ...dataRest,
+      UserListQuery: {
+        ...queryRest,
 
         variables,
         users,
@@ -146,7 +155,7 @@ export default compose(
 
         prevPage: () =>
           fetchMore({
-            query: userListQuery,
+            query: UserListQuery,
             variables: {
               ...variables,
               before: users.cursors.before
@@ -164,7 +173,7 @@ export default compose(
 
         nextPage: () =>
           fetchMore({
-            query: userListQuery,
+            query: UserListQuery,
             variables: {
               ...variables,
               after: users.cursors.after

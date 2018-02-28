@@ -18,6 +18,8 @@ import Avatar from 'material-ui/Avatar'
 import NotFound from '../NotFound'
 import Loading from '../Loading'
 
+import { UserFieldsFragment, UserListQuery } from './UserListing'
+
 class UserEditor extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -47,15 +49,15 @@ class UserEditor extends Component {
     roles: []
   }
 
-  componentWillReceiveProps ({ match, userDetailsQuery, typeOfWasteListQuery }) {
+  componentWillReceiveProps ({ match, UserDetailsQuery, typeOfWasteListQuery }) {
     if (match.params.userId) {
-      if (userDetailsQuery && userDetailsQuery.user) {
+      if (UserDetailsQuery && UserDetailsQuery.user) {
         const {
           _id,
           name,
           email,
           roles
-        } = userDetailsQuery.user
+        } = UserDetailsQuery.user
 
         this.setState({
           _id,
@@ -96,13 +98,13 @@ class UserEditor extends Component {
     const variables = { name, email, password, roles }
 
     if (this.state._id) {
-      const { data } = await this.props.userEditMutation({ variables: { id: _id, ...variables } })
+      const { data } = await this.props.UserEditMutation({ variables: { id: _id, ...variables } })
       if (data.updateUser) {
         const { user } = data.updateUser
         this.props.history.push(`/users/view/${user._id}`)
       }
     } else {
-      const { data } = await this.props.userAddMutation({ variables })
+      const { data } = await this.props.UserAddMutation({ variables })
       if (data.addUser) {
         const { user } = data.addUser
         this.props.history.push(`/users/view/${user._id}`)
@@ -112,7 +114,7 @@ class UserEditor extends Component {
 
   render () {
     const { classes, match } = this.props
-    const { loading, error, user } = this.props.userDetailsQuery || {}
+    const { loading, error, user } = this.props.UserDetailsQuery || {}
 
     const isNew = !match.params.userId
 
@@ -165,6 +167,7 @@ class UserEditor extends Component {
           <TextField
             label='Senha'
             type='password'
+            autoComplete='off'
             value={this.state.password}
             onChange={this.handleChange('password')}
             fullWidth
@@ -217,19 +220,18 @@ class UserEditor extends Component {
   }
 }
 
-export const userDetailsQuery = gql`
+export const UserDetailsQuery = gql`
   query UserDetailsQuery($userId: ID!) {
     user(_id: $userId) {
-      _id
-      name
-      email
-      roles
+      ...UserFieldsFragment
     }
   }
+
+  ${UserFieldsFragment}
 `
 
-export const userAddMutation = gql`
-  mutation AddUser (
+export const UserAddMutation = gql`
+  mutation UserAddMutation (
     $name: String!,
     $email: String!,
     $password: String!,
@@ -245,17 +247,16 @@ export const userAddMutation = gql`
     ) {
       success
       user {
-        _id
-        name
-        email
-        roles
+        ...UserFieldsFragment
       }
     }
   }
+
+  ${UserFieldsFragment}
 `
 
-export const userEditMutation = gql`
-  mutation EditUser (
+export const UserEditMutation = gql`
+  mutation UserEditMutation (
     $id: ID!
     $name: String,
     $email: String,
@@ -275,28 +276,33 @@ export const userEditMutation = gql`
     ) {
       success
       user {
-        _id
-        name
-        email
-        roles
+        ...UserFieldsFragment
       }
     }
   }
+
+  ${UserFieldsFragment}
 `
 
 export default compose(
   withStyles(UserEditor.styles, { withTheme: true }),
-  graphql(userDetailsQuery, {
-    name: 'userDetailsQuery',
+  graphql(UserDetailsQuery, {
+    name: 'UserDetailsQuery',
     skip: (props) => !props.match.params.userId,
     options: (props) => ({
       variables: { userId: props.match.params.userId }
     })
   }),
-  graphql(userAddMutation, {
-    name: 'userAddMutation'
+  graphql(UserAddMutation, {
+    name: 'UserAddMutation',
+    options: {
+      refetchQueries: [UserListQuery.name]
+    }
   }),
-  graphql(userEditMutation, {
-    name: 'userEditMutation'
+  graphql(UserEditMutation, {
+    name: 'UserEditMutation',
+    options: {
+      refetchQueries: [UserListQuery.name]
+    }
   })
 )(UserEditor)

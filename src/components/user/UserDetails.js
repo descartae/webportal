@@ -12,6 +12,8 @@ import EditIcon from 'material-ui-icons/Edit'
 import NotFound from '../NotFound'
 import Loading from '../Loading'
 
+import { UserFieldsFragment } from './UserListing'
+
 class UserDetails extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -42,7 +44,7 @@ class UserDetails extends Component {
   })
 
   render () {
-    const { classes, data: { loading, error, user } } = this.props
+    const { classes, UserDetailsQuery: { loading, error, user } } = this.props
 
     if (loading) {
       return <Loading />
@@ -79,22 +81,21 @@ class UserDetails extends Component {
   }
 }
 
-export const userDetailsQuery = gql`
+export const UserDetailsQuery = gql`
   query UserDetailsQuery($userId: ID!) {
     user(_id: $userId) {
-      _id
-      name
-      email
-      roles
+      ...UserFieldsFragment
     }
   }
+
+  ${UserFieldsFragment}
 `
 
 export default compose(
   withStyles(UserDetails.styles, { withTheme: true }),
-  graphql(userDetailsQuery, {
+  graphql(UserDetailsQuery, {
+    name: 'UserDetailsQuery',
     options: (props) => ({
-      fetchPolicy: 'network-only',
       variables: { userId: props.match.params.userId }
     })
   })
