@@ -14,7 +14,7 @@ services:
     environment:
       - PORT=3000
       - REACT_APP_SERVER_URL=http://localhost:4000/graphql
-      - REACT_APP_MAPS_API_KEY=myapikey
+      - REACT_APP_SIGNUP=true
     networks:
       - descartae
 
