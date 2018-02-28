@@ -34,11 +34,15 @@ class FacilityDetails extends Component {
     field: {
       marginTop: 16
     },
+    facilityTitle: {
+      marginBottom: 40
+    },
     edit: {
       float: 'right'
     },
     delete: {
-      float: 'right'
+      float: 'right',
+      marginLeft: 10
     },
     typesOfWaste: {
       padding: 5,
@@ -147,7 +151,7 @@ class FacilityDetails extends Component {
 
         </ForRole>
 
-        <Typography variant='title'>
+        <Typography variant='title' className={classes.facilityTitle}>
           {facility.name}
         </Typography>
 
