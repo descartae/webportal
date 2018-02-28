@@ -54,7 +54,7 @@ class Auth extends Component {
     
     //set prev state to false
     this.setState({
-      "modelOpen": false
+      dialogOpen: false
     })  
 
   }
@@ -80,9 +80,9 @@ class Auth extends Component {
   async onCreate (e) {
     e.preventDefault()
 
-    // setting the model dialog state to be true 
+    // setting the dialog state to be true 
     this.setState({
-      "modelOpen": true
+      dialogOpen: true
     })
 
     
@@ -91,7 +91,7 @@ class Auth extends Component {
   async onSignUp (e) {
     e.preventDefault()
 
-    const { data: { addSelfUser } } = await this.props.SignUp({
+    const { data: { addSelfUser } } = await this.props.signUp({
       variables: { name: this.state.name, email: this.state.email, password: this.state.password }
     })
 
@@ -142,9 +142,9 @@ class Auth extends Component {
               </Button>
 
         <Dialog
-          open={this.state.modelOpen}
+          open={this.state.dialogOpen}
           onClose={this.handleModelClose}
-          classes={{ paper: classes.modelOpen }}>
+          classes={{ paper: classes.dialogOpen }}>
           <DialogContent>
 
         <form onSubmit={this.onSignUp.bind(this)}>
@@ -201,7 +201,7 @@ const authenticate = gql`
 `
 
 const signUp = gql`
-  mutation SignUp($name: String!, $email: String!, $password: String!) {
+  mutation signUp($name: String!, $email: String!, $password: String!) {
     addSelfUser(input:{
       name: $name
       email: $email
@@ -219,6 +219,6 @@ export default compose(
     name: 'authenticate'
   }),
   graphql(signUp, {
-    name: 'SignUp'
+    name: 'signUp'
   })
 )(Auth)
