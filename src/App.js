@@ -18,8 +18,7 @@ import {
 import {
   ApolloClient,
   ApolloProvider,
-  createNetworkInterface,
-  toIdValue
+  createNetworkInterface
 } from 'react-apollo'
 
 import { MuiThemeProvider } from 'material-ui/styles'
@@ -48,9 +47,9 @@ networkInterface.use([{
 }])
 
 function dataIdFromObject (result) {
-  if (result.__typename) {
-    if (result.id !== undefined) {
-      return `${result.__typename}:${result.id}`
+  if (result && result.__typename) {
+    if (result._id !== undefined) {
+      return `${result.__typename}:${result._id}`
     }
   }
   return null
@@ -58,13 +57,6 @@ function dataIdFromObject (result) {
 
 const client = new ApolloClient({
   networkInterface,
-  customResolvers: {
-    Query: {
-      facility: (_, args) => {
-        return toIdValue(dataIdFromObject({ __typename: 'Facility', id: args['id'] }))
-      }
-    }
-  },
   dataIdFromObject
 })
 
