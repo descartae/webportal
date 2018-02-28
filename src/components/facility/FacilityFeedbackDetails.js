@@ -11,6 +11,8 @@ import CheckCircleIcon from 'material-ui-icons/CheckCircle'
 import NotFound from '../NotFound'
 import Loading from '../Loading'
 
+import { FacilityListQuery } from './FacilityListing'
+
 class FeedbackDetails extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -27,17 +29,17 @@ class FeedbackDetails extends Component {
 
   async onSubmit (e) {
     e.preventDefault()
-    const { data: { feedback: { _id } } } = this.props
+    const { FeedbackDetailsQuery: { feedback: { _id } } } = this.props
     const variables = { id: _id }
 
-    await this.props.feedbackResolveMutation({ variables })
+    await this.props.FeedbackResolveMutation({ variables })
 
     const { match, history } = this.props
     history.push(match.url.split(`/${_id}`)[0])
   }
 
   render () {
-    const { classes, data: { loading, error, feedback } } = this.props
+    const { classes, FeedbackDetailsQuery: { loading, error, feedback } } = this.props
 
     if (loading) {
       return <Loading />
@@ -65,7 +67,7 @@ class FeedbackDetails extends Component {
   }
 }
 
-export const feedbackDetailsQuery = gql`
+export const FeedbackDetailsQuery = gql`
   query FeedbackDetailsQuery($feedbackId: ID!) {
     feedback(_id: $feedbackId) {
       _id
@@ -75,8 +77,8 @@ export const feedbackDetailsQuery = gql`
   }
 `
 
-export const feedbackResolveMutation = gql`
-  mutation ResolveFeedback($id: ID!) {
+export const FeedbackResolveMutation = gql`
+  mutation FeedbackResolveMutation($id: ID!) {
     resolveFeedback(input: {_id: $id}) {
       success
       feedback {
@@ -90,13 +92,16 @@ export const feedbackResolveMutation = gql`
 
 export default compose(
   withStyles(FeedbackDetails.styles, { withTheme: true }),
-  graphql(feedbackDetailsQuery, {
+  graphql(FeedbackDetailsQuery, {
+    name: 'FeedbackDetailsQuery',
     options: (props) => ({
-      fetchPolicy: 'network-only',
       variables: { feedbackId: props.match.params.feedbackId }
     })
   }),
-  graphql(feedbackResolveMutation, {
-    name: 'feedbackResolveMutation'
+  graphql(FeedbackResolveMutation, {
+    name: 'FeedbackResolveMutation',
+    options: {
+      refetchQueries: [FacilityListQuery.name]
+    }
   })
 )(FeedbackDetails)

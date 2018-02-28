@@ -32,12 +32,12 @@ class FacilityListing extends Component {
 
   handlePrev = () => {
     if (this.props.loading) return
-    this.props.data.prevPage()
+    this.props.FacilityListQuery.prevPage()
   };
 
   handleNext = () => {
     if (this.props.loading) return
-    this.props.data.nextPage()
+    this.props.FacilityListQuery.nextPage()
   };
 
   selectFacility = (id) => (e) => {
@@ -52,7 +52,10 @@ class FacilityListing extends Component {
   }
 
   render () {
-    const { classes, data: { loading, error, facilities } } = this.props
+    const {
+      classes,
+      FacilityListQuery: { loading, error, facilities }
+    } = this.props
 
     if (loading) {
       return <Loading />
@@ -109,8 +112,29 @@ class FacilityListing extends Component {
   }
 }
 
-export const facilityListQuery = gql`
-  query FacilityListQuery($before: Cursor, $after: Cursor, $quantity: Int!) {
+export const FacilityFieldsFragment = gql`
+  fragment FacilityFieldsFragment on Facility {
+    _id
+    name
+    location {
+      address
+      municipality
+      state
+      zip
+      coordinates {
+        latitude
+        longitude
+      }
+    }
+
+    feedbacks {
+      unresolved
+    }
+  }
+`
+
+export const FacilityListQuery = gql`
+  query FacilityListQuery ($before: Cursor, $after: Cursor, $quantity: Int!) {
     facilities(filters: {
       cursor: {
         after: $after
@@ -124,46 +148,37 @@ export const facilityListQuery = gql`
       }
 
       items {
-        _id
-        name
-        location {
-          address
-          municipality
-          state
-          zip
-        }
-
-        feedbacks {
-          unresolved
-        }
+        ...FacilityFieldsFragment
       }
     }
   }
+
+  ${FacilityFieldsFragment}
 `
+FacilityListQuery.name = 'FacilityListQuery'
 
 export default compose(
   withStyles(FacilityListing.styles, { withTheme: true }),
-  graphql(facilityListQuery, {
+  graphql(FacilityListQuery, {
+    name: 'FacilityListQuery',
     options: (props) => ({
-      fetchPolicy: 'network-only',
       variables: {
         quantity: props.pageSize
       }
     }),
     props: ({
-      data: {
+      FacilityListQuery: {
         variables,
         facilities,
         fetchMore,
-        ...dataRest
+        ...queryRest
       },
       ...rest
     }) => ({
-
       ...rest,
 
-      data: {
-        ...dataRest,
+      FacilityListQuery: {
+        ...queryRest,
 
         variables,
         facilities,
@@ -171,7 +186,7 @@ export default compose(
 
         prevPage: () =>
           fetchMore({
-            query: facilityListQuery,
+            query: FacilityListQuery,
             variables: {
               ...variables,
               before: facilities.cursors.before
@@ -189,7 +204,7 @@ export default compose(
 
         nextPage: () =>
           fetchMore({
-            query: facilityListQuery,
+            query: FacilityListQuery,
             variables: {
               ...variables,
               after: facilities.cursors.after

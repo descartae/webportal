@@ -30,12 +30,12 @@ class FacilityFeedbackListing extends Component {
 
   handlePrev = () => {
     if (this.props.loading) return
-    this.props.data.prevPage()
+    this.props.FeedbackListQuery.prevPage()
   };
 
   handleNext = () => {
     if (this.props.loading) return
-    this.props.data.nextPage()
+    this.props.FeedbackListQuery.nextPage()
   };
 
   selectFeedback = (id) => (e) => {
@@ -50,7 +50,7 @@ class FacilityFeedbackListing extends Component {
   }
 
   render () {
-    const { classes, match, data: { loading, error, feedbacks } } = this.props
+    const { classes, match, FeedbackListQuery: { loading, error, feedbacks } } = this.props
 
     if (loading) {
       return <Loading />
@@ -91,7 +91,7 @@ class FacilityFeedbackListing extends Component {
   }
 }
 
-export const feedbackListQuery = gql`
+export const FeedbackListQuery = gql`
   query FeedbackListQuery($before: Cursor, $after: Cursor, $quantity: Int!, $facilityId: ID!) {
     feedbacks(filters: {
       facility: $facilityId
@@ -117,28 +117,28 @@ export const feedbackListQuery = gql`
 
 export default compose(
   withStyles(FacilityFeedbackListing.styles, { withTheme: true }),
-  graphql(feedbackListQuery, {
+  graphql(FeedbackListQuery, {
+    name: 'FeedbackListQuery',
     options: (props) => ({
-      fetchPolicy: 'network-only',
       variables: {
         facilityId: props.match.params.facilityId,
         quantity: props.pageSize
       }
     }),
     props: ({
-      data: {
+      FeedbackListQuery: {
         variables,
         feedbacks,
         fetchMore,
-        ...dataRest
+        ...queryRest
       },
       ...rest
     }) => ({
 
       ...rest,
 
-      data: {
-        ...dataRest,
+      FeedbackListQuery: {
+        ...queryRest,
 
         variables,
         feedbacks,
@@ -146,7 +146,7 @@ export default compose(
 
         prevPage: () =>
           fetchMore({
-            query: feedbackListQuery,
+            query: FeedbackListQuery,
             variables: {
               ...variables,
               before: feedbacks.cursors.before
@@ -164,7 +164,7 @@ export default compose(
 
         nextPage: () =>
           fetchMore({
-            query: feedbackListQuery,
+            query: FeedbackListQuery,
             variables: {
               ...variables,
               after: feedbacks.cursors.after

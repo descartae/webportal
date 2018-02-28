@@ -24,6 +24,8 @@ import ForRole from '../ForRole'
 import NotFound from '../NotFound'
 import Loading from '../Loading'
 
+import { FacilityFieldsFragment, FacilityListQuery } from './FacilityListing'
+
 class FacilityDetails extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -96,17 +98,16 @@ class FacilityDetails extends Component {
   async onDelete (e) {
     e.preventDefault()
 
-    // call the disable Facility mutation. Need to use async for await
-    await this.props.disableFacility()
-
-    // redirect to list view
-    this.props.history.push('/facilities')
+    const { data } = await this.props.FacilityDisableMutation()
+    if (data.disableFacility && data.disableFacility.success) {
+      this.props.history.push('/facilities')
+    }
   }
 
   render () {
     const {
       classes, theme, google, match,
-      data: { loading, error, facility }
+      FacilityDetailsQuery: { loading, error, facility }
     } = this.props
 
     if (loading) {
@@ -244,23 +245,15 @@ class FacilityDetails extends Component {
   }
 }
 
-export const facilityDetailsQuery = gql`
+export const FacilityDetailsQuery = gql`
   query FacilityDetailsQuery($facilityId: ID!) {
     facility(_id: $facilityId) {
-      _id
-      name
+
+      ...FacilityFieldsFragment
+
       telephone
       website
-      location {
-        address
-        municipality
-        state
-        zip
-        coordinates {
-          latitude
-          longitude
-        }
-      }
+
       typesOfWaste {
         _id
         name
@@ -268,6 +261,7 @@ export const facilityDetailsQuery = gql`
           androidMediumURL
         }
       }
+
       openHours {
         dayOfWeek
         startTime
@@ -275,9 +269,11 @@ export const facilityDetailsQuery = gql`
       }
     }
   }
+
+  ${FacilityFieldsFragment}
 `
-export const facilityDeleteMutation = gql`
-  mutation disableFacility(
+export const FacilityDisableMutation = gql`
+  mutation FacilityDisableMutation (
     $facilityId: ID!
   ) {
     disableFacility(input: {
@@ -287,17 +283,19 @@ export const facilityDeleteMutation = gql`
     }
   }
 `
+
 export default compose(
   withStyles(FacilityDetails.styles, { withTheme: true }),
-  graphql(facilityDeleteMutation, {
+  graphql(FacilityDisableMutation, {
+    name: 'FacilityDisableMutation',
     options: (props) => ({
-      variables: { facilityId: props.match.params.facilityId }
-    }),
-    name: 'disableFacility'
+      variables: { facilityId: props.match.params.facilityId },
+      refetchQueries: [FacilityListQuery.name]
+    })
   }),
-  graphql(facilityDetailsQuery, {
+  graphql(FacilityDetailsQuery, {
+    name: 'FacilityDetailsQuery',
     options: (props) => ({
-      fetchPolicy: 'network-only',
       variables: { facilityId: props.match.params.facilityId }
     })
   }),

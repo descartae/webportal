@@ -20,6 +20,8 @@ import Unauthorized from '../Unauthorized'
 import Loading from '../Loading'
 import { Paper } from 'material-ui'
 
+import { FacilityFieldsFragment, FacilityListQuery } from './FacilityListing'
+
 function generateEmptyCalendar () {
   var openHours = []
   for (var day of ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']) {
@@ -69,9 +71,9 @@ class FacilityEditor extends Component {
     weekDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   }
 
-  componentWillReceiveProps ({ match, facilityDetailsQuery, typesOfWasteListQuery }) {
+  componentWillReceiveProps ({ match, FacilityDetailsQuery, TypesOfWasteListQuery }) {
     if (match.params.facilityId) {
-      if (facilityDetailsQuery && facilityDetailsQuery.facility) {
+      if (FacilityDetailsQuery && FacilityDetailsQuery.facility) {
         const {
           _id,
           name,
@@ -83,7 +85,7 @@ class FacilityEditor extends Component {
           },
           typesOfWaste,
           openHours
-        } = facilityDetailsQuery.facility
+        } = FacilityDetailsQuery.facility
 
         const totalOpenHours = this.state.weekDays.map((d) => {
           const open = openHours.find((it) => it.dayOfWeek === d)
@@ -151,13 +153,13 @@ class FacilityEditor extends Component {
     const variables = { name, address, municipality, zip, state, typesOfWaste, openHours: cleanOpenHours }
 
     if (this.state._id) {
-      const { data } = await this.props.facilityEditMutation({ variables: { id: _id, ...variables } })
+      const { data } = await this.props.FacilityEditMutation({ variables: { id: _id, ...variables } })
       if (data.updateFacility) {
         const { facility } = data.updateFacility
         this.props.history.push(`/facilities/view/${facility._id}`)
       }
     } else {
-      const { data } = await this.props.facilityAddMutation({ variables })
+      const { data } = await this.props.FacilityAddMutation({ variables })
       if (data.addFacility) {
         const { facility } = data.addFacility
         this.props.history.push(`/facilities/view/${facility._id}`)
@@ -171,8 +173,8 @@ class FacilityEditor extends Component {
       return (<Unauthorized />)
     }
 
-    const { loading: loading1, error: error1, typesOfWaste } = this.props.typesOfWasteListQuery
-    const { loading: loading2, error: error2, facility } = this.props.facilityDetailsQuery || {}
+    const { loading: loading1, error: error1, typesOfWaste } = this.props.TypesOfWasteListQuery
+    const { loading: loading2, error: error2, facility } = this.props.FacilityDetailsQuery || {}
     const { classes, match } = this.props
 
     const isNew = !match.params.facilityId
@@ -345,21 +347,12 @@ class FacilityEditor extends Component {
   }
 }
 
-export const facilityDetailsQuery = gql`
+export const FacilityDetailsQuery = gql`
   query FacilityDetailsQuery($facilityId: ID!) {
     facility(_id: $facilityId) {
-      _id
-      name
-      location {
-        address
-        municipality
-        state
-        zip
-        coordinates {
-          latitude
-          longitude
-        }
-      }
+
+      ...FacilityFieldsFragment
+
       typesOfWaste {
         _id
         name
@@ -371,9 +364,11 @@ export const facilityDetailsQuery = gql`
       }
     }
   }
+
+  ${FacilityFieldsFragment}
 `
 
-export const facilityAddMutation = gql`
+export const FacilityAddMutation = gql`
   mutation AddFacility (
     $name: String!,
     $address: String!,
@@ -398,14 +393,15 @@ export const facilityAddMutation = gql`
     ) {
       success
       facility {
-        _id
-        name
+        ...FacilityFieldsFragment
       }
     }
   }
+
+  ${FacilityFieldsFragment}
 `
 
-export const facilityEditMutation = gql`
+export const FacilityEditMutation = gql`
   mutation EditFacility (
     $id: ID!,
     $name: String!,
@@ -434,13 +430,15 @@ export const facilityEditMutation = gql`
     ) {
       success
       facility {
-        _id
+        ...FacilityFieldsFragment
       }
     }
   }
+
+  ${FacilityFieldsFragment}
 `
 
-export const typesOfWasteListQuery = gql`
+export const TypesOfWasteListQuery = gql`
   query TypesOfWasteListQuery {
     typesOfWaste {
       _id
@@ -454,18 +452,21 @@ export const typesOfWasteListQuery = gql`
 
 export default compose(
   withStyles(FacilityEditor.styles, { withTheme: true }),
-  graphql(typesOfWasteListQuery, { name: 'typesOfWasteListQuery' }),
-  graphql(facilityDetailsQuery, {
-    name: 'facilityDetailsQuery',
+  graphql(TypesOfWasteListQuery, { name: 'TypesOfWasteListQuery' }),
+  graphql(FacilityDetailsQuery, {
+    name: 'FacilityDetailsQuery',
     skip: (props) => !props.match.params.facilityId,
     options: (props) => ({
       variables: { facilityId: props.match.params.facilityId }
     })
   }),
-  graphql(facilityAddMutation, {
-    name: 'facilityAddMutation'
+  graphql(FacilityAddMutation, {
+    name: 'FacilityAddMutation',
+    options: {
+      refetchQueries: [FacilityListQuery.name]
+    }
   }),
-  graphql(facilityEditMutation, {
-    name: 'facilityEditMutation'
+  graphql(FacilityEditMutation, {
+    name: 'FacilityEditMutation'
   })
 )(FacilityEditor)
