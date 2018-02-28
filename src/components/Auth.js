@@ -10,11 +10,6 @@ import Button from 'material-ui/Button'
 import logo from '../logo.png'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 
-import Typography from 'material-ui/Typography'
-import Input, { InputLabel } from 'material-ui/Input'
-import { MenuItem } from 'material-ui/Menu'
-import { FormControl } from 'material-ui/Form'
-
 class Auth extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
