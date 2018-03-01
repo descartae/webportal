@@ -46,6 +46,10 @@ class Auth extends Component {
       height: 120,
       margin: 10
     },
+    title: {
+      color: '#2D5D22',
+      textAlign: 'center'
+    },
     submit: {
       margin: 10
     }
@@ -112,6 +116,7 @@ class Auth extends Component {
     return (
       <div className={classes.root}>
         <Paper className={classes.container}>
+          <h1 className={classes.title}>Descartaê</h1>
           <img src={logo} alt='logo' className={classes.logo} />
           <form onSubmit={this.onLogin.bind(this)}>
 
