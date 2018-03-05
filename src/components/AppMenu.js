@@ -94,7 +94,7 @@ class AppMenu extends Component {
     })
   };
 
-  setMenu = event => {
+  setMenu = (event) => {
     this.setState({ menu: event.currentTarget })
   };
 
@@ -162,7 +162,7 @@ class AppMenu extends Component {
             </Link>
           </div>
 
-          <Link to='/facilities'>
+          <Link to='/facilities' onClick={() => this.toggleDrawer()}>
             <ListItem button>
               <ListItemIcon>
                 <StoreIcon />
@@ -172,7 +172,7 @@ class AppMenu extends Component {
           </Link>
 
           <ForRole roles={['ADMIN']}>
-            <Link to='/users'>
+            <Link to='/users' onClick={() => this.toggleDrawer()}>
               <ListItem button>
                 <ListItemIcon>
                   <PeopleIcon />

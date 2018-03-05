@@ -46,6 +46,14 @@ class Auth extends Component {
       height: 120,
       margin: 10
     },
+    title: {
+      color: '#2D5D22',
+      textAlign: 'center'
+    },
+    tagline: {
+      color: '#509D30',
+      textAlign: 'center'
+    },
     submit: {
       margin: 10
     }
@@ -112,7 +120,12 @@ class Auth extends Component {
     return (
       <div className={classes.root}>
         <Paper className={classes.container}>
+          <h1 className={classes.title}>Descartaê</h1>
           <img src={logo} alt='logo' className={classes.logo} />
+          <h3 className={classes.tagline}>
+            Seu portal para gerenciar dados de pontos de coleta no Brasil
+          </h3>
+          <br/>
           <form onSubmit={this.onLogin.bind(this)}>
 
             <TextField
@@ -122,7 +135,7 @@ class Auth extends Component {
               value={this.state.email}
               onChange={this.handleChange('email')}
             />
-
+            <br/>
             <TextField
               label='Senha'
               type='password'
