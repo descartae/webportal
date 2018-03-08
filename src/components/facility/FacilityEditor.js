@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
+import qs from 'query-string'
 import { withStyles } from 'material-ui/styles'
 
 import TextField from 'material-ui/TextField'
@@ -71,7 +72,9 @@ class FacilityEditor extends Component {
     weekDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   }
 
-  componentWillReceiveProps ({ match, FacilityDetailsQuery, TypesOfWasteListQuery }) {
+  componentWillReceiveProps ({ location, match, FacilityDetailsQuery, TypesOfWasteListQuery }) {
+    let typesOfWaste = []
+
     if (match.params.facilityId) {
       if (FacilityDetailsQuery && FacilityDetailsQuery.facility) {
         const {
@@ -83,7 +86,7 @@ class FacilityEditor extends Component {
             state,
             zip
           },
-          typesOfWaste,
+          typesOfWaste: currentTypesOfWaste,
           openHours
         } = FacilityDetailsQuery.facility
 
@@ -100,11 +103,19 @@ class FacilityEditor extends Component {
           municipality,
           state,
           zip,
-          typesOfWaste: typesOfWaste.map(({ _id }) => _id),
           openHours: totalOpenHours
         })
+
+        typesOfWaste = currentTypesOfWaste.map(({ _id }) => _id)
       }
     } else {
+      if (location.search) {
+        const search = qs.parse(location.search)
+        if (search.type) {
+          typesOfWaste = search.type instanceof Array ? search.type : [search.type]
+        }
+      }
+
       this.setState({
         _id: null,
         name: '',
@@ -112,9 +123,15 @@ class FacilityEditor extends Component {
         municipality: '',
         state: '',
         zip: '',
-        typesOfWaste: [],
         openHours: generateEmptyCalendar()
       })
+    }
+
+    if (!TypesOfWasteListQuery.loading) {
+      const { typesOfWaste: validTypesOfWaste } = TypesOfWasteListQuery
+      const validTypesOfWasteIds = validTypesOfWaste.map(({ _id }) => _id)
+      const sanatizedTypesOfWaste = typesOfWaste.filter(type => validTypesOfWasteIds.indexOf(type) > -1)
+      this.setState({ typesOfWaste: sanatizedTypesOfWaste })
     }
   }
 

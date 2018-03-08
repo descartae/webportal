@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
 import { withStyles } from 'material-ui/styles'
+import { Link } from 'react-router-dom'
 
 import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
@@ -55,7 +56,7 @@ class Home extends Component {
                 <Grid item xs={6}>
                   <p>Adicione e gerencie dados sobre pontos de coleta de lixo no Brasil.</p>
                   <p>Os dados que você inseriu estão conectados aos aplicativos móveis. Isso ajudará as pessoas a encontrar pontos de coleta próximos e a descobrir informações sobre quais tipos de resíduos são aceitos.</p>
-                  <p>Vá ao <strong><a href='/facilities'>painel</a></strong> para visualizar, adicionar, editar ou remover dados em pontos de coleta.</p>
+                  <p>Vá ao <strong><Link to={`/facilities`}>painel</Link></strong> para visualizar, adicionar, editar ou remover dados em pontos de coleta.</p>
                   <p className={classes.emphasis}>Obrigado por manter atualizados os dados de seus pontos locais de coleta! <span role="img" aria-label="Feliz">😄</span></p>
 
                   <Typography variant='title' gutterBottom>
@@ -80,6 +81,8 @@ class Home extends Component {
                       (typesOfWaste.map(({ _id, name, icons: { androidMediumURL } }) => (
                         <Chip
                           key={_id}
+                          onClick={() => {}}
+                          component={Link} to={`/facilities/add?type=${_id}`}
                           className={classes.typesOfWaste}
                           avatar={<Avatar src={androidMediumURL} />}
                           label={name}
