@@ -20,6 +20,7 @@ import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
+import ConfirmDialog from '../ConfirmDialog'
 import ForRole from '../ForRole'
 import NotFound from '../NotFound'
 import Loading from '../Loading'
@@ -75,32 +76,39 @@ class FacilityDetails extends Component {
   })
 
   state = {
-    mapDialog: false,
-    timeTableDialog: false
+    mapOpened: false,
+    timeTableOpened: false,
+    deleteConfirmationOpened: false
   }
 
   handleMapDialogOpen = () => {
-    this.setState({ mapDialog: true })
+    this.setState({ mapOpened: true })
   };
 
   handleMapDialogClose = () => {
-    this.setState({ mapDialog: false })
+    this.setState({ mapOpened: false })
   };
 
   handleTimeTableOpen = () => {
-    this.setState({ timeTableDialog: true })
+    this.setState({ timeTableOpened: true })
   };
 
   handleTimeTableClose = () => {
-    this.setState({ timeTableDialog: false })
+    this.setState({ timeTableOpened: false })
   };
 
-  async onDelete (e) {
+  onDelete (e) {
     e.preventDefault()
+    this.setState({ deleteConfirmationOpened: true })
+  }
 
-    const { data } = await this.props.FacilityDisableMutation()
-    if (data.disableFacility && data.disableFacility.success) {
-      this.props.history.push('/facilities')
+  async onConfirmDelete (confirmed) {
+    this.setState({ deleteConfirmationOpened: false })
+    if (confirmed) {
+      const { data } = await this.props.FacilityDisableMutation()
+      if (data.disableFacility && data.disableFacility.success) {
+        this.props.history.push('/facilities')
+      }
     }
   }
 
@@ -142,6 +150,16 @@ class FacilityDetails extends Component {
 
     return (
       <div>
+        <ConfirmDialog
+          title='Deletar ponto de coleta'
+          opened={this.state.deleteConfirmationOpened}
+          onConfirm={() => this.onConfirmDelete(true)}
+          onCancel={() => this.onConfirmDelete(false)}
+        >
+          <p>Você tem certeza que deseja deletar esse ponto de coleta?</p>
+          <p>Essa ação não pode ser desfeita.</p>
+        </ConfirmDialog>
+
         <ForRole roles={['ADMIN', 'MAINTAINER']}>
           <Button variant='fab' mini color='primary' onClick={this.onDelete.bind(this)} className={classes.delete}>
             <DeleteIcon />
@@ -149,7 +167,6 @@ class FacilityDetails extends Component {
           <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/edit/${facility._id}`} className={classes.edit}>
             <EditIcon />
           </Button>
-
         </ForRole>
 
         <Typography variant='title' className={classes.facilityTitle}>
@@ -188,7 +205,7 @@ class FacilityDetails extends Component {
         </p>
 
         <Dialog
-          open={this.state.timeTableDialog}
+          open={this.state.timeTableOpened}
           onClose={this.handleTimeTableClose}
           classes={{ paper: classes.timeTableDialog }}>
           <DialogContent>
@@ -219,7 +236,7 @@ class FacilityDetails extends Component {
         </Dialog>
 
         <Dialog
-          open={this.state.mapDialog}
+          open={this.state.mapOpened}
           onClose={this.handleMapDialogClose}
           classes={{ paper: classes.mapDialog }}>
           <Map google={google} zoom={14}
