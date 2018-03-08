@@ -4,6 +4,7 @@ import { Route, Switch, Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 
 import {
+  FacilityHome,
   FacilityDetails,
   FacilityListing,
   FacilityEditor,
@@ -28,12 +29,11 @@ class Facility extends Component {
 
   static styles = theme => ({
     add: {
-      margin: 0,
-      top: 'auto',
-      right: 20,
-      bottom: 20,
-      left: 'auto',
-      position: 'fixed'
+      marginLeft: theme.spacing.unit,
+      float: 'right'
+    },
+    addIcon: {
+      marginRight: theme.spacing.unit
     },
     paper: {
       padding: 16
@@ -59,23 +59,27 @@ class Facility extends Component {
             <Grid item xs={12}>
               <Typography variant='headline'>
                 Pontos de coleta
+                <ForRole roles={['ADMIN', 'MAINTAINER']}>
+                  <Button variant='raised' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
+                    <AddIcon className={classes.addIcon} /> Criar novo
+                  </Button>
+                </ForRole>
               </Typography>
             </Grid>
             <Grid item xs={6}>
               <FacilityListing pageSize={5} />
             </Grid>
-            { !match.isExact ? (
-              <Grid item xs={6} >
-                <Paper className={classes.paper}>
-                  <Switch>
-                    <Route path={`${match.url}/add`} component={FacilityEditor} />
-                    <Route path={`${match.url}/edit/:facilityId`} component={FacilityEditor} />
-                    <Route path={`${match.url}/edit/:facilityId/feedbacks`} component={FacilityEditor} />
-                    <Route path={`${match.url}/view/:facilityId`} component={FacilityDetails} />
-                  </Switch>
-                </Paper>
-              </Grid>
-            ) : null }
+            <Grid item xs={6} >
+              <Paper className={classes.paper}>
+                <Switch>
+                  <Route path={`${match.url}/add`} component={FacilityEditor} />
+                  <Route path={`${match.url}/edit/:facilityId`} component={FacilityEditor} />
+                  <Route path={`${match.url}/edit/:facilityId/feedbacks`} component={FacilityEditor} />
+                  <Route path={`${match.url}/view/:facilityId`} component={FacilityDetails} />
+                  <Route path={`${match.url}/`} component={FacilityHome} />
+                </Switch>
+              </Paper>
+            </Grid>
           </Grid>
         </Paper>
 
@@ -109,11 +113,6 @@ class Facility extends Component {
             </Dialog>
           )} />
 
-        <ForRole roles={['ADMIN', 'MAINTAINER']}>
-          <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
-            <AddIcon />
-          </Button>
-        </ForRole>
       </div>
     )
   }
