@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
 import qs from 'query-string'
-import { withStyles } from 'material-ui/styles'
 
+import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
@@ -16,6 +16,7 @@ import { FormControl } from 'material-ui/Form'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 
+import ConfirmDialog from '../ConfirmDialog'
 import NotFound from '../NotFound'
 import Unauthorized from '../Unauthorized'
 import Loading from '../Loading'
@@ -69,7 +70,32 @@ class FacilityEditor extends Component {
     zip: '',
     typesOfWaste: [],
     openHours: [],
-    weekDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+    weekDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
+
+    dirty: false,
+    dirtyConfirmationOpened: false,
+    dirtyConsent: false,
+    dirtyNextLocation: null
+  }
+
+  componentDidMount () {
+    this.unblock = this.props.history.block((nextLocation) => {
+      if (this.state.dirty && !this.state.dirtyConsent) {
+        this.setState({ dirtyConfirmationOpened: true, dirtyNextLocation: nextLocation })
+        return false
+      }
+    })
+  }
+
+  handleDirtyRelease = (confirmation) => {
+    const nextLocation = this.state.dirtyNextLocation
+    this.setState({ dirtyConsent: confirmation, dirtyConfirmationOpened: false, dirtyNextLocation: null })
+    if (confirmation) {
+      this.unblock()
+      if (nextLocation) {
+        this.props.history.push(nextLocation.pathname)
+      }
+    }
   }
 
   componentWillReceiveProps ({ location, match, FacilityDetailsQuery, TypesOfWasteListQuery }) {
@@ -103,7 +129,11 @@ class FacilityEditor extends Component {
           municipality,
           state,
           zip,
-          openHours: totalOpenHours
+          openHours: totalOpenHours,
+          dirty: false,
+          dirtyConsent: false,
+          dirtyConfirmationOpened: false,
+          dirtyNextLocation: null
         })
 
         typesOfWaste = currentTypesOfWaste.map(({ _id }) => _id)
@@ -123,7 +153,11 @@ class FacilityEditor extends Component {
         municipality: '',
         state: '',
         zip: '',
-        openHours: generateEmptyCalendar()
+        openHours: generateEmptyCalendar(),
+        dirty: false,
+        dirtyConsent: false,
+        dirtyConfirmationOpened: false,
+        dirtyNextLocation: null
       })
     }
 
@@ -149,6 +183,7 @@ class FacilityEditor extends Component {
     } else {
       this.setState({ [path[0]]: event.target.value })
     }
+    this.setState({ dirty: true, dirtyConsent: false })
   }
 
   handleTypeOfWasteDelete = type => event => {
@@ -225,6 +260,15 @@ class FacilityEditor extends Component {
 
     return (
       <div>
+        <ConfirmDialog
+          title='Modificações não salvas'
+          opened={this.state.dirtyConfirmationOpened}
+          onConfirm={() => this.handleDirtyRelease(true)}
+          onCancel={() => this.handleDirtyRelease(false)}
+        >
+          <p>Você deseja sair da página sem salvar as suas modificações?</p>
+        </ConfirmDialog>
+
         <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
