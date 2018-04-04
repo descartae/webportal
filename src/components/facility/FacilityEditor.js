@@ -62,6 +62,7 @@ class FacilityEditor extends Component {
   state = {
     _id: null,
     name: '',
+    telephone: '',
     address: '',
     municipality: '',
     state: '',
@@ -77,6 +78,7 @@ class FacilityEditor extends Component {
         const {
           _id,
           name,
+          telephone,
           location: {
             address,
             municipality,
@@ -96,6 +98,7 @@ class FacilityEditor extends Component {
         this.setState({
           _id,
           name,
+          telephone,
           address,
           municipality,
           state,
@@ -144,13 +147,13 @@ class FacilityEditor extends Component {
   async onSubmit (e) {
     e.preventDefault()
 
-    const { _id, name, address, municipality, zip, state, typesOfWaste, openHours } = this.state
+    const { _id, name, telephone, address, municipality, zip, state, typesOfWaste, openHours } = this.state
 
     const cleanOpenHours = openHours.filter(
       o => o.startTime.match(/[0-2][0-9]:[0-5][0-9]/) && o.endTime.match(/[0-2][0-9]:[0-5][0-9]/)
     )
 
-    const variables = { name, address, municipality, zip, state, typesOfWaste, openHours: cleanOpenHours }
+    const variables = { name, telephone, address, municipality, zip, state, typesOfWaste, openHours: cleanOpenHours }
 
     if (this.state._id) {
       const { data } = await this.props.FacilityEditMutation({ variables: { id: _id, ...variables } })
@@ -220,7 +223,13 @@ class FacilityEditor extends Component {
             fullWidth
             className={classes.field}
           />
-
+          <TextField
+            label='Contato'
+            value={this.state.telephone}
+            onChange={this.handleChange('telephone')}
+            fullWidth
+            className={classes.field}
+          />
           <TextField
             label='Endereço'
             value={this.state.address}
@@ -371,6 +380,7 @@ export const FacilityDetailsQuery = gql`
 export const FacilityAddMutation = gql`
   mutation AddFacility (
     $name: String!,
+    $telephone: String!,
     $address: String!,
     $municipality: String!,
     $state: String!,
@@ -381,6 +391,7 @@ export const FacilityAddMutation = gql`
     addFacility(
       input: {
         name: $name,
+        telephone: $telephone,
         location: {
           address: $address,
           municipality: $municipality,
@@ -405,6 +416,7 @@ export const FacilityEditMutation = gql`
   mutation EditFacility (
     $id: ID!,
     $name: String!,
+    $telephone: String!,
     $address: String!,
     $municipality: String!,
     $state: String!,
@@ -417,6 +429,7 @@ export const FacilityEditMutation = gql`
         _id: $id,
         patch: {
           name: $name,
+          telephone: $telephone,
           location: {
             address: $address,
             municipality: $municipality,
