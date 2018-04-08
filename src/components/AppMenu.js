@@ -127,6 +127,26 @@ class AppMenu extends Component {
               Descartaê
             </Typography>
 
+            <Link to='/facilities' onClick={() => this.toggleDrawer()}>
+              <ListItem button>
+                <ListItemIcon>
+                  <StoreIcon />
+                </ListItemIcon>
+                <ListItemText primary='Pontos de Coleta' />
+              </ListItem>
+            </Link>
+
+            <ForRole roles={['ADMIN']}>
+              <Link to='/users' onClick={() => this.toggleDrawer()}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Usuários' />
+                </ListItem>
+              </Link>
+            </ForRole>
+            
             <IconButton className={classes.user} onClick={this.setMenu}>
               <AccountCircle />
             </IconButton>
