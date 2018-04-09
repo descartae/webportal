@@ -10,7 +10,7 @@ import Button from 'material-ui/Button'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 import Typography from 'material-ui/Typography'
 
-import logo from '../logo.png'
+import logo from '../descartae-logo-portrait.png'
 
 const signupEnabled = process.env.REACT_APP_SIGNUP === 'true'
 
@@ -120,8 +120,7 @@ class Auth extends Component {
     return (
       <div className={classes.root}>
         <Paper className={classes.container}>
-          <h1 className={classes.title}>Descartaê</h1>
-          <img src={logo} alt='logo' className={classes.logo} />
+          <img src={logo} alt='Descartaê logo' className={classes.logo} />
           <h3 className={classes.tagline}>
             Seu portal para gerenciar dados de pontos de coleta no Brasil
           </h3>
