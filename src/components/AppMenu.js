@@ -20,7 +20,7 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
 import PeopleIcon from 'material-ui-icons/People'
 
-import logo from './../logo.png'
+import logo from '../descartae-logo-white-2.png'
 
 import Auth from './Auth'
 import ForRole from './ForRole'
@@ -119,34 +119,37 @@ class AppMenu extends Component {
           onClose={this.setDrawer(false)}>
 
           <Toolbar>
-            <IconButton className={classes.menu} onClick={this.toggleDrawer}>
-              <MenuIcon />
-            </IconButton>
 
-            <Typography className={classes.title} variant='title'>
-              Descartaê
-            </Typography>
-
-            <Link to='/facilities' onClick={() => this.toggleDrawer()}>
-              <ListItem button>
-                <ListItemIcon>
-                  <StoreIcon />
-                </ListItemIcon>
-                <ListItemText primary='Pontos de Coleta' />
-              </ListItem>
+          <div className={classes.logo}>
+            <Link to='/'>
+              <img src={logo} className={classes.logoImg} alt='Descartaê' />
             </Link>
+          </div>
 
-            <ForRole roles={['ADMIN']}>
-              <Link to='/users' onClick={() => this.toggleDrawer()}>
+            <Typography className={classes.title} variant='subheading'>
+              <Link to='/facilities'>
                 <ListItem button>
                   <ListItemIcon>
-                    <PeopleIcon />
+                    <StoreIcon />
                   </ListItemIcon>
-                  <ListItemText primary='Usuários' />
+                  <ListItemText primary='Pontos de Coleta' />
                 </ListItem>
               </Link>
-            </ForRole>
-            
+            </Typography>
+
+            <Typography className={classes.title} variant='subheading'>
+              <ForRole roles={['ADMIN']}>
+                <Link to='/users' onClick={() => this.toggleDrawer()}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <PeopleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary='Usuários' />
+                  </ListItem>
+                </Link>
+              </ForRole>
+            </Typography>
+
             <IconButton className={classes.user} onClick={this.setMenu}>
               <AccountCircle />
             </IconButton>
@@ -171,37 +174,6 @@ class AppMenu extends Component {
           </Toolbar>
 
         </AppBar>
-
-        <Drawer
-          open={this.state.drawer}
-          onClose={this.setDrawer(false)}>
-
-          <div className={classes.logo}>
-            <Link to='/'>
-              <img src={logo} className={classes.logoImg} alt='Descartaê' />
-            </Link>
-          </div>
-
-          <Link to='/facilities' onClick={() => this.toggleDrawer()}>
-            <ListItem button>
-              <ListItemIcon>
-                <StoreIcon />
-              </ListItemIcon>
-              <ListItemText primary='Pontos de Coleta' />
-            </ListItem>
-          </Link>
-
-          <ForRole roles={['ADMIN']}>
-            <Link to='/users' onClick={() => this.toggleDrawer()}>
-              <ListItem button>
-                <ListItemIcon>
-                  <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary='Usuários' />
-              </ListItem>
-            </Link>
-          </ForRole>
-        </Drawer>
 
         { this.props.children }
 
