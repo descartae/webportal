@@ -6,7 +6,6 @@ import { gql, graphql, compose } from 'react-apollo'
 
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
-import Checkbox from 'material-ui/Checkbox'
 import Button from 'material-ui/Button'
 import Badge from 'material-ui/Badge'
 import IconButton from 'material-ui/IconButton'
@@ -26,9 +25,7 @@ class FacilityListing extends Component {
     next: { float: 'right' }
   })
 
-  state = {
-    checked: {}
-  }
+  state = { }
 
   handlePrev = () => {
     if (this.props.loading) return
@@ -39,17 +36,6 @@ class FacilityListing extends Component {
     if (this.props.loading) return
     this.props.FacilityListQuery.nextPage()
   };
-
-  selectFacility = (id) => (e) => {
-    e.preventDefault()
-
-    const state = this.state.checked
-    state[id] = !state[id]
-    if (!state[id]) {
-      delete state[id]
-    }
-    this.setState({ checked: state })
-  }
 
   render () {
     const {
@@ -72,12 +58,6 @@ class FacilityListing extends Component {
         <List component='nav'>
           { items.map(it => (
             <ListItem button component={Link} to={`/facilities/view/${it._id}`} key={it._id}>
-              <Checkbox
-                checked={!!this.state.checked[it._id]}
-                onClick={this.selectFacility(it._id)}
-                tabIndex={-1}
-                disableRipple
-              />
               <ListItemText primary={it.name} secondary={`
                 ${it.location.address}, ${it.location.municipality}
                 ${it.location.state} ${it.location.zip}
