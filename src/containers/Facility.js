@@ -56,16 +56,23 @@ class Facility extends Component {
       <div>
         <Paper className={classes.paper}>
           <Grid container>
-            <Grid item xs={12}>
+          <Grid item xs={12}>
               <Typography variant='headline'>
                 Pontos de coleta
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <FacilityListing pageSize={5} />
+            <Grid item xs={4}>
+              <FacilityListing pageSize={4} />
+            </Grid>
+            <Grid item xs={1}>
+              <ForRole roles={['ADMIN', 'MAINTAINER']}>
+                <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
+                  <AddIcon />
+                </Button>
+              </ForRole>
             </Grid>
             { !match.isExact ? (
-              <Grid item xs={6} >
+              <Grid item xs={4} >
                 <Paper className={classes.paper}>
                   <Switch>
                     <Route path={`${match.url}/add`} component={FacilityEditor} />
@@ -109,11 +116,6 @@ class Facility extends Component {
             </Dialog>
           )} />
 
-        <ForRole roles={['ADMIN', 'MAINTAINER']}>
-          <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
-            <AddIcon />
-          </Button>
-        </ForRole>
       </div>
     )
   }
