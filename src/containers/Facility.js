@@ -56,7 +56,7 @@ class Facility extends Component {
       <div>
         <Paper className={classes.paper}>
           <Grid container>
-          <Grid item xs={12}>
+            <Grid item xs={10}>
               <Typography variant='headline'>
                 Pontos de coleta
               </Typography>
@@ -65,11 +65,6 @@ class Facility extends Component {
               <FacilityListing pageSize={4} />
             </Grid>
             <Grid item xs={1}>
-              <ForRole roles={['ADMIN', 'MAINTAINER']}>
-                <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
-                  <AddIcon />
-                </Button>
-              </ForRole>
             </Grid>
             { !match.isExact ? (
               <Grid item xs={4} >
@@ -83,6 +78,14 @@ class Facility extends Component {
                 </Paper>
               </Grid>
             ) : null }
+            <Grid item xs={2}>
+              <ForRole roles={['ADMIN', 'MAINTAINER']}>
+                <Button variant='fab' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
+                  <AddIcon />
+                </Button>
+              </ForRole>
+            </Grid>
+
           </Grid>
         </Paper>
 
