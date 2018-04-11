@@ -7,7 +7,6 @@ import jwt from 'jsonwebtoken'
 import { withRouter } from 'react-router'
 import { withStyles } from 'material-ui/styles'
 
-import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
@@ -20,7 +19,7 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
 import PeopleIcon from 'material-ui-icons/People'
 
-import logo from '../descartae-logo-white-2.png'
+import logo from '../descartae-logo-landscape-white.png'
 
 import Auth from './Auth'
 import ForRole from './ForRole'
@@ -43,7 +42,10 @@ class AppMenu extends Component {
       textAlign: 'center'
     },
     logoImg: {
-      width: 80
+      width: 150
+    },
+    menuButton: {
+      margin: theme.spacing.unit, 
     }
   })
 
@@ -65,7 +67,6 @@ class AppMenu extends Component {
     const hasToken = !!token
 
     this.state = {
-      drawer: false,
       menu: null,
       logged: hasToken,
       data: hasToken ? jwt.decode(token) : null
@@ -84,14 +85,16 @@ class AppMenu extends Component {
     this.setState({ logged: false })
   }
 
-  toggleDrawer = (event) => {
-    this.setState({ drawer: !this.state.drawer })
-  }
+  handleToggle = () => {
+    this.setState({ open: !this.state.open });
+  };
 
-  setDrawer = (drawer) => () => {
-    this.setState({
-      drawer
-    })
+  handleClose = event => {
+    if (this.target1.contains(event.target) || this.target2.contains(event.target)) {
+      return;
+    }
+
+    this.setState({ open: false });
   };
 
   setMenu = (event) => {
@@ -116,9 +119,13 @@ class AppMenu extends Component {
         <AppBar
           title='Descartaê'
           position='static'
-          onClose={this.setDrawer(false)}>
+        >
 
           <Toolbar>
+
+          <IconButton size="large" className={classes.buttonMenu, classes.user} onClick={this.setMenu}>
+            <MenuIcon/>
+          </IconButton>
 
           <div className={classes.logo}>
             <Link to='/'>
@@ -126,53 +133,56 @@ class AppMenu extends Component {
             </Link>
           </div>
 
-            <Typography className={classes.title} variant='subheading'>
-              <Link to='/facilities'>
-                <ListItem button>
-                  <ListItemIcon>
-                    <StoreIcon />
-                  </ListItemIcon>
-                  <ListItemText primary='Pontos de Coleta' />
-                </ListItem>
-              </Link>
-            </Typography>
-
-            <Typography className={classes.title} variant='subheading'>
-              <ForRole roles={['ADMIN']}>
-                <Link to='/users' onClick={() => this.toggleDrawer()}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <PeopleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Usuários' />
-                  </ListItem>
-                </Link>
-              </ForRole>
-            </Typography>
-
-            <IconButton className={classes.user} onClick={this.setMenu}>
-              <AccountCircle />
-            </IconButton>
-
             <Menu
               anchorEl={menu}
               anchorOrigin={{
                 vertical: 'top',
-                horizontal: 'right'
+                horizontal: 'left'
               }}
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right'
+                horizontal: 'left'
               }}
               open={!!menu}
               onClose={this.closeMenu}>
-
-              <MenuItem onClick={this.logout}>Logout</MenuItem>
-
+               <MenuItem>
+                <Typography className={classes.title} variant='subheading' className={classes.flex}>
+                  <Link to='/facilities'>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <StoreIcon />
+                      </ListItemIcon>
+                      <ListItemText primary='Pontos de Coleta' />
+                    </ListItem>
+                  </Link>
+                </Typography>
+               </MenuItem>
+               <MenuItem>
+                <Typography className={classes.title} variant='subheading' className={classes.flex}>
+                  <ForRole roles={['ADMIN']}>
+                    <Link to='/users'>
+                      <ListItem button>
+                        <ListItemIcon>
+                          <PeopleIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Usuários' />
+                      </ListItem>
+                    </Link>
+                  </ForRole>
+                </Typography>
+               </MenuItem>
+               <MenuItem onClick={this.logout}>
+                <Typography className={classes.title} variant='subheading' className={classes.flex}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <AccountCircle />
+                    </ListItemIcon>
+                    <ListItemText primary='Logout' />
+                  </ListItem>
+                </Typography>
+               </MenuItem>
             </Menu>
-
           </Toolbar>
-
         </AppBar>
 
         { this.props.children }
