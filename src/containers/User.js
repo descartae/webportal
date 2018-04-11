@@ -58,11 +58,11 @@ class User extends Component {
                 Usuários
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <UserListing pageSize={5} />
             </Grid>
             { !match.isExact ? (
-              <Grid item xs={6} >
+              <Grid item xs={12} >
                 <Paper className={classes.paper}>
                   <Switch>
                     <Route path={`${match.url}/add`} component={UserEditor} />
