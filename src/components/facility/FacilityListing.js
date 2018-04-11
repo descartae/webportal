@@ -25,9 +25,7 @@ class FacilityListing extends Component {
     next: { float: 'right' }
   })
 
-  state = {
-    checked: {}
-  }
+  state = { }
 
   handlePrev = () => {
     if (this.props.loading) return
@@ -38,17 +36,6 @@ class FacilityListing extends Component {
     if (this.props.loading) return
     this.props.FacilityListQuery.nextPage()
   };
-
-  selectFacility = (id) => (e) => {
-    e.preventDefault()
-
-    const state = this.state.checked
-    state[id] = !state[id]
-    if (!state[id]) {
-      delete state[id]
-    }
-    this.setState({ checked: state })
-  }
 
   render () {
     const {

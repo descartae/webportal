@@ -52,7 +52,8 @@ class Auth extends Component {
     },
     tagline: {
       color: '#509D30',
-      textAlign: 'center'
+      textAlign: 'center',
+      marginBottom: 20
     },
     submit: {
       margin: 10
@@ -122,11 +123,10 @@ class Auth extends Component {
         <Paper className={classes.container}>
           <img src={logo} alt='Descartaê logo' className={classes.logo} />
           <h3 className={classes.tagline}>
-            Seu portal para gerenciar dados de pontos de coleta no Brasil
+            Seu portal para gerenciar dados de pontos de coleta do Brasil
           </h3>
-          <br/>
-          <form onSubmit={this.onLogin.bind(this)}>
 
+          <form onSubmit={this.onLogin.bind(this)}>
             <TextField
               label='E-mail'
               type='email'
@@ -134,7 +134,6 @@ class Auth extends Component {
               value={this.state.email}
               onChange={this.handleChange('email')}
             />
-            <br/>
             <TextField
               label='Senha'
               type='password'
@@ -153,66 +152,66 @@ class Auth extends Component {
 
           { signupEnabled ? (
 
-          <div>
+            <div>
 
-            <Button variant='raised' color='primary' className={classes.submit} onClick={this.onCreateUser.bind(this)}>
+              <Button variant='raised' color='primary' className={classes.submit} onClick={this.onCreateUser.bind(this)}>
               Criar Conta
-            </Button>
+              </Button>
 
-            <Dialog
-              open={this.state.dialogOpen}
-              onClose={this.handleDialogClose}>
-              <DialogContent>
+              <Dialog
+                open={this.state.dialogOpen}
+                onClose={this.handleDialogClose}>
+                <DialogContent>
 
-                <Typography variant='title'>
+                  <Typography variant='title'>
                   Criar nova conta
-                </Typography>
+                  </Typography>
 
-                <p>Preencha os campos abaixo para criar uma nova conta.</p>
+                  <p>Preencha os campos abaixo para criar uma nova conta.</p>
 
-                <form onSubmit={this.onSignUp.bind(this)}>
-                  <TextField
-                    label='Nome'
-                    value={this.state.name}
-                    fullWidth
-                    margin='normal'
-                    onChange={this.handleChange('name')}
-                    className={classes.field}
-                  />
-                  <TextField
-                    label='E-mail'
-                    type='email'
-                    fullWidth
-                    margin='normal'
-                    value={this.state.email}
-                    onChange={this.handleChange('email')}
-                  />
+                  <form onSubmit={this.onSignUp.bind(this)}>
+                    <TextField
+                      label='Nome'
+                      value={this.state.name}
+                      fullWidth
+                      margin='normal'
+                      onChange={this.handleChange('name')}
+                      className={classes.field}
+                    />
+                    <TextField
+                      label='E-mail'
+                      type='email'
+                      fullWidth
+                      margin='normal'
+                      value={this.state.email}
+                      onChange={this.handleChange('email')}
+                    />
 
-                  <TextField
-                    label='Senha'
-                    type='password'
-                    fullWidth
-                    margin='normal'
-                    value={this.state.password}
-                    onChange={this.handleChange('password')}
-                  />
+                    <TextField
+                      label='Senha'
+                      type='password'
+                      fullWidth
+                      margin='normal'
+                      value={this.state.password}
+                      onChange={this.handleChange('password')}
+                    />
 
-                  <div className={classes.centerer}>
-                    <Button variant='raised' color='primary' type='submit' className={classes.submit}>
+                    <div className={classes.centerer}>
+                      <Button variant='raised' color='primary' type='submit' className={classes.submit}>
                       Criar
-                    </Button>
-                  </div>
-                </form>
+                      </Button>
+                    </div>
+                  </form>
 
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.handleDialogClose} color='primary' autoFocus>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleDialogClose} color='primary' autoFocus>
                   Fechar
-                </Button>
-              </DialogActions>
-            </Dialog>
+                  </Button>
+                </DialogActions>
+              </Dialog>
 
-          </div>
+            </div>
 
           ) : null }
 

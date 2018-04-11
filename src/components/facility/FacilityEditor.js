@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
-import { withStyles } from 'material-ui/styles'
+import qs from 'query-string'
 
+import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
@@ -15,6 +16,7 @@ import { FormControl } from 'material-ui/Form'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 
+import ConfirmDialog from '../ConfirmDialog'
 import NotFound from '../NotFound'
 import Unauthorized from '../Unauthorized'
 import Loading from '../Loading'
@@ -69,10 +71,37 @@ class FacilityEditor extends Component {
     zip: '',
     typesOfWaste: [],
     openHours: [],
-    weekDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+    weekDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
+
+    dirty: false,
+    dirtyConfirmationOpened: false,
+    dirtyConsent: false,
+    dirtyNextLocation: null
   }
 
-  componentWillReceiveProps ({ match, FacilityDetailsQuery, TypesOfWasteListQuery }) {
+  componentDidMount () {
+    this.unblock = this.props.history.block((nextLocation) => {
+      if (this.state.dirty && !this.state.dirtyConsent) {
+        this.setState({ dirtyConfirmationOpened: true, dirtyNextLocation: nextLocation })
+        return false
+      }
+    })
+  }
+
+  handleDirtyRelease = (confirmation) => {
+    const nextLocation = this.state.dirtyNextLocation
+    this.setState({ dirtyConsent: confirmation, dirtyConfirmationOpened: false, dirtyNextLocation: null })
+    if (confirmation) {
+      this.unblock()
+      if (nextLocation) {
+        this.props.history.push(nextLocation.pathname)
+      }
+    }
+  }
+
+  componentWillReceiveProps ({ location, match, FacilityDetailsQuery, TypesOfWasteListQuery }) {
+    let typesOfWaste = []
+
     if (match.params.facilityId) {
       if (FacilityDetailsQuery && FacilityDetailsQuery.facility) {
         const {
@@ -85,7 +114,7 @@ class FacilityEditor extends Component {
             state,
             zip
           },
-          typesOfWaste,
+          typesOfWaste: currentTypesOfWaste,
           openHours
         } = FacilityDetailsQuery.facility
 
@@ -103,11 +132,23 @@ class FacilityEditor extends Component {
           municipality,
           state,
           zip,
-          typesOfWaste: typesOfWaste.map(({ _id }) => _id),
-          openHours: totalOpenHours
+          openHours: totalOpenHours,
+          dirty: false,
+          dirtyConsent: false,
+          dirtyConfirmationOpened: false,
+          dirtyNextLocation: null
         })
+
+        typesOfWaste = currentTypesOfWaste.map(({ _id }) => _id)
       }
     } else {
+      if (location.search) {
+        const search = qs.parse(location.search)
+        if (search.type) {
+          typesOfWaste = search.type instanceof Array ? search.type : [search.type]
+        }
+      }
+
       this.setState({
         _id: null,
         name: '',
@@ -115,9 +156,19 @@ class FacilityEditor extends Component {
         municipality: '',
         state: '',
         zip: '',
-        typesOfWaste: [],
-        openHours: generateEmptyCalendar()
+        openHours: generateEmptyCalendar(),
+        dirty: false,
+        dirtyConsent: false,
+        dirtyConfirmationOpened: false,
+        dirtyNextLocation: null
       })
+    }
+
+    if (!TypesOfWasteListQuery.loading) {
+      const { typesOfWaste: validTypesOfWaste } = TypesOfWasteListQuery
+      const validTypesOfWasteIds = validTypesOfWaste.map(({ _id }) => _id)
+      const sanatizedTypesOfWaste = typesOfWaste.filter(type => validTypesOfWasteIds.indexOf(type) > -1)
+      this.setState({ typesOfWaste: sanatizedTypesOfWaste })
     }
   }
 
@@ -135,6 +186,7 @@ class FacilityEditor extends Component {
     } else {
       this.setState({ [path[0]]: event.target.value })
     }
+    this.setState({ dirty: true, dirtyConsent: false })
   }
 
   handleTypeOfWasteDelete = type => event => {
@@ -211,6 +263,15 @@ class FacilityEditor extends Component {
 
     return (
       <div>
+        <ConfirmDialog
+          title='Modificações não salvas'
+          opened={this.state.dirtyConfirmationOpened}
+          onConfirm={() => this.handleDirtyRelease(true)}
+          onCancel={() => this.handleDirtyRelease(false)}
+        >
+          <p>Você deseja sair da página sem salvar as suas modificações?</p>
+        </ConfirmDialog>
+
         <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>

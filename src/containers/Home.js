@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
 import { withStyles } from 'material-ui/styles'
+import { Link } from 'react-router-dom'
 
 import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
@@ -15,7 +16,7 @@ import Loading from '../components/Loading'
 class Home extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
@@ -132,5 +133,5 @@ export const TypesOfWasteListQuery = gql`
 
 export default compose(
   withStyles(Home.styles, { withTheme: true }),
-  graphql(TypesOfWasteListQuery, { name: 'TypesOfWasteListQuery' }),
+  graphql(TypesOfWasteListQuery, { name: 'TypesOfWasteListQuery' })
 )(Home)
