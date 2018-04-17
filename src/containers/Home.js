@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
 import { withStyles } from 'material-ui/styles'
-import { Link } from 'react-router-dom'
 
 import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
@@ -10,7 +9,6 @@ import Chip from 'material-ui/Chip'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
-import Button from 'material-ui/Button'
 import Loading from '../components/Loading'
 
 class Home extends Component {
