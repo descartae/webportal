@@ -175,7 +175,7 @@ class FacilityDetails extends Component {
 
         <p>Endereço: {facility.location.address}, {facility.location.municipality}, {facility.location.state} {facility.location.zip}</p>
         <p>Contato: {facility.telephone}</p>
-
+        <p>Local na rede Internet: {facility.website}</p>
         <Paper className={classes.typesOfWaste} elevation={0}>
           { facility.typesOfWaste.map(it => (
             <Chip
