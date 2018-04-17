@@ -97,6 +97,7 @@ export const FacilityFieldsFragment = gql`
     _id
     name
     telephone
+    website
     location {
       address
       municipality
