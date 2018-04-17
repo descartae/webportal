@@ -123,7 +123,7 @@ class AppMenu extends Component {
 
           <Toolbar>
 
-          <IconButton size="large" className={classes.buttonMenu, classes.user} onClick={this.setMenu}>
+          <IconButton size="large" className={classes.user} onClick={this.setMenu}>
             <MenuIcon/>
           </IconButton>
 
@@ -146,7 +146,7 @@ class AppMenu extends Component {
               open={!!menu}
               onClose={this.closeMenu}>
                <MenuItem>
-                <Typography className={classes.title} variant='subheading' className={classes.flex}>
+                <Typography variant='subheading' className={classes.flex}>
                   <Link to='/facilities'>
                     <ListItem button>
                       <ListItemIcon>
@@ -158,7 +158,7 @@ class AppMenu extends Component {
                 </Typography>
                </MenuItem>
                <MenuItem>
-                <Typography className={classes.title} variant='subheading' className={classes.flex}>
+                <Typography variant='subheading' className={classes.flex}>
                   <ForRole roles={['ADMIN']}>
                     <Link to='/users'>
                       <ListItem button>
@@ -172,7 +172,7 @@ class AppMenu extends Component {
                 </Typography>
                </MenuItem>
                <MenuItem onClick={this.logout}>
-                <Typography className={classes.title} variant='subheading' className={classes.flex}>
+                <Typography variant='subheading' className={classes.flex}>
                   <ListItem button>
                     <ListItemIcon>
                       <AccountCircle />
