@@ -2,10 +2,11 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
 import qs from 'query-string'
-
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
+import ContentClear from 'material-ui/svg-icons/content/clear'
 import Typography from 'material-ui/Typography'
 import Select from 'material-ui/Select'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
@@ -51,6 +52,10 @@ class FacilityEditor extends Component {
   static styles = theme => ({
     paper: {
       padding: 16
+    },
+    cancel: {
+      float: 'right',
+      marginLeft: 10 
     },
     typesOfWaste: {
       display: 'flex',
@@ -274,6 +279,10 @@ class FacilityEditor extends Component {
           <p>Você deseja sair da página sem salvar as suas modificações?</p>
         </ConfirmDialog>
 
+        <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/`} className={classes.cancel}>
+          <ContentClear/>
+        </Button>
+
         <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
@@ -420,6 +429,7 @@ class FacilityEditor extends Component {
           <Button variant='raised' color='primary' type='submit' className={classes.field}>
             { isNew ? 'Criar' : 'Editar' }
           </Button>
+
         </form>
       </div>
     )
