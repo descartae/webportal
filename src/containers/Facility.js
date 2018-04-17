@@ -24,19 +24,29 @@ import Dialog, { DialogContent } from 'material-ui/Dialog'
 class Facility extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired
   }
 
   static styles = theme => ({
+    root: {
+      overflow: 'hidden',
+      padding: `0 ${theme.spacing.unit * 3}px`,
+    },
+    wrapper: {
+      maxWidth: 1200,
+      margin: 'auto'
+    },
+    paper: {
+      margin: theme.spacing.unit,
+      padding: theme.spacing.unit * 2,
+    },
     add: {
       marginLeft: theme.spacing.unit,
       float: 'right'
     },
     addIcon: {
       marginRight: theme.spacing.unit
-    },
-    paper: {
-      padding: 16
     },
     dialog: {
       width: 500
@@ -53,37 +63,35 @@ class Facility extends Component {
     const { match, classes } = this.props
 
     return (
-      <div>
-        <Paper className={classes.paper}>
-          <Grid container>
-            <Grid item xs={10}>
-              <Typography variant='headline'>
-                Pontos de coleta
-                <ForRole roles={['ADMIN', 'MAINTAINER']}>
-                  <Button variant='raised' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
-                    <AddIcon className={classes.addIcon} /> Criar novo
-                  </Button>
-                </ForRole>
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <FacilityListing pageSize={4} />
-            </Grid>
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={4} >
-              <Paper className={classes.paper}>
-                <Switch>
-                  <Route path={`${match.url}/add`} component={FacilityEditor} />
-                  <Route path={`${match.url}/edit/:facilityId`} component={FacilityEditor} />
-                  <Route path={`${match.url}/edit/:facilityId/feedbacks`} component={FacilityEditor} />
-                  <Route path={`${match.url}/view/:facilityId`} component={FacilityDetails} />
-                  <Route path={`${match.url}/`} component={FacilityHome} />
-                </Switch>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Paper>
+      <div className={classes.root}>
+        <div className={classes.wrapper}>
+          <Paper className={classes.paper}>
+            <Grid container wrap="nowrap" spacing={16}>
+              <Grid item xs size={8}>
+                <Typography variant='headline'>
+                  Pontos de coleta
+                  <ForRole roles={['ADMIN', 'MAINTAINER']}>
+                    <Button variant='raised' color='secondary' component={Link} to={`/facilities/add`} className={classes.add}>
+                      <AddIcon className={classes.addIcon} /> Criar novo
+                    </Button>
+                  </ForRole>
+                </Typography>
+                <FacilityListing pageSize={6} />
+              </Grid>
+              <Grid item xs size={8}>
+                <Paper className={classes.paper}>
+                  <Switch>
+                    <Route path={`${match.url}/add`} component={FacilityEditor} />
+                    <Route path={`${match.url}/edit/:facilityId`} component={FacilityEditor} />
+                    <Route path={`${match.url}/edit/:facilityId/feedbacks`} component={FacilityEditor} />
+                    <Route path={`${match.url}/view/:facilityId`} component={FacilityDetails} />
+                    <Route path={`${match.url}/`} component={FacilityHome} />
+                  </Switch>
+                </Paper>
+             </Grid>
+           </Grid>
+         </Paper>
+       </div>
 
         <Route path={`${match.url}/view/:facilityId/feedbacks`} render={
           (routeProps) => (
