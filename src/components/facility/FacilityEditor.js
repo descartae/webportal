@@ -15,7 +15,7 @@ import { MenuItem } from 'material-ui/Menu'
 import { ListItemIcon, ListItemText } from 'material-ui/List'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
-import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import ConfirmDialog from '../ConfirmDialog'
 import NotFound from '../NotFound'
 import Unauthorized from '../Unauthorized'
