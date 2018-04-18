@@ -13,10 +13,9 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import Input, { InputLabel } from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
 import { ListItemIcon, ListItemText } from 'material-ui/List'
-import { FormControl } from 'material-ui/Form'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
-
+import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
 import ConfirmDialog from '../ConfirmDialog'
 import NotFound from '../NotFound'
 import Unauthorized from '../Unauthorized'
@@ -88,7 +87,7 @@ class FacilityEditor extends Component {
   componentDidMount () {
     this.unblock = this.props.history.block((nextLocation) => {
       if (this.state.dirty && !this.state.dirtyConsent) {
-        this.setState({ dirtyConfirmationOpened: true, dirtyNextLocation: nextLocation })
+        this.setState({ dirtyConfirmationOpened: "true", dirtyNextLocation: nextLocation })
         return false
       }
     })
@@ -193,7 +192,7 @@ class FacilityEditor extends Component {
     } else {
       this.setState({ [path[0]]: event.target.value })
     }
-    this.setState({ dirty: true, dirtyConsent: false })
+    this.setState({ dirty: "true", dirtyConsent: false })
   }
 
   handleTypeOfWasteDelete = type => event => {
@@ -273,7 +272,7 @@ class FacilityEditor extends Component {
         <ConfirmDialog
           title='Modificações não salvas'
           opened={this.state.dirtyConfirmationOpened}
-          onConfirm={() => this.handleDirtyRelease(true)}
+          onConfirm={() => this.handleDirtyRelease("true")}
           onCancel={() => this.handleDirtyRelease(false)}
         >
           <p>Você deseja sair da página sem salvar as suas modificações?</p>
@@ -286,151 +285,162 @@ class FacilityEditor extends Component {
         <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
+        
+        <FormControl component="fieldset">
+          <form onSubmit={this.onSubmit.bind(this)}>
+            <TextField
+              label='Nome'
+              value={this.state.name}
+              onChange={this.handleChange('name')}
+              fullWidth
+              required="true"
+              className={classes.field}
+            />
+            <TextField
+              label='Contato'
+              value={this.state.telephone}
+              onChange={this.handleChange('telephone')}
+              fullWidth
+              required="true"
+              className={classes.field}
+            />
+            <TextField
+              label='Local na rede Internet'
+              value={this.state.website}
+              onChange={this.handleChange('website')}
+              fullWidth
+              required="true"
+              className={classes.field}
+            />
+            <TextField
+              label='Endereço'
+              value={this.state.address}
+              onChange={this.handleChange('address')}
+              fullWidth
+              required="true"
+              className={classes.field}
+            />
 
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <TextField
-            label='Nome'
-            value={this.state.name}
-            onChange={this.handleChange('name')}
-            fullWidth
-            className={classes.field}
-          />
-          <TextField
-            label='Contato'
-            value={this.state.telephone}
-            onChange={this.handleChange('telephone')}
-            fullWidth
-            className={classes.field}
-          />
-          <TextField
-            label='Local na rede Internet'
-            value={this.state.website}
-            onChange={this.handleChange('website')}
-            fullWidth
-            className={classes.field}
-          />
-          <TextField
-            label='Endereço'
-            value={this.state.address}
-            onChange={this.handleChange('address')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='Cidade'
+              value={this.state.municipality}
+              onChange={this.handleChange('municipality')}
+              fullWidth
+              required="true"
+              className={classes.field}
+            />
 
-          <TextField
-            label='Cidade'
-            value={this.state.municipality}
-            onChange={this.handleChange('municipality')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='Estado'
+              value={this.state.state}
+              onChange={this.handleChange('state')}
+              fullWidth
+              required="true"
+              className={classes.field}
+            />
 
-          <TextField
-            label='Estado'
-            value={this.state.state}
-            onChange={this.handleChange('state')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='CEP'
+              value={this.state.zip}
+              onChange={this.handleChange('zip')}
+              fullWidth
+              required="true"
+              className={classes.field}
+            />
 
-          <TextField
-            label='CEP'
-            value={this.state.zip}
-            onChange={this.handleChange('zip')}
-            fullWidth
-            className={classes.field}
-          />
+            <FormControl fullWidth className={classes.field}>
+              <InputLabel required='true'>Tipos de Lixo</InputLabel>
+              <Select
+                multiple
+                value={this.state.typesOfWaste}
+                onChange={this.handleChange('typesOfWaste')}
+                input={<Input />}
+                renderValue={selected => (
+                  <div className={classes.typesOfWaste} style={{
+                    display: 'flex',
+                    flexWrap: 'wrap'
+                  }}>
+                    {selected.map(value =>
+                      <Chip
+                        key={value}
+                        avatar={<Avatar src={typesOfWasteMap[value].icons.androidMediumURL} />}
+                        label={typesOfWasteMap[value].name}
+                        style={{ margin: 5 }}
+                        onDelete={this.handleTypeOfWasteDelete(value)}
+                      />
+                    )}
+                  </div>
+                )}
+              >
+                {typesOfWaste.map(({ _id, name }) => (
+                  <MenuItem
+                    key={name}
+                    value={_id}>
+                    <ListItemIcon>
+                      <Avatar src={typesOfWasteMap[_id].icons.androidMediumURL} />
+                    </ListItemIcon>
+                    <ListItemText primary={name} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-          <FormControl fullWidth className={classes.field}>
-            <InputLabel>Tipos de Lixo</InputLabel>
-            <Select
-              multiple
-              value={this.state.typesOfWaste}
-              onChange={this.handleChange('typesOfWaste')}
-              input={<Input />}
-              renderValue={selected => (
-                <div className={classes.typesOfWaste} style={{
-                  display: 'flex',
-                  flexWrap: 'wrap'
-                }}>
-                  {selected.map(value =>
-                    <Chip
-                      key={value}
-                      avatar={<Avatar src={typesOfWasteMap[value].icons.androidMediumURL} />}
-                      label={typesOfWasteMap[value].name}
-                      style={{ margin: 5 }}
-                      onDelete={this.handleTypeOfWasteDelete(value)}
-                    />
-                  )}
-                </div>
-              )}
-            >
-              {typesOfWaste.map(({ _id, name }) => (
-                <MenuItem
-                  key={name}
-                  value={_id}>
-                  <ListItemIcon>
-                    <Avatar src={typesOfWasteMap[_id].icons.androidMediumURL} />
-                  </ListItemIcon>
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            <Paper className={classes.field}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Dia da semana</TableCell>
+                    <TableCell colSpan={2}>Horário</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {this.state.openHours.map((it, i) => {
+                    return (
+                      <TableRow key={it.dayOfWeek}>
+                        <TableCell variant='head'>{ptWeekDays[it.dayOfWeek]}</TableCell>
+                        <TableCell>
+                          <TextField
+                            label='Abertura'
+                            required='true'
+                            type='time'
+                            onChange={this.handleChange(`openHours.${i}.startTime`)}
+                            defaultValue={it.startTime}
+                            InputLabelProps={{
+                              shrink: "true"
+                            }}
+                            inputProps={{
+                              step: 10 * 60
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <TextField
+                            label='Fechamento'
+                            required='true'
+                            type='time'
+                            onChange={this.handleChange(`openHours.${i}.endTime`)}
+                            defaultValue={it.endTime}
+                            InputLabelProps={{
+                              shrink: "true"
+                            }}
+                            inputProps={{
+                              step: 10 * 60
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </Paper>
 
-          <Paper className={classes.field}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Dia da semana</TableCell>
-                  <TableCell colSpan={2}>Horário</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.state.openHours.map((it, i) => {
-                  return (
-                    <TableRow key={it.dayOfWeek}>
-                      <TableCell variant='head'>{ptWeekDays[it.dayOfWeek]}</TableCell>
-                      <TableCell>
-                        <TextField
-                          label='Abertura'
-                          type='time'
-                          onChange={this.handleChange(`openHours.${i}.startTime`)}
-                          defaultValue={it.startTime}
-                          InputLabelProps={{
-                            shrink: true
-                          }}
-                          inputProps={{
-                            step: 10 * 60
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <TextField
-                          label='Fechamento'
-                          type='time'
-                          onChange={this.handleChange(`openHours.${i}.endTime`)}
-                          defaultValue={it.endTime}
-                          InputLabelProps={{
-                            shrink: true
-                          }}
-                          inputProps={{
-                            step: 10 * 60
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
+            <Button variant='raised' color='primary' type='submit' className={classes.field}>
+              { isNew ? 'Criar' : 'Editar' }
+            </Button>
 
-          <Button variant='raised' color='primary' type='submit' className={classes.field}>
-            { isNew ? 'Criar' : 'Editar' }
-          </Button>
-
-        </form>
+          </form>
+        </FormControl>
       </div>
     )
   }
@@ -548,7 +558,7 @@ export const TypesOfWasteListQuery = gql`
 `
 
 export default compose(
-  withStyles(FacilityEditor.styles, { withTheme: true }),
+  withStyles(FacilityEditor.styles, { withTheme: "true" }),
   graphql(TypesOfWasteListQuery, { name: 'TypesOfWasteListQuery' }),
   graphql(FacilityDetailsQuery, {
     name: 'FacilityDetailsQuery',
