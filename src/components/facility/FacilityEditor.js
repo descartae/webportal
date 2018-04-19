@@ -305,7 +305,7 @@ class FacilityEditor extends Component {
               className={classes.field}
             />
             <TextField
-              label='Local na rede Internet'
+              label='Website'
               value={this.state.website}
               onChange={this.handleChange('website')}
               fullWidth
