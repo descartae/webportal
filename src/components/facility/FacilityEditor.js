@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
-import ContentClear from 'material-ui/svg-icons/content/clear'
+import ContentClear from 'material-ui-icons/Clear'
 import Typography from 'material-ui/Typography'
 import Select from 'material-ui/Select'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
@@ -54,7 +54,7 @@ class FacilityEditor extends Component {
     },
     cancel: {
       float: 'right',
-      marginLeft: 10 
+      marginLeft: 10
     },
     typesOfWaste: {
       display: 'flex',
@@ -134,6 +134,7 @@ class FacilityEditor extends Component {
           _id,
           name,
           telephone,
+          website,
           address,
           municipality,
           state,
@@ -158,6 +159,8 @@ class FacilityEditor extends Component {
       this.setState({
         _id: null,
         name: '',
+        telephone: '',
+        website: '',
         address: '',
         municipality: '',
         state: '',
@@ -285,7 +288,7 @@ class FacilityEditor extends Component {
         <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
-        
+
         <FormControl component="fieldset">
           <form onSubmit={this.onSubmit.bind(this)}>
             <TextField
