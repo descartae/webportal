@@ -33,7 +33,7 @@ class User extends Component {
       padding: `0 ${theme.spacing.unit * 3}px`,
     },
     wrapper: {
-      maxWidth: 1000,
+      maxWidth: 1200,
       margin: 'auto'
     },
     paper: {
@@ -82,10 +82,10 @@ class User extends Component {
                     </Paper>
                   </Grid>
                 ) : null }
-            </Grid> 
+            </Grid>
           </Paper>
 
-        </div> 
+        </div>
       </div>
     )
   }
