@@ -9,13 +9,12 @@ import { withStyles } from 'material-ui/styles'
 
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 import AccountCircle from 'material-ui-icons/AccountCircle'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import { ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
 import PeopleIcon from 'material-ui-icons/People'
 
@@ -45,7 +44,7 @@ class AppMenu extends Component {
       width: 150
     },
     menuButton: {
-      margin: theme.spacing.unit, 
+      margin: theme.spacing.unit,
     }
   })
 
@@ -145,42 +144,27 @@ class AppMenu extends Component {
               }}
               open={!!menu}
               onClose={this.closeMenu}>
-               <MenuItem>
-                <Typography variant='subheading' className={classes.flex}>
-                  <Link to='/facilities'>
-                    <ListItem button>
-                      <ListItemIcon>
-                        <StoreIcon />
-                      </ListItemIcon>
-                      <ListItemText primary='Pontos de Coleta' />
-                    </ListItem>
-                  </Link>
-                </Typography>
-               </MenuItem>
-               <MenuItem>
-                <Typography variant='subheading' className={classes.flex}>
-                  <ForRole roles={['ADMIN']}>
-                    <Link to='/users'>
-                      <ListItem button>
-                        <ListItemIcon>
-                          <PeopleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='Usuários' />
-                      </ListItem>
-                    </Link>
-                  </ForRole>
-                </Typography>
-               </MenuItem>
-               <MenuItem onClick={this.logout}>
-                <Typography variant='subheading' className={classes.flex}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <AccountCircle />
-                    </ListItemIcon>
-                    <ListItemText primary='Logout' />
-                  </ListItem>
-                </Typography>
-               </MenuItem>
+
+              <MenuItem component={Link} to='/facilities'>
+                <ListItemIcon>
+                  <StoreIcon />
+                </ListItemIcon>
+                <ListItemText primary='Pontos de Coleta' />
+              </MenuItem>
+              <ForRole roles={['ADMIN']}>
+                <MenuItem component={Link} to='/users'>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Usuários' />
+                </MenuItem>
+              </ForRole>
+              <MenuItem onClick={this.logout}>
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText primary='Logout' />
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
