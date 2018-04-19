@@ -10,7 +10,7 @@ import Button from 'material-ui/Button'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 import Typography from 'material-ui/Typography'
 
-import logo from '../descartae-logo-portrait.png'
+import logo from '../logo-portrait.png'
 
 const signupEnabled = process.env.REACT_APP_SIGNUP === 'true'
 

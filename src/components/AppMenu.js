@@ -19,7 +19,7 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
 import PeopleIcon from 'material-ui-icons/People'
 
-import logo from '../descartae-logo-landscape-white.png'
+import logo from '../logo-landscape-white.png'
 
 import Auth from './Auth'
 import ForRole from './ForRole'
