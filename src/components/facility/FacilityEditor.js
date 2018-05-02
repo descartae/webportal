@@ -87,7 +87,7 @@ class FacilityEditor extends Component {
   componentDidMount () {
     this.unblock = this.props.history.block((nextLocation) => {
       if (this.state.dirty && !this.state.dirtyConsent) {
-        this.setState({ dirtyConfirmationOpened: "true", dirtyNextLocation: nextLocation })
+        this.setState({ dirtyConfirmationOpened: true, dirtyNextLocation: nextLocation })
         return false
       }
     })
@@ -195,7 +195,7 @@ class FacilityEditor extends Component {
     } else {
       this.setState({ [path[0]]: event.target.value })
     }
-    this.setState({ dirty: "true", dirtyConsent: false })
+    this.setState({ dirty: true, dirtyConsent: false })
   }
 
   handleTypeOfWasteDelete = type => event => {
@@ -275,7 +275,7 @@ class FacilityEditor extends Component {
         <ConfirmDialog
           title='Modificações não salvas'
           opened={this.state.dirtyConfirmationOpened}
-          onConfirm={() => this.handleDirtyRelease("true")}
+          onConfirm={() => this.handleDirtyRelease(true)}
           onCancel={() => this.handleDirtyRelease(false)}
         >
           <p>Você deseja sair da página sem salvar as suas modificações?</p>
@@ -296,7 +296,6 @@ class FacilityEditor extends Component {
               value={this.state.name}
               onChange={this.handleChange('name')}
               fullWidth
-              required="true"
               className={classes.field}
             />
             <TextField
@@ -304,7 +303,6 @@ class FacilityEditor extends Component {
               value={this.state.telephone}
               onChange={this.handleChange('telephone')}
               fullWidth
-              required="true"
               className={classes.field}
             />
             <TextField
@@ -312,7 +310,6 @@ class FacilityEditor extends Component {
               value={this.state.website}
               onChange={this.handleChange('website')}
               fullWidth
-              required="true"
               className={classes.field}
             />
             <TextField
@@ -320,7 +317,6 @@ class FacilityEditor extends Component {
               value={this.state.address}
               onChange={this.handleChange('address')}
               fullWidth
-              required="true"
               className={classes.field}
             />
 
@@ -329,7 +325,6 @@ class FacilityEditor extends Component {
               value={this.state.municipality}
               onChange={this.handleChange('municipality')}
               fullWidth
-              required="true"
               className={classes.field}
             />
 
@@ -338,7 +333,6 @@ class FacilityEditor extends Component {
               value={this.state.state}
               onChange={this.handleChange('state')}
               fullWidth
-              required="true"
               className={classes.field}
             />
 
@@ -347,12 +341,11 @@ class FacilityEditor extends Component {
               value={this.state.zip}
               onChange={this.handleChange('zip')}
               fullWidth
-              required="true"
               className={classes.field}
             />
 
             <FormControl fullWidth className={classes.field}>
-              <InputLabel required='true'>Tipos de Lixo</InputLabel>
+              <InputLabel>Tipos de Lixo</InputLabel>
               <Select
                 multiple
                 value={this.state.typesOfWaste}
@@ -404,12 +397,11 @@ class FacilityEditor extends Component {
                         <TableCell>
                           <TextField
                             label='Abertura'
-                            required='true'
                             type='time'
                             onChange={this.handleChange(`openHours.${i}.startTime`)}
                             defaultValue={it.startTime}
                             InputLabelProps={{
-                              shrink: "true"
+                              shrink: true
                             }}
                             inputProps={{
                               step: 10 * 60
@@ -419,12 +411,11 @@ class FacilityEditor extends Component {
                         <TableCell>
                           <TextField
                             label='Fechamento'
-                            required='true'
                             type='time'
                             onChange={this.handleChange(`openHours.${i}.endTime`)}
                             defaultValue={it.endTime}
                             InputLabelProps={{
-                              shrink: "true"
+                              shrink: true
                             }}
                             inputProps={{
                               step: 10 * 60
@@ -561,7 +552,7 @@ export const TypesOfWasteListQuery = gql`
 `
 
 export default compose(
-  withStyles(FacilityEditor.styles, { withTheme: "true" }),
+  withStyles(FacilityEditor.styles, { withTheme: true }),
   graphql(TypesOfWasteListQuery, { name: 'TypesOfWasteListQuery' }),
   graphql(FacilityDetailsQuery, {
     name: 'FacilityDetailsQuery',
