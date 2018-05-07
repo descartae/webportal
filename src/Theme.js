@@ -2,6 +2,9 @@ import { createMuiTheme } from 'material-ui/styles'
 import { green, red } from 'material-ui/colors'
 
 export default createMuiTheme({
+  page: {
+    maxWidth: 1200
+  },
   palette: {
     primary: { main: green[900] },
     secondary: { main: green[600] },

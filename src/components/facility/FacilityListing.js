@@ -96,6 +96,8 @@ export const FacilityFieldsFragment = gql`
   fragment FacilityFieldsFragment on Facility {
     _id
     name
+    telephone
+    website
     location {
       address
       municipality

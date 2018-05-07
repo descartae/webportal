@@ -7,20 +7,18 @@ import jwt from 'jsonwebtoken'
 import { withRouter } from 'react-router'
 import { withStyles } from 'material-ui/styles'
 
-import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 import AccountCircle from 'material-ui-icons/AccountCircle'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import { ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
 import PeopleIcon from 'material-ui-icons/People'
 
-import logo from './../logo.png'
+import logo from '../logo-landscape-white.png'
 
 import Auth from './Auth'
 import ForRole from './ForRole'
@@ -43,7 +41,10 @@ class AppMenu extends Component {
       textAlign: 'center'
     },
     logoImg: {
-      width: 80
+      width: 150
+    },
+    menuButton: {
+      margin: theme.spacing.unit,
     }
   })
 
@@ -65,7 +66,6 @@ class AppMenu extends Component {
     const hasToken = !!token
 
     this.state = {
-      drawer: false,
       menu: null,
       logged: hasToken,
       data: hasToken ? jwt.decode(token) : null
@@ -84,14 +84,16 @@ class AppMenu extends Component {
     this.setState({ logged: false })
   }
 
-  toggleDrawer = (event) => {
-    this.setState({ drawer: !this.state.drawer })
-  }
+  handleToggle = () => {
+    this.setState({ open: !this.state.open });
+  };
 
-  setDrawer = (drawer) => () => {
-    this.setState({
-      drawer
-    })
+  handleClose = event => {
+    if (this.target1.contains(event.target) || this.target2.contains(event.target)) {
+      return;
+    }
+
+    this.setState({ open: false });
   };
 
   setMenu = (event) => {
@@ -116,45 +118,13 @@ class AppMenu extends Component {
         <AppBar
           title='Descartaê'
           position='static'
-          onClose={this.setDrawer(false)}>
+        >
 
           <Toolbar>
-            <IconButton className={classes.menu} onClick={this.toggleDrawer}>
-              <MenuIcon />
-            </IconButton>
 
-            <Typography className={classes.title} variant='title'>
-              Descartaê
-            </Typography>
-
-            <IconButton className={classes.user} onClick={this.setMenu}>
-              <AccountCircle />
-            </IconButton>
-
-            <Menu
-              anchorEl={menu}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              open={!!menu}
-              onClose={this.closeMenu}>
-
-              <MenuItem onClick={this.logout}>Logout</MenuItem>
-
-            </Menu>
-
-          </Toolbar>
-
-        </AppBar>
-
-        <Drawer
-          open={this.state.drawer}
-          onClose={this.setDrawer(false)}>
+          <IconButton size="large" className={classes.user} onClick={this.setMenu}>
+            <MenuIcon/>
+          </IconButton>
 
           <div className={classes.logo}>
             <Link to='/'>
@@ -162,26 +132,42 @@ class AppMenu extends Component {
             </Link>
           </div>
 
-          <Link to='/facilities' onClick={() => this.toggleDrawer()}>
-            <ListItem button>
-              <ListItemIcon>
-                <StoreIcon />
-              </ListItemIcon>
-              <ListItemText primary='Pontos de Coleta' />
-            </ListItem>
-          </Link>
+            <Menu
+              anchorEl={menu}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
+              }}
+              open={!!menu}
+              onClose={this.closeMenu}>
 
-          <ForRole roles={['ADMIN']}>
-            <Link to='/users' onClick={() => this.toggleDrawer()}>
-              <ListItem button>
+              <MenuItem component={Link} to='/facilities'>
                 <ListItemIcon>
-                  <PeopleIcon />
+                  <StoreIcon />
                 </ListItemIcon>
-                <ListItemText primary='Usuários' />
-              </ListItem>
-            </Link>
-          </ForRole>
-        </Drawer>
+                <ListItemText primary='Pontos de Coleta' />
+              </MenuItem>
+              <ForRole roles={['ADMIN']}>
+                <MenuItem component={Link} to='/users'>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Usuários' />
+                </MenuItem>
+              </ForRole>
+              <MenuItem onClick={this.logout}>
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText primary='Logout' />
+              </MenuItem>
+            </Menu>
+          </Toolbar>
+        </AppBar>
 
         { this.props.children }
 

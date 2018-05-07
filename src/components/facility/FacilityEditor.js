@@ -2,20 +2,20 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { gql, graphql, compose } from 'react-apollo'
 import qs from 'query-string'
-
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
+import ContentClear from 'material-ui-icons/Clear'
 import Typography from 'material-ui/Typography'
 import Select from 'material-ui/Select'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import Input, { InputLabel } from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
 import { ListItemIcon, ListItemText } from 'material-ui/List'
-import { FormControl } from 'material-ui/Form'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
-
+import { FormControl } from 'material-ui/Form';
 import ConfirmDialog from '../ConfirmDialog'
 import NotFound from '../NotFound'
 import Unauthorized from '../Unauthorized'
@@ -52,6 +52,10 @@ class FacilityEditor extends Component {
     paper: {
       padding: 16
     },
+    cancel: {
+      float: 'right',
+      marginLeft: 10
+    },
     typesOfWaste: {
       display: 'flex',
       flexWrap: 'wrap'
@@ -64,6 +68,8 @@ class FacilityEditor extends Component {
   state = {
     _id: null,
     name: '',
+    telephone: '',
+    website: '',
     address: '',
     municipality: '',
     state: '',
@@ -106,6 +112,8 @@ class FacilityEditor extends Component {
         const {
           _id,
           name,
+          telephone,
+          website,
           location: {
             address,
             municipality,
@@ -125,6 +133,8 @@ class FacilityEditor extends Component {
         this.setState({
           _id,
           name,
+          telephone,
+          website,
           address,
           municipality,
           state,
@@ -149,6 +159,8 @@ class FacilityEditor extends Component {
       this.setState({
         _id: null,
         name: '',
+        telephone: '',
+        website: '',
         address: '',
         municipality: '',
         state: '',
@@ -196,13 +208,13 @@ class FacilityEditor extends Component {
   async onSubmit (e) {
     e.preventDefault()
 
-    const { _id, name, address, municipality, zip, state, typesOfWaste, openHours } = this.state
+    const { _id, name, telephone, website, address, municipality, zip, state, typesOfWaste, openHours } = this.state
 
     const cleanOpenHours = openHours.filter(
       o => o.startTime.match(/[0-2][0-9]:[0-5][0-9]/) && o.endTime.match(/[0-2][0-9]:[0-5][0-9]/)
     )
 
-    const variables = { name, address, municipality, zip, state, typesOfWaste, openHours: cleanOpenHours }
+    const variables = { name, telephone, website, address, municipality, zip, state, typesOfWaste, openHours: cleanOpenHours }
 
     if (this.state._id) {
       const { data } = await this.props.FacilityEditMutation({ variables: { id: _id, ...variables } })
@@ -269,140 +281,160 @@ class FacilityEditor extends Component {
           <p>Você deseja sair da página sem salvar as suas modificações?</p>
         </ConfirmDialog>
 
+        <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/`} className={classes.cancel}>
+          <ContentClear/>
+        </Button>
+
         <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
 
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <TextField
-            label='Nome'
-            value={this.state.name}
-            onChange={this.handleChange('name')}
-            fullWidth
-            className={classes.field}
-          />
+        <FormControl component="fieldset">
+          <form onSubmit={this.onSubmit.bind(this)}>
+            <TextField
+              label='Nome'
+              value={this.state.name}
+              onChange={this.handleChange('name')}
+              fullWidth
+              className={classes.field}
+            />
+            <TextField
+              label='Contato'
+              value={this.state.telephone}
+              onChange={this.handleChange('telephone')}
+              fullWidth
+              className={classes.field}
+            />
+            <TextField
+              label='Website'
+              value={this.state.website}
+              onChange={this.handleChange('website')}
+              fullWidth
+              className={classes.field}
+            />
+            <TextField
+              label='Endereço'
+              value={this.state.address}
+              onChange={this.handleChange('address')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='Endereço'
-            value={this.state.address}
-            onChange={this.handleChange('address')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='Cidade'
+              value={this.state.municipality}
+              onChange={this.handleChange('municipality')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='Cidade'
-            value={this.state.municipality}
-            onChange={this.handleChange('municipality')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='Estado'
+              value={this.state.state}
+              onChange={this.handleChange('state')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='Estado'
-            value={this.state.state}
-            onChange={this.handleChange('state')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='CEP'
+              value={this.state.zip}
+              onChange={this.handleChange('zip')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='CEP'
-            value={this.state.zip}
-            onChange={this.handleChange('zip')}
-            fullWidth
-            className={classes.field}
-          />
+            <FormControl fullWidth className={classes.field}>
+              <InputLabel>Tipos de Lixo</InputLabel>
+              <Select
+                multiple
+                value={this.state.typesOfWaste}
+                onChange={this.handleChange('typesOfWaste')}
+                input={<Input />}
+                renderValue={selected => (
+                  <div className={classes.typesOfWaste} style={{
+                    display: 'flex',
+                    flexWrap: 'wrap'
+                  }}>
+                    {selected.map(value =>
+                      <Chip
+                        key={value}
+                        avatar={<Avatar src={typesOfWasteMap[value].icons.androidMediumURL} />}
+                        label={typesOfWasteMap[value].name}
+                        style={{ margin: 5 }}
+                        onDelete={this.handleTypeOfWasteDelete(value)}
+                      />
+                    )}
+                  </div>
+                )}
+              >
+                {typesOfWaste.map(({ _id, name }) => (
+                  <MenuItem
+                    key={name}
+                    value={_id}>
+                    <ListItemIcon>
+                      <Avatar src={typesOfWasteMap[_id].icons.androidMediumURL} />
+                    </ListItemIcon>
+                    <ListItemText primary={name} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-          <FormControl fullWidth className={classes.field}>
-            <InputLabel>Tipos de Lixo</InputLabel>
-            <Select
-              multiple
-              value={this.state.typesOfWaste}
-              onChange={this.handleChange('typesOfWaste')}
-              input={<Input />}
-              renderValue={selected => (
-                <div className={classes.typesOfWaste} style={{
-                  display: 'flex',
-                  flexWrap: 'wrap'
-                }}>
-                  {selected.map(value =>
-                    <Chip
-                      key={value}
-                      avatar={<Avatar src={typesOfWasteMap[value].icons.androidMediumURL} />}
-                      label={typesOfWasteMap[value].name}
-                      style={{ margin: 5 }}
-                      onDelete={this.handleTypeOfWasteDelete(value)}
-                    />
-                  )}
-                </div>
-              )}
-            >
-              {typesOfWaste.map(({ _id, name }) => (
-                <MenuItem
-                  key={name}
-                  value={_id}>
-                  <ListItemIcon>
-                    <Avatar src={typesOfWasteMap[_id].icons.androidMediumURL} />
-                  </ListItemIcon>
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            <Paper className={classes.field}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Dia da semana</TableCell>
+                    <TableCell colSpan={2}>Horário</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {this.state.openHours.map((it, i) => {
+                    return (
+                      <TableRow key={it.dayOfWeek}>
+                        <TableCell variant='head'>{ptWeekDays[it.dayOfWeek]}</TableCell>
+                        <TableCell>
+                          <TextField
+                            label='Abertura'
+                            type='time'
+                            onChange={this.handleChange(`openHours.${i}.startTime`)}
+                            defaultValue={it.startTime}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                            inputProps={{
+                              step: 10 * 60
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <TextField
+                            label='Fechamento'
+                            type='time'
+                            onChange={this.handleChange(`openHours.${i}.endTime`)}
+                            defaultValue={it.endTime}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                            inputProps={{
+                              step: 10 * 60
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </Paper>
 
-          <Paper className={classes.field}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Dia da semana</TableCell>
-                  <TableCell colSpan={2}>Horário</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.state.openHours.map((it, i) => {
-                  return (
-                    <TableRow key={it.dayOfWeek}>
-                      <TableCell variant='head'>{ptWeekDays[it.dayOfWeek]}</TableCell>
-                      <TableCell>
-                        <TextField
-                          label='Abertura'
-                          type='time'
-                          onChange={this.handleChange(`openHours.${i}.startTime`)}
-                          defaultValue={it.startTime}
-                          InputLabelProps={{
-                            shrink: true
-                          }}
-                          inputProps={{
-                            step: 10 * 60
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <TextField
-                          label='Fechamento'
-                          type='time'
-                          onChange={this.handleChange(`openHours.${i}.endTime`)}
-                          defaultValue={it.endTime}
-                          InputLabelProps={{
-                            shrink: true
-                          }}
-                          inputProps={{
-                            step: 10 * 60
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
+            <Button variant='raised' color='primary' type='submit' className={classes.field}>
+              { isNew ? 'Criar' : 'Editar' }
+            </Button>
 
-          <Button variant='raised' color='primary' type='submit' className={classes.field}>
-            { isNew ? 'Criar' : 'Editar' }
-          </Button>
-        </form>
+          </form>
+        </FormControl>
       </div>
     )
   }
@@ -432,6 +464,8 @@ export const FacilityDetailsQuery = gql`
 export const FacilityAddMutation = gql`
   mutation AddFacility (
     $name: String!,
+    $telephone: String!,
+    $website: String!,
     $address: String!,
     $municipality: String!,
     $state: String!,
@@ -442,6 +476,8 @@ export const FacilityAddMutation = gql`
     addFacility(
       input: {
         name: $name,
+        telephone: $telephone,
+        website: $website,
         location: {
           address: $address,
           municipality: $municipality,
@@ -466,6 +502,8 @@ export const FacilityEditMutation = gql`
   mutation EditFacility (
     $id: ID!,
     $name: String!,
+    $telephone: String!,
+    $website: String!,
     $address: String!,
     $municipality: String!,
     $state: String!,
@@ -478,6 +516,8 @@ export const FacilityEditMutation = gql`
         _id: $id,
         patch: {
           name: $name,
+          telephone: $telephone,
+          website: $website,
           location: {
             address: $address,
             municipality: $municipality,
