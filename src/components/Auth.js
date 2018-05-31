@@ -102,7 +102,7 @@ class Auth extends Component {
     e.preventDefault()
 
     const { data: { addSelfUser } } = await this.props.SignUpMutation({
-      variables: { name: this.state.name, email: this.state.email, password: this.state.password }
+      variables: { name: this.state.name, email: this.state.email, title: this.state.title, organization: this.state.organization, municipality: this.state.municipality, password: this.state.password }
     })
 
     if (addSelfUser) {
@@ -186,7 +186,30 @@ class Auth extends Component {
                       value={this.state.email}
                       onChange={this.handleChange('email')}
                     />
-
+                    <TextField
+                      label='Title'
+                      value={this.state.title}
+                      onChange={this.handleChange('title')}
+                      fullWidth
+                      margin='normal'
+                      className={classes.field}
+                    />
+                    <TextField
+                      label='Organização / Biblioteca'
+                      value={this.state.organization}
+                      onChange={this.handleChange('organization')}
+                      fullWidth
+                      margin='normal'
+                      className={classes.field}
+                    />
+                    <TextField
+                      label='Municipality'
+                      value={this.state.muncipality}
+                      onChange={this.handleChange('municipality')}
+                      fullWidth
+                      margin='normal'
+                      className={classes.field}
+                    />
                     <TextField
                       label='Senha'
                       type='password'
@@ -232,10 +255,13 @@ const AuthenticateMutation = gql`
 `
 
 const SignUpMutation = gql`
-  mutation SignUpMutation ($name: String!, $email: String!, $password: String!) {
+  mutation SignUpMutation ($name: String!, $email: String!, $title: String!, $organization: String!, $municipality: String!, $password: String!) {
     addSelfUser(input:{
       name: $name
       email: $email
+      title: $title
+      municipality: $municipality
+      organization: $organization
       password: $password
     }){
       success
