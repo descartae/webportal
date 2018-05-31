@@ -74,9 +74,9 @@ class UserDetails extends Component {
           {user.name}
         </Typography>
 
-        <p>Title: {user.title}</p>
-        <p>Organization: {user.organization}</p>
-        <p>Municipality: {user.municipality}</p>
+        <p>Titulo do trabalho: {user.title}</p>
+        <p>Organização / Biblioteca: {user.organization}</p>
+        <p>Municipalidade: {user.municipality}</p>
         <p>E-mail: {user.email}</p>
         <p>Papéis: {user.roles.map(it => roles[it]).join(', ')}</p>
       </div>
