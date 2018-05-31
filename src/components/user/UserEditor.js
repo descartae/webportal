@@ -45,6 +45,9 @@ class UserEditor extends Component {
     _id: null,
     name: '',
     email: '',
+    title: '',
+    organization: '',
+    municipality: '',
     password: '',
     roles: []
   }
@@ -55,6 +58,9 @@ class UserEditor extends Component {
         const {
           _id,
           name,
+          title,
+          organization, 
+          municipality,
           email,
           roles
         } = UserDetailsQuery.user
@@ -62,6 +68,9 @@ class UserEditor extends Component {
         this.setState({
           _id,
           name,
+          title,
+          organization, 
+          municipality,
           email,
           password: '',
           roles
@@ -71,6 +80,9 @@ class UserEditor extends Component {
       this.setState({
         _id: null,
         name: '',
+        title: '',
+        organization: '', 
+        municipality: '',
         email: '',
         password: '',
         roles: []
@@ -94,8 +106,8 @@ class UserEditor extends Component {
   async onSubmit (e) {
     e.preventDefault()
 
-    const { _id, name, email, password, roles } = this.state
-    const variables = { name, email, password, roles }
+    const { _id, name, email, title, organization, municipality,password, roles } = this.state
+    const variables = { name, email, title, organization, municipality,  password, roles }
 
     if (this.state._id) {
       const { data } = await this.props.UserEditMutation({ variables: { id: _id, ...variables } })
@@ -160,6 +172,30 @@ class UserEditor extends Component {
             label='E-mail'
             value={this.state.email}
             onChange={this.handleChange('email')}
+            fullWidth
+            className={classes.field}
+          />
+
+          <TextField
+            label='Title'
+            value={this.state.title}
+            onChange={this.handleChange('title')}
+            fullWidth
+            className={classes.field}
+          />
+
+          <TextField
+            label='Organização / Biblioteca'
+            value={this.state.organization}
+            onChange={this.handleChange('organization')}
+            fullWidth
+            className={classes.field}
+          />
+
+          <TextField
+            label='Municipality'
+            value={this.state.muncipality}
+            onChange={this.handleChange('municipality')}
             fullWidth
             className={classes.field}
           />
@@ -234,6 +270,9 @@ export const UserAddMutation = gql`
   mutation UserAddMutation (
     $name: String!,
     $email: String!,
+    $title: String!,
+    $organization: String!,
+    $municipality: String!,
     $password: String!,
     $roles: [Role]!
   ) {
@@ -241,6 +280,9 @@ export const UserAddMutation = gql`
       input: {
         name: $name,
         email: $email,
+        title: $title,
+        organization: $organization,
+        municipality: $municipality,
         password: $password,
         roles: $roles
       }
@@ -260,6 +302,9 @@ export const UserEditMutation = gql`
     $id: ID!
     $name: String,
     $email: String,
+    $title: String!,
+    $organization: String!,
+    $municipality: String!,
     $password: String,
     $roles: [Role]
   ) {
@@ -269,6 +314,9 @@ export const UserEditMutation = gql`
         patch: {
           name: $name,
           email: $email,
+          title: $title,
+          organization: $organization,
+          municipality: $municipality,
           password: $password,
           roles: $roles
         }
