@@ -187,7 +187,7 @@ class Auth extends Component {
                       onChange={this.handleChange('email')}
                     />
                     <TextField
-                      label='Title'
+                      label='Cargo'
                       value={this.state.title}
                       onChange={this.handleChange('title')}
                       fullWidth
@@ -203,7 +203,7 @@ class Auth extends Component {
                       className={classes.field}
                     />
                     <TextField
-                      label='Municipality'
+                      label='Municipalidade'
                       value={this.state.muncipality}
                       onChange={this.handleChange('municipality')}
                       fullWidth

@@ -177,7 +177,7 @@ class UserEditor extends Component {
           />
 
           <TextField
-            label='Titulo do trabalho'
+            label='Cargo'
             value={this.state.title}
             onChange={this.handleChange('title')}
             fullWidth

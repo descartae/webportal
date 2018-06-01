@@ -74,7 +74,7 @@ class UserDetails extends Component {
           {user.name}
         </Typography>
 
-        <p>Titulo do trabalho: {user.title}</p>
+        <p>Cargo: {user.title}</p>
         <p>Organização / Biblioteca: {user.organization}</p>
         <p>Municipalidade: {user.municipality}</p>
         <p>E-mail: {user.email}</p>
