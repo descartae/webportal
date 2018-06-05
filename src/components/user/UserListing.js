@@ -127,7 +127,7 @@ export default compose(
     name: 'UserListQuery',
     options: (props) => ({
       variables: {
-        quantity: props.pageSize
+        quantity: 40 /* props.pageSize */
       }
     }),
     props: ({
