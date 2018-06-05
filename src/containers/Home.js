@@ -68,11 +68,11 @@ class Home extends Component {
                 <Typography noWrap variant='headline'>
                   Bem-vindo ao Descartaê!
                 </Typography>
-                <p>Adicione e gerencie dados sobre pontos de coleta de lixo no Brasil.</p>
-                <p>Os dados que você inseriu estão conectados aos aplicativos móveis. Isso ajudará as pessoas a encontrar pontos de coleta próximos e a descobrir informações sobre quais tipos de resíduos são aceitos.</p>
-                <p>Visualizar, adicionar, editar ou remover dados em pontos de coleta: <a className={classes.link} href='/facilities'>Vá ao painel</a> </p>
-                <p className={classes.emphasis}>Obrigado por manter atualizados os dados de seus pontos locais de coleta! <span role="img" aria-label="Feliz">😄</span></p>
-                <p><strong>Adicione pontos de coletas de diversos tipos de resíduos</strong></p>
+                <p>Adicione e gerencie dados sobre pontos de coleta ou catadores de lixo no Brasil.</p>
+                <p>Os dados que você inseriu estão conectados aos aplicativos móveis. Isso ajudará as pessoas a encontrar pontos de coleta ou catadores próximos e a descobrir informações sobre quais tipos de resíduos são aceitos.</p>
+                <p>Visualizar, adicionar, editar ou remover dados em pontos de coleta ou catadores: <a className={classes.link} href='/facilities'>Vá ao painel</a> </p>
+                <p className={classes.emphasis}>Obrigado por manter atualizados os dados de seus pontos locais de coleta ou catadores! <span role="img" aria-label="Feliz">😄</span></p>
+                <p><strong>Adicione pontos de coletas ou catadores de diversos tipos de resíduos</strong></p>
                 <Paper className={classes.typesOfWastePaper}>
 
                 {
