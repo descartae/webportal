@@ -6,7 +6,6 @@ import { gql, graphql, compose } from 'react-apollo'
 
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
-import Checkbox from 'material-ui/Checkbox'
 import Button from 'material-ui/Button'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
@@ -66,12 +65,6 @@ class UserListing extends Component {
         <List component='nav'>
           { items.map(it => (
             <ListItem button component={Link} to={`/users/view/${it._id}`} key={it._id}>
-              <Checkbox
-                checked={!!this.state.checked[it._id]}
-                onClick={this.selectUser(it._id)}
-                tabIndex={-1}
-                disableRipple
-              />
               <ListItemText primary={it.name} secondary={`${it.email}`} />
             </ListItem>
           ))}
