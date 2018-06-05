@@ -106,7 +106,7 @@ class Home extends Component {
                 <p>A ideia do aplicativo surgiu da iniciativa de um projeto chamado <strong>Feito na Biblioteca</strong>. </p>
                 <p>O projeto visa conectar usuários das bibliotecas públicas da Grande Belo Horizonte e Rio Grande do Sul aos dados abertos do governo para melhorar a vida cotidiana da sociedade.</p>
                 <p>O Descartaê é um projeto open source e sua base de dados é alimentada por bibliotecários vonlutários de cada cidade envolvida </p>
-
+                <p><strong>Contato:</strong> Perguntas ou Feedbacks - E-mail <a href="mailto:feitonabiblioteca@caravanstudios.org">feitonabiblioteca@caravanstudios.org</a></p>
                 <p>Oferecido por: <a className={classes.link} href='http://www.feitonabiblioteca.org/'>Feito na Biblioteca</a> e <a className={classes.link} href='http://caravanstudios.org'>Caravan Studios</a></p>
               </Grid>
             </Grid>
