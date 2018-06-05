@@ -76,7 +76,7 @@ class UserDetails extends Component {
 
         <p>Cargo: {user.title}</p>
         <p>Organização / Biblioteca: {user.organization}</p>
-        <p>Municipalidade: {user.municipality}</p>
+        <p>Município: {user.municipality}</p>
         <p>E-mail: {user.email}</p>
         <p>Papéis: {user.roles.map(it => roles[it]).join(', ')}</p>
       </div>
