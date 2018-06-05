@@ -96,6 +96,9 @@ export const UserFieldsFragment = gql`
     _id
     name
     email
+    title
+    organization
+    municipality
     roles
   }
 `
