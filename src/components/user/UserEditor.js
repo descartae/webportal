@@ -194,7 +194,7 @@ class UserEditor extends Component {
 
           <TextField
             label='Município'
-            value={this.state.muncipality}
+            value={this.state.municipality}
             onChange={this.handleChange('municipality')}
             fullWidth
             className={classes.field}
