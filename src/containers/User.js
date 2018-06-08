@@ -33,7 +33,11 @@ class User extends Component {
       padding: `0 ${theme.spacing.unit * 3}px`,
     },
     wrapper: {
-      maxWidth: theme.page.maxWidth,
+      maxWidth: theme.page.maxWidth,    
+      margin: 'auto'
+    },
+    minWrapper: {
+      maxWidth: '400px',
       margin: 'auto'
     },
     paper: {
@@ -58,35 +62,25 @@ class User extends Component {
     // if the logged user ID matches the location user ID, the logged user should have access to their account information/edit their account. Otherwise, only administrators get to have access to all users - create, edit, and view.
 
     if (roles.indexOf('ADMIN') === -1 && pageUserId === this.context.auth.id) {
-      <div className={classes.root}>
-        <div className={classes.wrapper}>
+      return (
+       <div className={classes.root}>
+        <div className={classes.minWrapper}>
           <Paper className={classes.paper}>
             <Grid container wrap="nowrap" spacing={16}>
-              <Grid item xs size={8}>
-                <Typography variant='headline'>
-                  Usuários
-                <Button variant='fab' mini color='secondary' component={Link} to={`${match.url}/add`} className={classes.add}>
-                  <AddIcon className={classes.addIcon} />
-                </Button>
-                </Typography>
-                <UserListing pageSize={6} />
-              </Grid>
+              <Grid item xs zeroMinWidth>
                 { !match.isExact ? (
-                  <Grid item xs size={8} >
-                    <Paper className={classes.paper}>
-                      <Switch>
-                        <Route path={`${match.url}/edit/:userId`} component={UserEditor} />
-                        <Route path={`${match.url}/view/:userId`} component={UserDetails} />
-                      </Switch>
-                    </Paper>
-                  </Grid>
+                  <Switch>
+                    <Route path={`${match.url}/edit/:userId`} component={UserEditor} />
+                    <Route path={`${match.url}/view/:userId`} component={UserDetails} />
+                  </Switch>
                 ) : null }
+              </Grid>
             </Grid>
           </Paper>
 
         </div>
       </div>
-
+      )
     } else if (roles.indexOf('ADMIN') === -1) {
       return (<Unauthorized />)
     } 
