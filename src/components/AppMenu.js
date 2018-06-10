@@ -17,6 +17,7 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 import { ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
 import PeopleIcon from 'material-ui-icons/People'
+import PersonIcon from 'material-ui-icons/Person'
 
 import logo from '../logo-landscape-white.png'
 
@@ -106,8 +107,8 @@ class AppMenu extends Component {
 
   render () {
     const { classes } = this.props
-    const { menu, logged } = this.state
-
+    const { data, menu, logged } = this.state
+    
     if (!logged) {
       return <Auth />
     }
@@ -159,6 +160,12 @@ class AppMenu extends Component {
                   <ListItemText primary='Usuários' />
                 </MenuItem>
               </ForRole>
+              <MenuItem component={Link} to={`/users/view/${data.id}`}>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary='Minha conta' />
+              </MenuItem>
               <MenuItem onClick={this.logout}>
                 <ListItemIcon>
                   <AccountCircle />
