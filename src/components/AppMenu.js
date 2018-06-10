@@ -170,7 +170,7 @@ class AppMenu extends Component {
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
-                <ListItemText primary='Logout' />
+                <ListItemText primary='Sair' />
               </MenuItem>
             </Menu>
           </Toolbar>
