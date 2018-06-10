@@ -166,6 +166,14 @@ class AppMenu extends Component {
                 </ListItemIcon>
                 <ListItemText primary='Minha conta' />
               </MenuItem>
+              <a href="mailto:feitonabiblioteca@caravanstudios.org">
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Enviar perguntas ou feedback' />
+                </MenuItem>
+              </a>
               <MenuItem onClick={this.logout}>
                 <ListItemIcon>
                   <AccountCircle />
