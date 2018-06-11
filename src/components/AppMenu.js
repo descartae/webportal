@@ -18,6 +18,7 @@ import { ListItemIcon, ListItemText } from 'material-ui/List'
 import StoreIcon from 'material-ui-icons/Store'
 import PeopleIcon from 'material-ui-icons/People'
 import PersonIcon from 'material-ui-icons/Person'
+import MessageIcon from 'material-ui-icons/Message'
 
 import logo from '../logo-landscape-white.png'
 
@@ -169,7 +170,7 @@ class AppMenu extends Component {
               <a href="mailto:feitonabiblioteca@caravanstudios.org">
                 <MenuItem>
                   <ListItemIcon>
-                    <PersonIcon />
+                    <MessageIcon />
                   </ListItemIcon>
                   <ListItemText primary='Enviar perguntas ou feedback' />
                 </MenuItem>
