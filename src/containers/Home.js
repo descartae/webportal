@@ -113,7 +113,7 @@ class Home extends Component {
                 <Typography noWrap variant='title'>
                   Perguntas ou Feedbacks?
                 </Typography>
-                <p><strong>Enviar perguntas ou feedbacks</strong>: e-mail <a href="mailto:feitonabiblioteca@caravanstudios.org">feitonabiblioteca@caravanstudios.org</a></p>
+                <p>E-mail <a href="mailto:feitonabiblioteca@caravanstudios.org">feitonabiblioteca@caravanstudios.org</a></p>
                 <p>Oferecido por: <a className={classes.link} href='http://www.feitonabiblioteca.org/'>Feito na Biblioteca</a> e <a className={classes.link} href='http://caravanstudios.org'>Caravan Studios</a></p>
               </Grid>
             </Grid>
