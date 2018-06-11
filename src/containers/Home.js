@@ -23,12 +23,15 @@ class Home extends Component {
       padding: `0 ${theme.spacing.unit * 3}px`,
     },
     wrapper: {
-      maxWidth: theme.page.maxWidth,
+      maxWidth: '700px', /* updating to improve readability
+                       * previous width: theme.page.maxWidth
+                       */
       margin: 'auto'
     },
     paper: {
       margin: theme.spacing.unit,
       padding: theme.spacing.unit * 2,
+      fontSize: '120%'
     },
     button: {
       margin: theme.spacing.unit,
