@@ -97,7 +97,7 @@ class User extends Component {
                   <AddIcon className={classes.addIcon} />
                 </Button>
                 </Typography>
-                <UserListing pageSize={6} />
+                <UserListing pageSize={20} />
               </Grid>
                 { !match.isExact ? (
                   <Grid item xs size={8} >
