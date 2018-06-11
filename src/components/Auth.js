@@ -55,6 +55,12 @@ class Auth extends Component {
       textAlign: 'center',
       marginBottom: 20
     },
+    footer: {
+      color: '#43484d',
+      textAlign: 'center',
+      fontSize: '90%'
+    },
+
     submit: {
       margin: 10
     }
@@ -238,6 +244,7 @@ class Auth extends Component {
 
           ) : null }
 
+          <p className={classes.footer}>Problemas ao fazer o login? E-mail <a href="mailto:feitonabiblioteca@caravanstudios.org">feitonabiblioteca@caravanstudios.org</a></p>
         </Paper>
       </div>
     )
