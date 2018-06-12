@@ -23,12 +23,15 @@ class Home extends Component {
       padding: `0 ${theme.spacing.unit * 3}px`,
     },
     wrapper: {
-      maxWidth: theme.page.maxWidth,
+      maxWidth: '700px', /* updating to improve readability
+                       * previous width: theme.page.maxWidth
+                       */
       margin: 'auto'
     },
     paper: {
       margin: theme.spacing.unit,
       padding: theme.spacing.unit * 2,
+      fontSize: '120%'
     },
     button: {
       margin: theme.spacing.unit,
@@ -68,11 +71,11 @@ class Home extends Component {
                 <Typography noWrap variant='headline'>
                   Bem-vindo ao Descartaê!
                 </Typography>
-                <p>Adicione e gerencie dados sobre pontos de coleta de lixo no Brasil.</p>
-                <p>Os dados que você inseriu estão conectados aos aplicativos móveis. Isso ajudará as pessoas a encontrar pontos de coleta próximos e a descobrir informações sobre quais tipos de resíduos são aceitos.</p>
-                <p>Visualizar, adicionar, editar ou remover dados em pontos de coleta: <a className={classes.link} href='/facilities'>Vá ao painel</a> </p>
-                <p className={classes.emphasis}>Obrigado por manter atualizados os dados de seus pontos locais de coleta! <span role="img" aria-label="Feliz">😄</span></p>
-                <p><strong>Adicione pontos de coletas de diversos tipos de resíduos</strong></p>
+                <p>Adicione e gerencie dados sobre pontos de coleta ou catadores de lixo no Brasil.</p>
+                <p>Os dados que você inseriu estão conectados aos aplicativos móveis. Isso ajudará as pessoas a encontrar pontos de coleta ou catadores próximos e a descobrir informações sobre quais tipos de resíduos são aceitos.</p>
+                <p>Visualizar, adicionar, editar ou remover dados em pontos de coleta ou catadores: <a className={classes.link} href='/facilities'>Vá ao painel</a> </p>
+                <p className={classes.emphasis}>Obrigado por manter atualizados os dados de seus pontos locais de coleta ou catadores! <span role="img" aria-label="Feliz">😄</span></p>
+                <p><strong>Adicione pontos de coletas ou catadores de diversos tipos de resíduos</strong></p>
                 <Paper className={classes.typesOfWastePaper}>
 
                 {
@@ -106,7 +109,11 @@ class Home extends Component {
                 <p>A ideia do aplicativo surgiu da iniciativa de um projeto chamado <strong>Feito na Biblioteca</strong>. </p>
                 <p>O projeto visa conectar usuários das bibliotecas públicas da Grande Belo Horizonte e Rio Grande do Sul aos dados abertos do governo para melhorar a vida cotidiana da sociedade.</p>
                 <p>O Descartaê é um projeto open source e sua base de dados é alimentada por bibliotecários vonlutários de cada cidade envolvida </p>
-
+                <br/>
+                <Typography noWrap variant='title'>
+                  Perguntas ou Feedbacks?
+                </Typography>
+                <p>E-mail <a href="mailto:feitonabiblioteca@caravanstudios.org">feitonabiblioteca@caravanstudios.org</a></p>
                 <p>Oferecido por: <a className={classes.link} href='http://www.feitonabiblioteca.org/'>Feito na Biblioteca</a> e <a className={classes.link} href='http://caravanstudios.org'>Caravan Studios</a></p>
               </Grid>
             </Grid>

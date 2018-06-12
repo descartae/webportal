@@ -33,7 +33,11 @@ class User extends Component {
       padding: `0 ${theme.spacing.unit * 3}px`,
     },
     wrapper: {
-      maxWidth: theme.page.maxWidth,
+      maxWidth: theme.page.maxWidth,    
+      margin: 'auto'
+    },
+    minWrapper: {
+      maxWidth: '400px',
       margin: 'auto'
     },
     paper: {
@@ -50,12 +54,36 @@ class User extends Component {
   })
 
   render () {
-    const { match, classes } = this.props
-    const { auth: { roles } } = this.context
+    const { location, match, classes } = this.props
+    const { auth: { roles} } = this.context
+    // Get the location user ID
+    const path = location.pathname.split("/");
+    const pageUserId = path[path.length-1];
+    // if the logged user ID matches the location user ID, the logged user should have access to their account information/edit their account. Otherwise, only administrators get to have access to all users - create, edit, and view.
 
-    if (roles.indexOf('ADMIN') === -1) {
+    if (roles.indexOf('ADMIN') === -1 && pageUserId === this.context.auth.id) {
+      return (
+       <div className={classes.root}>
+        <div className={classes.minWrapper}>
+          <Paper className={classes.paper}>
+            <Grid container wrap="nowrap" spacing={16}>
+              <Grid item xs zeroMinWidth>
+                { !match.isExact ? (
+                  <Switch>
+                    <Route path={`${match.url}/edit/:userId`} component={UserEditor} />
+                    <Route path={`${match.url}/view/:userId`} component={UserDetails} />
+                  </Switch>
+                ) : null }
+              </Grid>
+            </Grid>
+          </Paper>
+
+        </div>
+      </div>
+      )
+    } else if (roles.indexOf('ADMIN') === -1) {
       return (<Unauthorized />)
-    }
+    } 
 
     return (
       <div className={classes.root}>

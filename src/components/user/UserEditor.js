@@ -28,6 +28,10 @@ class UserEditor extends Component {
     match: PropTypes.object.isRequired
   }
 
+  static contextTypes = {
+    auth: PropTypes.object.isRequired
+  }
+
   static styles = theme => ({
     paper: {
       padding: 16
@@ -126,6 +130,7 @@ class UserEditor extends Component {
 
   render () {
     const { classes, match } = this.props
+    const { auth } = this.context
     const { loading, error, user } = this.props.UserDetailsQuery || {}
 
     const isNew = !match.params.userId
@@ -153,106 +158,175 @@ class UserEditor extends Component {
       rolesMap[role._id] = role
     }
 
-    return (
-      <div>
-        <Typography variant='title'>
-          { isNew ? 'Novo Usuário' : 'Editar Usuário' }
-        </Typography>
+    // if the logged user is an admin, the user can change the role
 
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <TextField
-            label='Nome'
-            value={this.state.name}
-            onChange={this.handleChange('name')}
-            fullWidth
-            className={classes.field}
-          />
+    if (auth.roles.includes('ADMIN')) {
+      return (
+        <div>
+          <Typography variant='title'>
+            { isNew ? 'Novo Usuário' : 'Editar Usuário' }
+          </Typography>
 
-          <TextField
-            label='E-mail'
-            value={this.state.email}
-            onChange={this.handleChange('email')}
-            fullWidth
-            className={classes.field}
-          />
+          <form onSubmit={this.onSubmit.bind(this)}>
+            <TextField
+              label='Nome'
+              value={this.state.name}
+              onChange={this.handleChange('name')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='Cargo'
-            value={this.state.title}
-            onChange={this.handleChange('title')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='E-mail'
+              value={this.state.email}
+              onChange={this.handleChange('email')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='Organização / Biblioteca'
-            value={this.state.organization}
-            onChange={this.handleChange('organization')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='Cargo'
+              value={this.state.title}
+              onChange={this.handleChange('title')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='Município'
-            value={this.state.muncipality}
-            onChange={this.handleChange('municipality')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='Organização / Biblioteca'
+              value={this.state.organization}
+              onChange={this.handleChange('organization')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <TextField
-            label='Senha'
-            type='password'
-            autoComplete='off'
-            value={this.state.password}
-            onChange={this.handleChange('password')}
-            fullWidth
-            className={classes.field}
-          />
+            <TextField
+              label='Município'
+              value={this.state.municipality}
+              onChange={this.handleChange('municipality')}
+              fullWidth
+              className={classes.field}
+            />
 
-          <FormControl fullWidth className={classes.field}>
-            <InputLabel>Papéis</InputLabel>
-            <Select
-              multiple
-              value={this.state.roles}
-              onChange={this.handleChange('roles')}
-              input={<Input />}
-              renderValue={selected => (
-                <div className={classes.roles} style={{
-                  display: 'flex',
-                  flexWrap: 'wrap'
-                }}>
-                  {selected.map(_id =>
-                    <Chip
-                      key={_id}
-                      avatar={<Avatar src={rolesMap[_id].icon} />}
-                      label={rolesMap[_id].name}
-                      style={{ margin: 5 }}
-                      onDelete={this.handleRoleDelete(_id)}
-                    />
-                  )}
-                </div>
-              )}
-            >
-              {roles.map(({ _id, name }) => (
-                <MenuItem
-                  key={name}
-                  value={_id}>
-                  <ListItemIcon>
-                    <Avatar src={rolesMap[_id].icon} />
-                  </ListItemIcon>
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            <TextField
+              label='Senha'
+              type='password'
+              autoComplete='off'
+              value={this.state.password}
+              onChange={this.handleChange('password')}
+              fullWidth
+              className={classes.field}
+            />
+            <FormControl fullWidth className={classes.field}>
+              <InputLabel>Papéis</InputLabel>
+              <Select
+                multiple
+                value={this.state.roles}
+                onChange={this.handleChange('roles')}
+                input={<Input />}
+                renderValue={selected => (
+                  <div className={classes.roles} style={{
+                    display: 'flex',
+                    flexWrap: 'wrap'
+                  }}>
+                    {selected.map(_id =>
+                      <Chip
+                        key={_id}
+                        avatar={<Avatar src={rolesMap[_id].icon} />}
+                        label={rolesMap[_id].name}
+                        style={{ margin: 5 }}
+                        onDelete={this.handleRoleDelete(_id)}
+                      />
+                    )}
+                  </div>
+                )}
+              >
+                {roles.map(({ _id, name }) => (
+                  <MenuItem
+                    key={name}
+                    value={_id}>
+                    <ListItemIcon>
+                      <Avatar src={rolesMap[_id].icon} />
+                    </ListItemIcon>
+                    <ListItemText primary={name} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button variant='raised' color='primary' type='submit' className={classes.field}>
+              { isNew ? 'Criar' : 'Editar' }
+            </Button>
+          </form>
+        </div>
+      )
+    } else {  
+        // else, the user cannot edit their role
 
-          <Button variant='raised' color='primary' type='submit' className={classes.field}>
-            { isNew ? 'Criar' : 'Editar' }
-          </Button>
-        </form>
-      </div>
-    )
+        return (
+          <div>
+            <Typography variant='title'>
+              { isNew ? 'Novo Usuário' : 'Editar Usuário' }
+            </Typography>
+
+            <form onSubmit={this.onSubmit.bind(this)}>
+              <TextField
+                label='Nome'
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                fullWidth
+                className={classes.field}
+              />
+
+              <TextField
+                label='E-mail'
+                value={this.state.email}
+                onChange={this.handleChange('email')}
+                fullWidth
+                className={classes.field}
+              />
+
+              <TextField
+                label='Cargo'
+                value={this.state.title}
+                onChange={this.handleChange('title')}
+                fullWidth
+                className={classes.field}
+              />
+
+              <TextField
+                label='Organização / Biblioteca'
+                value={this.state.organization}
+                onChange={this.handleChange('organization')}
+                fullWidth
+                className={classes.field}
+              />
+
+              <TextField
+                label='Município'
+                value={this.state.municipality}
+                onChange={this.handleChange('municipality')}
+                fullWidth
+                className={classes.field}
+              />
+
+              <TextField
+                label='Senha'
+                type='password'
+                autoComplete='off'
+                value={this.state.password}
+                onChange={this.handleChange('password')}
+                fullWidth
+                className={classes.field}
+              />
+
+              <Button variant='raised' color='primary' type='submit' className={classes.field}>
+                { isNew ? 'Criar' : 'Editar' }
+              </Button>
+          </form>
+
+        </div>
+        )
+    }
   }
 }
 

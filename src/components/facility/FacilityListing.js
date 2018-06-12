@@ -145,7 +145,7 @@ export default compose(
     name: 'FacilityListQuery',
     options: (props) => ({
       variables: {
-        quantity: props.pageSize
+        quantity: 40
       }
     }),
     props: ({
