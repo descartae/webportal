@@ -15,7 +15,7 @@ import { MenuItem } from 'material-ui/Menu'
 import { ListItemIcon, ListItemText } from 'material-ui/List'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
-import { FormControl } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form'
 import ConfirmDialog from '../ConfirmDialog'
 import NotFound from '../NotFound'
 import Unauthorized from '../Unauthorized'
@@ -282,14 +282,14 @@ class FacilityEditor extends Component {
         </ConfirmDialog>
 
         <Button variant='fab' mini color='secondary' component={Link} to={`/facilities/`} className={classes.cancel}>
-          <ContentClear/>
+          <ContentClear />
         </Button>
 
         <Typography variant='title'>
           { isNew ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta' }
         </Typography>
 
-        <FormControl component="fieldset">
+        <FormControl component='fieldset'>
           <form onSubmit={this.onSubmit.bind(this)}>
             <TextField
               label='Nome'

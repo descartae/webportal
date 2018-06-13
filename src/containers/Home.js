@@ -20,7 +20,7 @@ class Home extends Component {
   static styles = theme => ({
     root: {
       overflow: 'hidden',
-      padding: `0 ${theme.spacing.unit * 3}px`,
+      padding: `0 ${theme.spacing.unit * 3}px`
     },
     wrapper: {
       maxWidth: '700px', /* updating to improve readability
@@ -34,10 +34,10 @@ class Home extends Component {
       fontSize: '120%'
     },
     button: {
-      margin: theme.spacing.unit,
+      margin: theme.spacing.unit
     },
     input: {
-      display: 'none',
+      display: 'none'
     },
     typesOfWastePaper: {
       margin: '20px 10px',
@@ -66,7 +66,7 @@ class Home extends Component {
       <div className={classes.root}>
         <div className={classes.wrapper}>
           <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={16}>
+            <Grid container wrap='nowrap' spacing={16}>
               <Grid item xs zeroMinWidth>
                 <Typography noWrap variant='headline'>
                   Bem-vindo ao Descartaê!
@@ -74,22 +74,22 @@ class Home extends Component {
                 <p>Adicione e gerencie dados sobre pontos de coleta ou catadores de lixo no Brasil.</p>
                 <p>Os dados que você inseriu estão conectados aos aplicativos móveis. Isso ajudará as pessoas a encontrar pontos de coleta ou catadores próximos e a descobrir informações sobre quais tipos de resíduos são aceitos.</p>
                 <p>Visualizar, adicionar, editar ou remover dados em pontos de coleta ou catadores: <a className={classes.link} href='/facilities'>Vá ao painel</a> </p>
-                <p className={classes.emphasis}>Obrigado por manter atualizados os dados de seus pontos locais de coleta ou catadores! <span role="img" aria-label="Feliz">😄</span></p>
+                <p className={classes.emphasis}>Obrigado por manter atualizados os dados de seus pontos locais de coleta ou catadores! <span role='img' aria-label='Feliz'>😄</span></p>
                 <p><strong>Adicione pontos de coletas ou catadores de diversos tipos de resíduos</strong></p>
                 <Paper className={classes.typesOfWastePaper}>
 
-                {
-                  loading ?
-                    <Loading /> :
-                    (typesOfWaste.map(({ _id, name, icons: { androidMediumURL } }) => (
-                      <Chip
-                        key={_id}
-                        className={classes.typesOfWaste}
-                        avatar={<Avatar src={androidMediumURL} />}
-                        label={name}
-                      />
-                    )))
-                }
+                  {
+                    loading
+                      ? <Loading />
+                      : (typesOfWaste.map(({ _id, name, icons: { androidMediumURL } }) => (
+                        <Chip
+                          key={_id}
+                          className={classes.typesOfWaste}
+                          avatar={<Avatar src={androidMediumURL} />}
+                          label={name}
+                        />
+                      )))
+                  }
 
                 </Paper>
                 <Typography noWrap variant='title' gutterBottom>
@@ -99,21 +99,21 @@ class Home extends Component {
                 <p>O mundo está cada vez mais perto de chegar no limte de fornecimento de recursos naturais para produção de novos produtos.</p>
                 <p>Por isso a importância da reciclagem. Ela reduz significativamente impacto sobre o meio ambiente, diminuindo as retiradas de matéria-prima da natureza, gerando economia de água e energia e reduzindo disposição inadequada do lixo.</p>
 
-                <p className={classes.emphasis}>São geradas 230 mil toneladas de lixo por dia no Brasil. <span role="img" aria-label="Medo">😨</span> <br /> <small>Fonte: Pensamento verde</small></p>
+                <p className={classes.emphasis}>São geradas 230 mil toneladas de lixo por dia no Brasil. <span role='img' aria-label='Medo'>😨</span> <br /> <small>Fonte: Pensamento verde</small></p>
                 <Typography noWrap variant='title'>
                 Os bastidores do Projeto
                 </Typography>
                 <Typography noWrap variant='subheading'>
-                Das bibliotecas para mundo <span role="img" aria-label="Livros e Mundo">📚🌎</span>
+                Das bibliotecas para mundo <span role='img' aria-label='Livros e Mundo'>📚🌎</span>
                 </Typography>
                 <p>A ideia do aplicativo surgiu da iniciativa de um projeto chamado <strong>Feito na Biblioteca</strong>. </p>
                 <p>O projeto visa conectar usuários das bibliotecas públicas da Grande Belo Horizonte e Rio Grande do Sul aos dados abertos do governo para melhorar a vida cotidiana da sociedade.</p>
                 <p>O Descartaê é um projeto open source e sua base de dados é alimentada por bibliotecários vonlutários de cada cidade envolvida </p>
-                <br/>
+                <br />
                 <Typography noWrap variant='title'>
                   Perguntas ou Feedbacks?
                 </Typography>
-                <p>E-mail <a href="mailto:feitonabiblioteca@caravanstudios.org">feitonabiblioteca@caravanstudios.org</a></p>
+                <p>E-mail <a href='mailto:feitonabiblioteca@caravanstudios.org'>feitonabiblioteca@caravanstudios.org</a></p>
                 <p>Oferecido por: <a className={classes.link} href='http://www.feitonabiblioteca.org/'>Feito na Biblioteca</a> e <a className={classes.link} href='http://caravanstudios.org'>Caravan Studios</a></p>
               </Grid>
             </Grid>

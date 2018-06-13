@@ -46,7 +46,7 @@ class AppMenu extends Component {
       width: 150
     },
     menuButton: {
-      margin: theme.spacing.unit,
+      margin: theme.spacing.unit
     }
   })
 
@@ -87,15 +87,15 @@ class AppMenu extends Component {
   }
 
   handleToggle = () => {
-    this.setState({ open: !this.state.open });
+    this.setState({ open: !this.state.open })
   };
 
   handleClose = event => {
     if (this.target1.contains(event.target) || this.target2.contains(event.target)) {
-      return;
+      return
     }
 
-    this.setState({ open: false });
+    this.setState({ open: false })
   };
 
   setMenu = (event) => {
@@ -109,7 +109,7 @@ class AppMenu extends Component {
   render () {
     const { classes } = this.props
     const { data, menu, logged } = this.state
-    
+
     if (!logged) {
       return <Auth />
     }
@@ -124,15 +124,15 @@ class AppMenu extends Component {
 
           <Toolbar>
 
-          <IconButton size="large" className={classes.user} onClick={this.setMenu}>
-            <MenuIcon/>
-          </IconButton>
+            <IconButton size='large' className={classes.user} onClick={this.setMenu}>
+              <MenuIcon />
+            </IconButton>
 
-          <div className={classes.logo}>
-            <Link to='/'>
-              <img src={logo} className={classes.logoImg} alt='Descartaê' />
-            </Link>
-          </div>
+            <div className={classes.logo}>
+              <Link to='/'>
+                <img src={logo} className={classes.logoImg} alt='Descartaê' />
+              </Link>
+            </div>
 
             <Menu
               anchorEl={menu}
@@ -167,7 +167,7 @@ class AppMenu extends Component {
                 </ListItemIcon>
                 <ListItemText primary='Minha conta' />
               </MenuItem>
-              <a href="mailto:feitonabiblioteca@caravanstudios.org">
+              <a href='mailto:feitonabiblioteca@caravanstudios.org'>
                 <MenuItem>
                   <ListItemIcon>
                     <MessageIcon />
