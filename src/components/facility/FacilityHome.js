@@ -19,7 +19,7 @@ class FacilityHome extends Component {
         <p>O botão <strong>Criar Novo</strong> levará você ao formulário para criação de um novo ponto.</p>
         <p>Ao clicar em um item da lista, a página exibirá detalhes sobre o ponto escolhido.</p>
         <p>O botão <FeedbackIcon /> abrirá uma janela com os feedbacks dados ao ponto escolhido através do aplicativo.</p>
-        <p><strong>Enviar perguntas ou feedbacks</strong>: e-mail <a href="mailto:feitonabiblioteca@caravanstudios.org">feitonabiblioteca@caravanstudios.org</a></p>
+        <p><strong>Enviar perguntas ou feedbacks</strong>: e-mail <a href='mailto:feitonabiblioteca@caravanstudios.org'>feitonabiblioteca@caravanstudios.org</a></p>
       </div>
     )
   }

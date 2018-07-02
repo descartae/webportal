@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker exec client.webportal.descartae npm run prettify

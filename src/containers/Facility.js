@@ -31,7 +31,7 @@ class Facility extends Component {
   static styles = theme => ({
     root: {
       overflow: 'hidden',
-      padding: `0 ${theme.spacing.unit * 3}px`,
+      padding: `0 ${theme.spacing.unit * 3}px`
     },
     wrapper: {
       maxWidth: theme.page.maxWidth,
@@ -39,7 +39,7 @@ class Facility extends Component {
     },
     paper: {
       margin: theme.spacing.unit,
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing.unit * 2
     },
     add: {
       marginLeft: theme.spacing.unit,
@@ -66,7 +66,7 @@ class Facility extends Component {
       <div className={classes.root}>
         <div className={classes.wrapper}>
           <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={16}>
+            <Grid container wrap='nowrap' spacing={16}>
               <Grid item xs size={8}>
                 <Typography variant='headline'>
                   Pontos de coleta
@@ -88,10 +88,10 @@ class Facility extends Component {
                     <Route path={`${match.url}/`} component={FacilityHome} />
                   </Switch>
                 </Paper>
-             </Grid>
-           </Grid>
-         </Paper>
-       </div>
+              </Grid>
+            </Grid>
+          </Paper>
+        </div>
 
         <Route path={`${match.url}/view/:facilityId/feedbacks`} render={
           (routeProps) => (
